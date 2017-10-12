@@ -9,7 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
-    private EditText mAccount;                        //用户名编辑
+    private EditText mNickname;                       //用户昵称编辑
+    private EditText mMobile;                        //用户手机号编辑
     private EditText mPwd;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
     private Button mSureButton;                       //确定按钮
@@ -19,9 +20,10 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        mAccount = (EditText) findViewById(R.id.resetpwd_edit_name);
-        mPwd = (EditText) findViewById(R.id.resetpwd_edit_pwd_old);
-        mPwdCheck = (EditText) findViewById(R.id.resetpwd_edit_pwd_new);
+        mNickname = (EditText) findViewById(R.id.register_edit_name);
+        mMobile = (EditText) findViewById(R.id.register_edit_mobile);
+        mPwd = (EditText) findViewById(R.id.registere_edit_pwd_old);
+        mPwdCheck = (EditText) findViewById(R.id.register_edit_pwd_new);
 
         mSureButton = (Button) findViewById(R.id.register_btn_sure);
         mCancelButton = (Button) findViewById(R.id.register_btn_cancel);
@@ -51,14 +53,14 @@ public class Register extends AppCompatActivity {
     };
     public void register_check() {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();
+            String userName = mMobile.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
             //检查用户是否存在
             int count=mUserDataManager.findUserByName(userName);
             //用户已经存在时返回，给出提示文字
             if(count>0){
-                Toast.makeText(this, getString(R.string.name_already_exist, userName),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.mobile_already_exist, userName),Toast.LENGTH_SHORT).show();
                 return ;
             }
             if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
@@ -80,8 +82,8 @@ public class Register extends AppCompatActivity {
         }
     }
     public boolean isUserNameAndPwdValid() {
-        if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, getString(R.string.account_empty),
+        if (mMobile.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.mobile_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwd.getText().toString().trim().equals("")) {

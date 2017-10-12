@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Resetpwd extends AppCompatActivity {
-    private EditText mAccount;                        //用户名编辑
+    private EditText mMobile;                        //用户名编辑
     private EditText mPwd_old;                            //密码编辑
     private EditText mPwd_new;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
@@ -21,7 +21,7 @@ public class Resetpwd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resetpwd);
 //        layout.setOrientation(RelativeLayout.VERTICAL).
-        mAccount = (EditText) findViewById(R.id.resetpwd_edit_name);
+        mMobile = (EditText) findViewById(R.id.resetpwd_edit_name);
         mPwd_old = (EditText) findViewById(R.id.resetpwd_edit_pwd_old);
         mPwd_new = (EditText) findViewById(R.id.resetpwd_edit_pwd_new);
         mPwdCheck = (EditText) findViewById(R.id.resetpwd_edit_pwd_check);
@@ -55,7 +55,7 @@ public class Resetpwd extends AppCompatActivity {
     };
     public void resetpwd_check() {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();
+            String userName = mMobile.getText().toString().trim();
             String userPwd_old = mPwd_old.getText().toString().trim();
             String userPwd_new = mPwd_new.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
@@ -91,16 +91,16 @@ public class Resetpwd extends AppCompatActivity {
         }
     }
     public boolean isUserNameAndPwdValid() {
-        String userName = mAccount.getText().toString().trim();
+        String userName = mMobile.getText().toString().trim();
         //检查用户是否存在
         int count=mUserDataManager.findUserByName(userName);
         //用户不存在时返回，给出提示文字
         if(count<=0){
-            Toast.makeText(this, getString(R.string.name_not_exist, userName),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.mobile_not_exist, userName),Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, getString(R.string.account_empty),Toast.LENGTH_SHORT).show();
+        if (mMobile.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.mobile_empty),Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwd_old.getText().toString().trim().equals("")) {
             Toast.makeText(this, getString(R.string.pwd_empty),Toast.LENGTH_SHORT).show();

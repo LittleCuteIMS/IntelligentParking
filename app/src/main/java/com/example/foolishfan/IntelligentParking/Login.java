@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class Login extends Activity {                 //登录界面活动
 
     public int pwdresetFlag=0;
-    private EditText mAccount;                        //用户名编辑
+    private EditText mMobile;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
     private Button mRegisterButton;                   //注册按钮
     private Button mLoginButton;                      //登录按钮
@@ -38,7 +38,7 @@ public class Login extends Activity {                 //登录界面活动
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         //通过id找到相应的控件
-        mAccount = (EditText) findViewById(R.id.login_edit_account);
+        mMobile = (EditText) findViewById(R.id.login_edit_mobile);
         mPwd = (EditText) findViewById(R.id.login_edit_pwd);
         mRegisterButton = (Button) findViewById(R.id.login_btn_register);
         mLoginButton = (Button) findViewById(R.id.login_btn_login);
@@ -58,7 +58,7 @@ public class Login extends Activity {                 //登录界面活动
         boolean choseAutoLogin =login_sp.getBoolean("mAutologinCheck", false);
         //如果上次选了记住密码，那进入登录页面也自动勾选记住密码，并填上用户名和密码
         if(choseRemember){
-            mAccount.setText(name);
+            mMobile.setText(name);
             mPwd.setText(pwd);
             mRememberCheck.setChecked(true);
         }
@@ -101,7 +101,7 @@ public class Login extends Activity {                 //登录界面活动
 
     public void login() {                                              //登录按钮监听事件
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
+            String userName = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor =login_sp.edit();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
@@ -129,7 +129,7 @@ public class Login extends Activity {                 //登录界面活动
     }
     public void cancel() {           //注销
         if (isUserNameAndPwdValid()) {
-            String userName = mAccount.getText().toString().trim();    //获取当前输入的用户名和密码信息
+            String userName = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
             int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
             if(result==1){                                             //返回1说明用户名和密码均正确
@@ -137,7 +137,7 @@ public class Login extends Activity {                 //登录界面活动
 //                startActivity(intent);
                 Toast.makeText(this, getString(R.string.cancel_success),Toast.LENGTH_SHORT).show();//登录成功提示
                 mPwd.setText("");
-                mAccount.setText("");
+                mMobile.setText("");
                 mUserDataManager.deleteUserDatabyname(userName);
             }else if(result==0){
                 Toast.makeText(this, getString(R.string.cancel_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
@@ -147,8 +147,8 @@ public class Login extends Activity {                 //登录界面活动
     }
 
     public boolean isUserNameAndPwdValid() {
-        if (mAccount.getText().toString().trim().equals("")) {
-            Toast.makeText(this, getString(R.string.account_empty),
+        if (mMobile.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.mobile_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
         } else if (mPwd.getText().toString().trim().equals("")) {
