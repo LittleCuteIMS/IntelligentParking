@@ -24,10 +24,9 @@
             android:textColor="#ffffff"
             android:background="#e52525"
             android:textSize="20dp"
-            android:layout_below="@+id/login_btn_login"
+            android:layout_above="@+id/login_btn_cancle"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
+            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="fill_parent"
@@ -38,10 +37,9 @@
             android:background="#545bcb"
             android:textSize="20dp"
             android:textColor="#ffffff"
-            android:layout_below="@+id/login_edit_pwd"
+            android:layout_above="@+id/login_btn_register"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="52dp" />
+            android:layout_alignParentStart="true" />
 
         <ImageView
             android:layout_width="300dp"
@@ -63,21 +61,21 @@
             android:id="@+id/login_edit_pwd"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:hint="请输入您的密码"
-            android:layout_below="@+id/login_edit_account"
+            android:layout_below="@+id/login_edit_mobile"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
         <EditText
+            android:id="@+id/login_edit_mobile"
             android:layout_width="400dp"
             android:layout_height="60dp"
-            android:inputType="textPersonName"
-            android:id="@+id/login_edit_account"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:hint="请输入您的手机号码"
-            android:layout_below="@+id/logo"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp" />
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@android:drawable/ic_menu_myplaces"
+            android:hint="请输入您的手机号码"
+            android:inputType="textPersonName" />
 
         <Button
             android:layout_width="fill_parent"
@@ -85,14 +83,12 @@
             android:text="注销"
             android:id="@+id/login_btn_cancle"
             android:textSize="20dp"
-            android:layout_below="@+id/login_btn_register"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:textColor="#ffffff"
-            android:background="#3a1313" />
+            android:background="#3a1313"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <CheckBox
             android:layout_width="100dp"
