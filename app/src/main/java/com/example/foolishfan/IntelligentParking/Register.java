@@ -21,7 +21,6 @@ public class Register extends AppCompatActivity {
     private EditText mPwdCheck;                       //密码编辑
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
-    private UserDataManager mUserDataManager;         //用户数据管理类
     private Handler handler;                            //控制线程
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +40,19 @@ public class Register extends AppCompatActivity {
         handler = new Handler(){
             public void handleMessage(Message msg){
                 Toast toast1;
-                if(msg.obj!=null){//如果不为空
-                    toast1=Toast.makeText(getApplicationContext(), msg.obj.toString(),Toast.LENGTH_SHORT);
-                    toast1.setGravity(Gravity.BOTTOM, 0, 0);
-                    toast1.show();
+                if(msg.obj!=null) {//如果不为空
+                    if (msg.obj.toString().equals("SUCCEED") ) {
+                        toast1 = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast1.show();
+                        Intent intent_Register_to_Login = new Intent(Register.this, Login.class);    //切换Register Activity至Login Activity
+                        startActivity(intent_Register_to_Login);
+                        finish();
+                    } else {
+                        toast1 = Toast.makeText(getApplicationContext(), "手机号已存在", Toast.LENGTH_SHORT);
+                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast1.show();
+                    }
                 }else{
                     toast1=Toast.makeText(getApplicationContext(), "网络错误",Toast.LENGTH_SHORT);
                     toast1.setGravity(Gravity.BOTTOM, 0, 0);
@@ -53,11 +61,6 @@ public class Register extends AppCompatActivity {
                 super.handleMessage(msg);
             }
         };
-
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();                              //建立本地数据库
-        }
 
     }
     View.OnClickListener m_register_Listener = new View.OnClickListener() {    //不同按钮按下的监听事件选择
@@ -74,19 +77,22 @@ public class Register extends AppCompatActivity {
             }
         }
     };
+    
     public void register_check() {                                //确认按钮的监听事件
         if (isUserNameAndPwdValid()) {
             String nickname=mNickname.getText().toString().trim();
             String mobile= mMobile.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
+
+
             //检查用户是否存在
-            int count=mUserDataManager.findUserByName(mobile);
+            //int count=mUserDataManager.findUserByName(mobile);
             //用户已经存在时返回，给出提示文字
-            if(count>0){
+            /*if(count>0){
                 Toast.makeText(this, getString(R.string.mobile_already_exist, mobile),Toast.LENGTH_SHORT).show();
                 return ;
-            }
+            }*/
             if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
                 return ;
@@ -100,23 +106,15 @@ public class Register extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
                 //服务器上注册
-                String url="http://10.0.2.2/ParkingWeb/user/dataentry1.php";
+                String url="http://10.0.2.2/ParkingWeb/user/register.php";
                 HttpJson http=new HttpJson(url,json.toString(),handler);
                 new Thread(http.getHttpThread()).start();
 
-                //本地注册
-                UserData mUser = new UserData(mobile, userPwd);
-                mUserDataManager.openDataBase();
-                long flag = mUserDataManager.insertUserData(mUser); //新建用户信息
-                if (flag == -1) {
-                    Toast.makeText(this, getString(R.string.register_fail),Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, getString(R.string.register_success),Toast.LENGTH_SHORT).show();
-                    Intent intent_Register_to_Login = new Intent(Register.this,Login.class) ;    //切换User Activity至Login Activity
-                    startActivity(intent_Register_to_Login);
-                    finish();
-                }
+
+
             }
         }
     }

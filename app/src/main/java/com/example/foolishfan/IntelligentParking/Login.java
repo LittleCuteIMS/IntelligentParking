@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class Login extends Activity {                 //登录界面活动
 
@@ -22,6 +29,7 @@ public class Login extends Activity {                 //登录界面活动
     private Button mLoginButton;                      //登录按钮
     private Button mCancleButton;                     //注销按钮
     private CheckBox mRememberCheck;
+    private Handler handler;                   //登录接收服务器返回的信息
 
     private SharedPreferences login_sp;
     private String userNameValue,passwordValue;
@@ -30,7 +38,7 @@ public class Login extends Activity {                 //登录界面活动
     private View loginSuccessView;
     private TextView loginSuccessShow;
     private TextView mChangepwdText;
-    private UserDataManager mUserDataManager;         //用户数据管理类
+    private Handler loginHandler;
 
 
     @Override
@@ -68,13 +76,36 @@ public class Login extends Activity {                 //登录界面活动
         mCancleButton.setOnClickListener(mListener);
         mChangepwdText.setOnClickListener(mListener);
 
+        handler = new Handler(){
+            public void handleMessage(Message msg){
+                Toast toast1;
+                if(msg.obj!=null) {//如果不为空
+                    if (msg.obj.toString().equals("SUCCEED")) {
+                        toast1 = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
+                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast1.show();
+                        Intent intent_Login_to_User = new Intent(Login.this, User.class);    //切换Login Activity至User Activity
+                        startActivity(intent_Login_to_User);
+                        finish();
+                    } else {
+                        toast1 = Toast.makeText(getApplicationContext(), "手机号不存在", Toast.LENGTH_SHORT);
+                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                        toast1.show();
+                    }
+                }else{
+                    toast1=Toast.makeText(getApplicationContext(), "网络错误",Toast.LENGTH_SHORT);
+                    toast1.setGravity(Gravity.BOTTOM, 0, 0);
+                    toast1.show();
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+
         ImageView image = (ImageView) findViewById(R.id.logo);             //使用ImageView显示logo
         image.setImageResource(R.drawable.toplogo);
 
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();                              //建立本地数据库
-        }
+
     }
     OnClickListener mListener = new OnClickListener() {                  //不同按钮按下的监听事件选择
         public void onClick(View v) {
@@ -99,12 +130,32 @@ public class Login extends Activity {                 //登录界面活动
         }
     };
 
+
     public void login() {                                              //登录按钮监听事件
         if (isUserNameAndPwdValid()) {
             String userName = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
             SharedPreferences.Editor editor =login_sp.edit();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+
+            {
+                //将用户手机号，密码转为json
+                JSONObject json=new JSONObject();
+                try {
+                    json.put("mobile",userName);
+                    json.put("password",userPwd);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //把用户信息发送到服务器上
+                String url="http://10.0.2.2/ParkingWeb/user/login.php";
+                HttpJson http=new HttpJson(url,json.toString(),handler);
+                new Thread(http.getHttpThread()).start();
+
+
+            }
+
+
+            /*int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
             if(result==1){                                             //返回1说明用户名和密码均正确
                 //保存用户名和密码
                 editor.putString("USER_NAME", userName);
@@ -124,24 +175,25 @@ public class Login extends Activity {                 //登录界面活动
                 Toast.makeText(this, getString(R.string.login_success),Toast.LENGTH_SHORT).show();//登录成功提示
             }else if(result==0){
                 Toast.makeText(this, getString(R.string.login_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
-            }
+            }*/
         }
     }
+
+
     public void cancel() {           //注销
         if (isUserNameAndPwdValid()) {
             String userName = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
+            /*int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd);
             if(result==1){                                             //返回1说明用户名和密码均正确
 //                Intent intent = new Intent(Login.this,User.class) ;    //切换Login Activity至User Activity
 //                startActivity(intent);
                 Toast.makeText(this, getString(R.string.cancel_success),Toast.LENGTH_SHORT).show();//登录成功提示
                 mPwd.setText("");
                 mMobile.setText("");
-                mUserDataManager.deleteUserDatabyname(userName);
             }else if(result==0){
                 Toast.makeText(this, getString(R.string.cancel_fail),Toast.LENGTH_SHORT).show();  //登录失败提示
-            }
+            }*/
         }
 
     }
@@ -159,27 +211,5 @@ public class Login extends Activity {                 //登录界面活动
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();
-        }
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        if (mUserDataManager != null) {
-            mUserDataManager.closeDataBase();
-            mUserDataManager = null;
-        }
-        super.onPause();
-    }
 
 }

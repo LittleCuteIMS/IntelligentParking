@@ -1,7 +1,4 @@
 package com.example.foolishfan.IntelligentParking;
-/**
- * Created by FoolishFan on 2016/7/14.
- */
 
 public class UserData {
     private String userName;                  //用户名

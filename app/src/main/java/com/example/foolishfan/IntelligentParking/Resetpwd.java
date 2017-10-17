@@ -15,7 +15,6 @@ public class Resetpwd extends AppCompatActivity {
     private EditText mPwdCheck;                       //密码编辑
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
-    private UserDataManager mUserDataManager;         //用户数据管理类
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +32,6 @@ public class Resetpwd extends AppCompatActivity {
         mCancelButton.setOnClickListener(m_resetpwd_Listener);
         //mCancelButton.setOnClickListener(m_resetpwd_Listener);
 
-        if (mUserDataManager == null) {
-            mUserDataManager = new UserDataManager(this);
-            mUserDataManager.openDataBase();                              //建立本地数据库
-        }
 
     }
     View.OnClickListener m_resetpwd_Listener = new View.OnClickListener() {    //不同按钮按下的监听事件选择
@@ -59,7 +54,7 @@ public class Resetpwd extends AppCompatActivity {
             String userPwd_old = mPwd_old.getText().toString().trim();
             String userPwd_new = mPwd_new.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-            int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd_old);
+            /*int result=mUserDataManager.findUserByNameAndPwd(userName, userPwd_old);
             if(result==1){                                             //返回1说明用户名和密码均正确,继续后续操作
                 if(userPwd_new.equals(userPwdCheck)==false){           //两次密码输入不一样
                     Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
@@ -83,7 +78,7 @@ public class Resetpwd extends AppCompatActivity {
             }else if(result==0){                                       //返回0说明用户名和密码不匹配，重新输入
                 Toast.makeText(this, getString(R.string.pwd_not_fit_user),Toast.LENGTH_SHORT).show();
                 return;
-            }
+            }*/
 
 
 
@@ -93,12 +88,12 @@ public class Resetpwd extends AppCompatActivity {
     public boolean isUserNameAndPwdValid() {
         String userName = mMobile.getText().toString().trim();
         //检查用户是否存在
-        int count=mUserDataManager.findUserByName(userName);
+        /*int count=mUserDataManager.findUserByName(userName);
         //用户不存在时返回，给出提示文字
         if(count<=0){
             Toast.makeText(this, getString(R.string.mobile_not_exist, userName),Toast.LENGTH_SHORT).show();
             return false;
-        }
+        }*/
         if (mMobile.getText().toString().trim().equals("")) {
             Toast.makeText(this, getString(R.string.mobile_empty),Toast.LENGTH_SHORT).show();
             return false;
