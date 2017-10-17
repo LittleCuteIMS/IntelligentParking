@@ -25,4 +25,15 @@
     <string name="mobile_already_exist">手机号【<xliff:g example="tom" id="id1">%1$s</xliff:g>】已存在，请重新输入！</string>
     <string name="mobile_not_exist">手机号【<xliff:g example="tom" id="id1">%1$s</xliff:g>】不存在，请重新输入！</string>
     <string name="user_login_success">用户：<xliff:g example="tom" id="id2">%1$s</xliff:g>登录，欢迎光临！</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">设置</string>
+    <string name="click_login">点击头像登录</string>
+    <string name="user_login">用户登录</string>
+    <string name="snackbar_indefinitely">无限期显示Snackbar</string>
+    <string name="snackbar_long">在Long时间段内显示Snackbar</string>
+    <string name="snackbar_short">在short时间段内显示Snackbar</string>
+    <string name="snackbar_action">设置Snackbar的action</string>
+    <string name="snackbar_color">自定义Snackbar的文字颜色</string>
 </resources>
