@@ -109,8 +109,8 @@ public class Register extends AppCompatActivity {
 
 
                 //服务器上注册
-                String url="http://10.0.2.2/ParkingWeb/user/register.php";
-                HttpJson http=new HttpJson(url,json.toString(),handler);
+                String path="user/register.php";
+                HttpJson http=new HttpJson(path,json.toString(),handler);
                 new Thread(http.getHttpThread()).start();
 
 

@@ -9,11 +9,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 
@@ -67,10 +69,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Toast toast1;
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.switchLocalhost) {
+            HttpJson.setWebsite("http://10.0.2.2/ParkingWeb/");
+            toast1 = Toast.makeText(getApplicationContext(), "已设置为10.0.2.2", Toast.LENGTH_SHORT);
+            toast1.setGravity(Gravity.BOTTOM, 0, 0);
+            toast1.show();
+        }
+        if (id == R.id.switchServer) {
+            HttpJson.setWebsite("http://120.78.173.73/ParkingWeb/");
+            toast1 = Toast.makeText(getApplicationContext(), "已设置为120.78.173.73", Toast.LENGTH_SHORT);
+            toast1.setGravity(Gravity.BOTTOM, 0, 0);
+            toast1.show();
+        }
+        if (id == R.id.switchCC) {
+            HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
+            toast1 = Toast.makeText(getApplicationContext(), "已设置为192.168.155.1", Toast.LENGTH_SHORT);
+            toast1.setGravity(Gravity.BOTTOM, 0, 0);
+            toast1.show();
         }
 
         return super.onOptionsItemSelected(item);

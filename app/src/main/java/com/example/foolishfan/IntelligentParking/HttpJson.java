@@ -17,13 +17,15 @@ import java.net.URL;
  */
 
 public class HttpJson {
-    private String urlStr=null;     //获取访问的php文件的URL地址
+    static private  String website="http://120.78.173.73/ParkingWeb/";    //设置访问IP地址值
+    private String path=null;     //获取访问的php文件的URL地址
     private String json=null;       //获取要传输的json格式字符串数据
     private Handler handler=null;   //接受子线程发送的数据， 并用此数据配合主线程更新UI
     private HttpThread httpThread;  //处理通信的线程
 
-    public HttpJson(String initURL, String initJson, Handler initHandler){//构造函数
-        urlStr=initURL;
+    public HttpJson(String initPath, String initJson, Handler initHandler){//构造函数
+
+        path=initPath;
         json=initJson;
         handler=initHandler;    //获取主线程的handler
         httpThread=new HttpThread();
@@ -33,12 +35,16 @@ public class HttpJson {
         return httpThread;
     }
 
+    static public void setWebsite(String initWebsite){
+        website=initWebsite;
+    }
+
     private class HttpThread implements Runnable{//处理通信的线程的类
         public void run() {
             URL url=null;
             String result="";   //获取服务器返回的内容
             try {
-                url = new URL(urlStr);//构造URL对象
+                url = new URL(website+path);//构造URL对象
                 //打开连接
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");//设置请求为POST方式
@@ -81,7 +87,8 @@ public class HttpJson {
                 e.printStackTrace();
             }
             Message m = handler.obtainMessage();//创建一个Message消息
-            m.obj=result;//为消息添加从服务器上获取的消息
+            if(result!="")
+                m.obj=result;//为消息添加从服务器上获取的消息
             handler.sendMessage(m);//发送消息
         }
     }

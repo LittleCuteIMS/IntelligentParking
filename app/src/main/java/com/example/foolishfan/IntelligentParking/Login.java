@@ -147,8 +147,8 @@ public class Login extends Activity {                 //登录界面活动
                     e.printStackTrace();
                 }
                 //把用户信息发送到服务器上
-                String url="http://10.0.2.2/ParkingWeb/user/login.php";
-                HttpJson http=new HttpJson(url,json.toString(),handler);
+                String path="user/login.php";
+                HttpJson http=new HttpJson(path,json.toString(),handler);
                 new Thread(http.getHttpThread()).start();
 
 
