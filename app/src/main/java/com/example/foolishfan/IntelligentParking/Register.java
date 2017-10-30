@@ -49,7 +49,7 @@ public class Register extends AppCompatActivity {
                         startActivity(intent_Register_to_Login);
                         finish();
                     } else {
-                        toast1 = Toast.makeText(getApplicationContext(), "手机号已存在", Toast.LENGTH_SHORT);
+                        toast1 = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
                         toast1.setGravity(Gravity.BOTTOM, 0, 0);
                         toast1.show();
                     }

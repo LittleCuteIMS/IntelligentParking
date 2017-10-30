@@ -63,9 +63,10 @@ public class HttpJson {
                     //设置文件长度
                     conn.setRequestProperty("Content-Length",String.valueOf(json.getBytes().length));
                     //打开链接
+
                     DataOutputStream out = new DataOutputStream(conn.getOutputStream());
                     //组织要发送的数据
-                    out.writeBytes(json);//将数据写入POST数据流
+                    out.write(json.getBytes());//将数据写入POST数据流
                     out.flush();//刷新流
                     out.close();//关闭流
                 }
