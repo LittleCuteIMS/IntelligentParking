@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             toast1.setGravity(Gravity.BOTTOM, 0, 0);
             toast1.show();
         }
-        if (id == R.id.switchCC) {
+        if (id == R.id.switchLAN) {
             HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
             toast1 = Toast.makeText(getApplicationContext(), "已设置为192.168.155.1", Toast.LENGTH_SHORT);
             toast1.setGravity(Gravity.BOTTOM, 0, 0);

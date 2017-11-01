@@ -11,7 +11,7 @@
         android:orderInCategory="101"
         android:title="远程服务器" />
     <item
-        android:id="@+id/switchCC"
+        android:id="@+id/switchLAN"
         android:orderInCategory="102"
-        android:title="蔡创的电脑" />
+        android:title="WIFI共享大师局域网" />
 </menu>
