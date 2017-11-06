@@ -8,16 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="1">
 
-
-    <!--
-
-    <EditText android:id="@+id/edt_operator_name" style="@style/syncEditText"
-        android:hint="@string/hint_operator_name" />
-    <ImageView android:id="@+id/syncOperatorImg" style="@style/syncImageView"
-        android:layout_alignLeft="@+id/edt_operator_name"
-        android:layout_alignTop="@+id/edt_operator_name"
-        android:layout_alignBottom="@+id/edt_operator_name" android:src="@drawable/sync_operator" />
--->
     <EditText
         android:id="@+id/register_edit_name"
         android:layout_width="wrap_content"
@@ -32,16 +22,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <!--
-
-    <EditText android:id="@+id/edt_operator_name" style="@style/syncEditText"
-        android:hint="@string/hint_operator_name" />
-    <ImageView android:id="@+id/syncOperatorImg" style="@style/syncImageView"
-        android:layout_alignLeft="@+id/edt_operator_name"
-        android:layout_alignTop="@+id/edt_operator_name"
-        android:layout_alignBottom="@+id/edt_operator_name" android:src="@drawable/sync_operator" />
--->
 
     <EditText
         android:id="@+id/register_edit_mobile"

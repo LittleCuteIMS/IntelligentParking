@@ -22,16 +22,6 @@
         android:layout_alignRight="@+id/resetpwd_edit_pwd_new"
         android:layout_alignEnd="@+id/resetpwd_edit_pwd_new" />
 
-    <!--
-
-        <EditText android:id="@+id/edt_operator_name" style="@style/syncEditText"
-            android:hint="@string/hint_operator_name" />
-        <ImageView android:id="@+id/syncOperatorImg" style="@style/syncImageView"
-            android:layout_alignLeft="@+id/edt_operator_name"
-            android:layout_alignTop="@+id/edt_operator_name"
-            android:layout_alignBottom="@+id/edt_operator_name" android:src="@drawable/sync_operator" />
-    -->
-
     <EditText
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
         android:layout_width="fill_parent"

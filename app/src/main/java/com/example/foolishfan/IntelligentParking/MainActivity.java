@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //顶部toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //获取登录状态
         SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
         isLogin=statusPreferences.getBoolean("isLogin",false);
@@ -36,15 +40,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Button wallet=(Button)findViewById(R.id.wallet);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
         ImageView mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);//导航栏
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
+
 
         //注册监听事件
         addCar.setOnClickListener(mainOnClick);
         parkNearby.setOnClickListener(mainOnClick);
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
-        setSupportActionBar(toolbar);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
