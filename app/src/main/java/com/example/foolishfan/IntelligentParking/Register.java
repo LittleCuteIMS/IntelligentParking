@@ -19,8 +19,6 @@ public class Register extends AppCompatActivity {
     private EditText mMobile;                        //用户手机号编辑
     private EditText mPwd;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
-    private Button mSureButton;                       //确定按钮
-    private Button mCancelButton;                     //取消按钮
     private Handler handler;                            //控制线程
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,38 +29,32 @@ public class Register extends AppCompatActivity {
         mPwd = (EditText) findViewById(R.id.register_edit_pwd_old);
         mPwdCheck = (EditText) findViewById(R.id.register_edit_pwd_new);
 
-        mSureButton = (Button) findViewById(R.id.register_btn_sure);
-        mCancelButton = (Button) findViewById(R.id.register_btn_cancel);
+        Button mSureButton = (Button) findViewById(R.id.register_btn_sure);
+        Button mCancelButton = (Button) findViewById(R.id.register_btn_cancel);
 
         mSureButton.setOnClickListener(m_register_Listener);      //注册界面两个按钮的监听事件
         mCancelButton.setOnClickListener(m_register_Listener);
 
         handler = new Handler(){
             public void handleMessage(Message msg){
-                Toast toast1;
                 if(msg.obj!=null) {//如果不为空
                     if (msg.obj.toString().equals("SUCCEED") ) {
-                        toast1 = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
-                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
-                        toast1.show();
+                        Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                         Intent intent_Register_to_Login = new Intent(Register.this, Login.class);    //切换Register Activity至Login Activity
                         startActivity(intent_Register_to_Login);
                         finish();
                     } else {
-                        toast1 = Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT);
-                        toast1.setGravity(Gravity.BOTTOM, 0, 0);
-                        toast1.show();
+                        Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    toast1=Toast.makeText(getApplicationContext(), "网络错误",Toast.LENGTH_SHORT);
-                    toast1.setGravity(Gravity.BOTTOM, 0, 0);
-                    toast1.show();
+                    Toast.makeText(getApplicationContext(), "网络错误",Toast.LENGTH_SHORT).show();
                 }
                 super.handleMessage(msg);
             }
         };
 
     }
+
     View.OnClickListener m_register_Listener = new View.OnClickListener() {    //不同按钮按下的监听事件选择
         public void onClick(View v) {
             switch (v.getId()) {
@@ -84,9 +76,8 @@ public class Register extends AppCompatActivity {
             String mobile= mMobile.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-            if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
+            if(!userPwd.equals(userPwdCheck)){     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
-                return ;
             } else {
                 //将用户昵称，手机号，密码转为json
                 JSONObject json=new JSONObject();

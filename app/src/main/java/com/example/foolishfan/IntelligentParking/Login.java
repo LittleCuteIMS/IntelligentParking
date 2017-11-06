@@ -7,12 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,9 +21,6 @@ public class Login extends Activity {                 //登录界面活动
 
     private EditText mMobile;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
-    private Button mRegisterButton;                   //注册按钮
-    private Button mLoginButton;                      //登录按钮
-    private Button mCancleButton;                     //取消按钮
     private Handler handler;                   //登录接收服务器返回的信息
 
     @Override
@@ -37,39 +31,29 @@ public class Login extends Activity {                 //登录界面活动
         //通过id找到相应的控件
         mMobile = (EditText) findViewById(R.id.login_edit_mobile);
         mPwd = (EditText) findViewById(R.id.login_edit_pwd);
-        mRegisterButton = (Button) findViewById(R.id.login_btn_register);
-        mLoginButton = (Button) findViewById(R.id.login_btn_login);
-        mCancleButton = (Button) findViewById(R.id.login_btn_cancle);
+        Button mRegisterButton = (Button) findViewById(R.id.login_btn_register);
+        Button mLoginButton = (Button) findViewById(R.id.login_btn_login);
+        Button mCancelButton = (Button) findViewById(R.id.login_btn_cancle);
 
-        //使用SharedPreferences获取信息
-        SharedPreferences userPreferences=getSharedPreferences("user", Context.MODE_PRIVATE);
-        String mobile=userPreferences.getString("mobile","");
-        String userPwd=userPreferences.getString("userPwd","");
-
-        if(mobile!="" && userPwd!=""){
-            mMobile.setText(mobile);
-            mPwd.setText(userPwd);
-        }
-
-        mRegisterButton.setOnClickListener(mListener);                      //采用OnClickListener方法设置不同按钮按下之后的监听事件
+        //设置监听事件
+        mRegisterButton.setOnClickListener(mListener);
         mLoginButton.setOnClickListener(mListener);
-        mCancleButton.setOnClickListener(mListener);
+        mCancelButton.setOnClickListener(mListener);
 
         handler = new Handler(){
             public void handleMessage(Message msg){
                 if(msg.obj!=null) {//如果不为空
                     if (msg.obj.toString().equals("SUCCEED")) {
                         //保存登录状态
-                        SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
-                        SharedPreferences.Editor statusEditor=statusPreferences.edit();
+                        SharedPreferences.Editor statusEditor=getSharedPreferences("status",Context.MODE_PRIVATE).edit();
                         statusEditor.putBoolean("isLogin",true);
                         statusEditor.apply();
 
                         Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
-                        //切换Login Activity至User Activity
-                        Intent intent_Login_to_User = new Intent(Login.this, User.class);
-                        startActivity(intent_Login_to_User);
+                        //切换Login Activity至Main Activity
+                        Intent intent_Login_to_Main = new Intent(Login.this, MainActivity.class);
+                        startActivity(intent_Login_to_Main);
                         finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "手机号不存在", Toast.LENGTH_SHORT).show();
@@ -81,7 +65,7 @@ public class Login extends Activity {                 //登录界面活动
             }
         };
     }
-    OnClickListener mListener = new OnClickListener() {                  //不同按钮按下的监听事件选择
+    OnClickListener mListener = new OnClickListener() {//不同按钮按下的监听事件选择
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.login_btn_register:                            //登录界面的注册按钮

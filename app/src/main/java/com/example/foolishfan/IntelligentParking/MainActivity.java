@@ -93,24 +93,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.nav_me:
+            case R.id.nav_me://停车历史
                 break;
-            case R.id.nav_about:
+            case R.id.nav_message://我的车辆
                 break;
-            case R.id.nav_friend:
+            case R.id.nav_friend://消息中心
                 break;
-            case R.id.nav_manage:
+            case R.id.nav_notification://我的收藏
                 break;
-            case R.id.nav_message:
+            case R.id.nav_manage://应用管理
                 break;
-            case R.id.nav_night:
+            case R.id.nav_night://夜间模式
                 break;
-            case R.id.nav_notification:
+            case R.id.nav_suggestion://意见反馈
                 break;
-            case R.id.nav_setting:
+            case R.id.nav_setting://设置
+                Intent intent=new Intent(MainActivity.this,SoftwareSet.class);
+                startActivity(intent);
                 break;
-            case R.id.nav_suggestion:
-                break;
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

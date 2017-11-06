@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+
 
     <group android:checkableBehavior="none">
         <item
@@ -34,12 +36,11 @@
         android:id="@+id/group_settings">
         <item android:id="@+id/nav_night"
             android:title="夜间模式"/>
+        <item
+            android:id="@+id/nav_suggestion"
+            android:title="意见反馈" />
         <item android:id="@+id/nav_setting"
             android:title="设置"/>
-        <item android:id="@+id/nav_suggestion"
-            android:title="意见反馈"/>
-        <item android:id="@+id/nav_about"
-            android:title="关于"/>
 
     </group>
 </menu>
