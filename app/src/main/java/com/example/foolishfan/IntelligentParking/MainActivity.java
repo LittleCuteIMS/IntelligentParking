@@ -25,11 +25,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar toolbar;
+    static private boolean isLogin;//全局获取当前软件的登录状态
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //获取登录状态
+        SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
+        isLogin=statusPreferences.getBoolean("isLogin",false);
 
         ButterKnife.inject(this);   //ButterKnife的绑定注解，找到参数对应的View，并自动的进行转换
         toolbar = (Toolbar) findViewById(R.id.toolbar); //导航控件
@@ -128,8 +133,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.ivAvatar){
-            Intent intent = new Intent(this,Login.class);   //若点击用户登录则切换MainActivity至Login Activity
-            startActivity(intent);
+            if(isLogin){
+                Intent intent=new Intent(this,User.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this,Login.class);   //若点击用户登录则切换MainActivity至Login Activity
+                startActivity(intent);
+            }
         }
     }
 

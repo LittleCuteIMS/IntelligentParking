@@ -91,17 +91,6 @@
             android:textColor="#ffffff"
             android:textSize="20dp" />
 
-        <CheckBox
-            android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:text="记住密码"
-            android:id="@+id/Login_Remember"
-            android:layout_below="@+id/login_edit_pwd"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:checked="false"
-            android:textSize="15dp" />
-
     </RelativeLayout>
 
 

@@ -27,7 +27,6 @@ public class Login extends Activity {                 //登录界面活动
     private Button mRegisterButton;                   //注册按钮
     private Button mLoginButton;                      //登录按钮
     private Button mCancleButton;                     //取消按钮
-    private CheckBox mRememberCheck;
     private Handler handler;                   //登录接收服务器返回的信息
 
     @Override
@@ -41,7 +40,6 @@ public class Login extends Activity {                 //登录界面活动
         mRegisterButton = (Button) findViewById(R.id.login_btn_register);
         mLoginButton = (Button) findViewById(R.id.login_btn_login);
         mCancleButton = (Button) findViewById(R.id.login_btn_cancle);
-        mRememberCheck = (CheckBox) findViewById(R.id.Login_Remember);
 
         //使用SharedPreferences获取信息
         SharedPreferences userPreferences=getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -56,7 +54,6 @@ public class Login extends Activity {                 //登录界面活动
         mRegisterButton.setOnClickListener(mListener);                      //采用OnClickListener方法设置不同按钮按下之后的监听事件
         mLoginButton.setOnClickListener(mListener);
         mCancleButton.setOnClickListener(mListener);
-        mRememberCheck.setOnCheckedChangeListener(checkedListener);
 
         handler = new Handler(){
             public void handleMessage(Message msg){
@@ -66,7 +63,7 @@ public class Login extends Activity {                 //登录界面活动
                         SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
                         SharedPreferences.Editor statusEditor=statusPreferences.edit();
                         statusEditor.putBoolean("isLogin",true);
-                        statusEditor.commit();
+                        statusEditor.apply();
 
                         Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
@@ -102,30 +99,17 @@ public class Login extends Activity {                 //登录界面活动
         }
     };
 
-    //记住密码按钮的监听事件
-    CompoundButton.OnCheckedChangeListener checkedListener=new CompoundButton.OnCheckedChangeListener(){
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
-                String mobile = mMobile.getText().toString().trim();
-                String userPwd = mPwd.getText().toString().trim();
-
-                //将用户的登录信息保存在sharedPreference里面
-                SharedPreferences userPreferences=getSharedPreferences("user", Context.MODE_PRIVATE);
-                SharedPreferences.Editor userEditor=userPreferences.edit();
-                userEditor.putString("mobile",mobile);
-                userEditor.putString("userPwd",userPwd);
-                userEditor.commit();
-            }
-        }
-    };
-
-
     public void login() {                                              //登录按钮监听事件
         if (isUserNameAndPwdValid()) {
             String mobile = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
             String userPwd = mPwd.getText().toString().trim();
+
+            //将用户的登录信息保存在sharedPreference里面
+            SharedPreferences.Editor userEditor=getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+            userEditor.putString("mobile",mobile);
+            userEditor.putString("userPwd",userPwd);
+            userEditor.apply();
+
             //将用户手机号，密码转为json
             JSONObject json=new JSONObject();
             try {
