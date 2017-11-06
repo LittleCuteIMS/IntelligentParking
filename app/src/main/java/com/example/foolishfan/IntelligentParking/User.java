@@ -20,6 +20,5 @@ public class User extends AppCompatActivity {
         Intent intent3 = new Intent(User.this,Login.class) ;
         startActivity(intent3);
         finish();
-
     }
 }
