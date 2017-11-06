@@ -25,9 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        tools:text="JohnTsai"
         android:text="@string/click_login"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="JohnTsai" />
 
     <TextView
         android:id="@+id/tvRealName"

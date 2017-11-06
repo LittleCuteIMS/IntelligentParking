@@ -12,16 +12,4 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    <Button
-        android:id="@+id/snackbar"
-        android:layout_below="@id/textView"
-        android:text="点击返回i"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 </RelativeLayout>

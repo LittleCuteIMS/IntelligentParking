@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private TextView mTextView;     //主页面显示一段文字
     private ImageView mImageView;
 
     @Override
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
         navigationView.setNavigationItemSelectedListener(this);
 
-        mTextView = (TextView) findViewById(R.id.textView);
         mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
         mImageView.setOnClickListener(this);
 
@@ -102,35 +100,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String string = null;
         switch (id){
             case R.id.nav_me:
-                string = "停车历史";
                 break;
             case R.id.nav_about:
-                string = "关于";
                 break;
             case R.id.nav_friend:
-                string = "消息中心";
                 break;
             case R.id.nav_manage:
-                string = "应用管理";
                 break;
             case R.id.nav_message:
-                string = "我的车辆";
                 break;
             case R.id.nav_night:
-                string = "夜间模式";
                 break;
             case R.id.nav_notification:
-                string = "我的收藏";
                 break;
             case R.id.nav_setting:
-                string= "设置";
                 break;
             case R.id.nav_suggestion:
-                string = "意见反馈";
                 break;
         }
-        if (!TextUtils.isEmpty(string))
-            mTextView.setText("你点击了"+string);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

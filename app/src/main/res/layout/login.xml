@@ -42,16 +42,17 @@
             android:layout_alignParentStart="true" />
 
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="300dp"
             android:layout_height="150dp"
-            android:id="@+id/logo"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="false"
-            android:background="#ffffff" />
+            android:background="#ffffff"
+            android:src="@drawable/toplogo" />
 
         <EditText
             android:layout_width="400dp"
@@ -78,17 +79,17 @@
             android:inputType="textPersonName" />
 
         <Button
+            android:id="@+id/login_btn_cancle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="注销"
-            android:id="@+id/login_btn_cancle"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:background="#3a1313"
-            android:layout_marginBottom="15dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="15dp"
+            android:background="#3a1313"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
 
         <CheckBox
             android:layout_width="100dp"
@@ -101,39 +102,7 @@
             android:checked="false"
             android:textSize="15dp" />
 
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="20dp"
-            android:text="修改密码"
-            android:id="@+id/login_text_change_pwd"
-            android:layout_below="@+id/login_edit_pwd"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="15dp" />
-
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/login_success_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="15.0px"
-        android:layout_marginRight="15.0px"
-        android:layout_marginTop="62.0px"
-        android:background="#ff3f3f3f"
-        android:paddingBottom="10.0px"
-        android:paddingTop="21.0px"
-        android:visibility="gone" >
-
-        <TextView
-            android:id="@+id/login_success_show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="#ff3f3f3f"
-            android:textSize="20.0dip" />
-    </RelativeLayout>
 
 </RelativeLayout>

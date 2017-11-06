@@ -84,15 +84,6 @@ public class Register extends AppCompatActivity {
             String mobile= mMobile.getText().toString().trim();
             String userPwd = mPwd.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-
-
-            //检查用户是否存在
-            //int count=mUserDataManager.findUserByName(mobile);
-            //用户已经存在时返回，给出提示文字
-            /*if(count>0){
-                Toast.makeText(this, getString(R.string.mobile_already_exist, mobile),Toast.LENGTH_SHORT).show();
-                return ;
-            }*/
             if(userPwd.equals(userPwdCheck)==false){     //两次密码输入不一样
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
                 return ;
@@ -106,15 +97,10 @@ public class Register extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
                 //服务器上注册
                 String path="user/register.php";
                 HttpJson http=new HttpJson(path,json.toString(),handler);
                 new Thread(http.getHttpThread()).start();
-
-
-
             }
         }
     }
