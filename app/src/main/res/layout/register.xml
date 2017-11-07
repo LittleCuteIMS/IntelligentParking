@@ -15,7 +15,6 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:fitsSystemWindows="true"
             android:id="@+id/register_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
