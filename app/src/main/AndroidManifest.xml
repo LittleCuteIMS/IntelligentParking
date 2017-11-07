@@ -2,25 +2,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.foolishfan.IntelligentParking">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="停了么"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.example.foolishfan.IntelligentParking.Login">
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".Login"
+            android:label="登录"/>
+        <activity
+            android:name=".User"
+            android:label="个人中心" />
+        <activity
+            android:name=".Register"
+            android:label="用户注册"/>
+        <activity
+            android:name=".Resetpwd"
+            android:label="密码修改" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.foolishfan.IntelligentParking.User"
-            android:label="个人中心"/>
-        <activity android:name="com.example.foolishfan.IntelligentParking.Register"
-            android:label="用户注册"/>
-        <activity android:name="com.example.foolishfan.IntelligentParking.Resetpwd"
-            android:label="密码修改"></activity>
+        <activity
+            android:name=".SoftwareSet"
+            android:label="系统设置"/>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
