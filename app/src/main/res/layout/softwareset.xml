@@ -3,7 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SoftwareSet">
+
+    <android.support.v7.widget.Toolbar
+        android:fitsSystemWindows="true"
+        android:id="@+id/softwareset_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
         android:id="@+id/wipeCache"
@@ -11,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="清除缓存"
         android:gravity="left|center"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/softwareset_toolbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

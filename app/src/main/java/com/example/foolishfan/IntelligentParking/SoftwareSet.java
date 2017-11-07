@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * Created by Administrator on 2017/11/6 0006.
@@ -16,6 +18,16 @@ public class SoftwareSet extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.softwareset);
+
+        //设置toolbar导航栏，设置导航按钮
+        Toolbar softwareset_toolbar = (Toolbar) findViewById(R.id.softwareset_toolbar);
+        setSupportActionBar(softwareset_toolbar);
+        softwareset_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //获取按钮
         Button wipeCache=(Button)findViewById(R.id.wipeCache);
@@ -43,7 +55,10 @@ public class SoftwareSet extends AppCompatActivity {
                 case R.id.aboutUs:
                     break;
                 case R.id.logout:
-                    logout();
+                    if(MainActivity.isLogin)
+                        logout();
+                    else
+                        Toast.makeText(getApplicationContext(),"您当前未登录",Toast.LENGTH_SHORT).show();
                     break;
             }
         }

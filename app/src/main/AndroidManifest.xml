@@ -12,14 +12,13 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".Login"
-            android:label="登录"
-            android:parentActivityName=".MainActivity"/>
+            android:label="登录"/>
         <activity
             android:name=".User"
             android:label="个人中心" />
         <activity
             android:name=".Register"
-            android:label="用户注册" />
+            android:label="用户注册"/>
         <activity
             android:name=".Resetpwd"
             android:label="密码修改" />

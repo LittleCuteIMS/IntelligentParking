@@ -3,8 +3,10 @@ package com.example.foolishfan.IntelligentParking;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -24,16 +26,25 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+
+        //设置toolbar导航栏，设置导航按钮
+        Toolbar register_toolbar = (Toolbar) findViewById(R.id.register_toolbar);
+        setSupportActionBar(register_toolbar);
+        register_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mNickname=(EditText)findViewById(R.id.register_edit_name);
         mMobile = (EditText) findViewById(R.id.register_edit_mobile);
         mPwd = (EditText) findViewById(R.id.register_edit_pwd_old);
         mPwdCheck = (EditText) findViewById(R.id.register_edit_pwd_new);
 
         Button mSureButton = (Button) findViewById(R.id.register_btn_sure);
-        Button mCancelButton = (Button) findViewById(R.id.register_btn_cancel);
 
         mSureButton.setOnClickListener(m_register_Listener);      //注册界面两个按钮的监听事件
-        mCancelButton.setOnClickListener(m_register_Listener);
 
         handler = new Handler(){
             public void handleMessage(Message msg){
@@ -60,11 +71,6 @@ public class Register extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.register_btn_sure:                       //确认按钮的监听事件
                     register_check();
-                    break;
-                case R.id.register_btn_cancel:                     //取消按钮的监听事件,由注册界面返回登录界面
-                    Intent intent_Register_to_Login = new Intent(Register.this,Login.class) ;    //切换User Activity至Login Activity
-                    startActivity(intent_Register_to_Login);
-                    finish();
                     break;
             }
         }

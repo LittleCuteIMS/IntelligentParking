@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,20 +33,22 @@ public class Login extends AppCompatActivity {                 //登录界面活
         //设置toolbar导航栏，设置导航按钮
         Toolbar login_toolbar = (Toolbar) findViewById(R.id.login_toolbar);
         setSupportActionBar(login_toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        login_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //通过id找到相应的控件
         mMobile = (EditText) findViewById(R.id.login_edit_mobile);
         mPwd = (EditText) findViewById(R.id.login_edit_pwd);
         Button mRegisterButton = (Button) findViewById(R.id.login_btn_register);
         Button mLoginButton = (Button) findViewById(R.id.login_btn_login);
-        Button mCancelButton = (Button) findViewById(R.id.login_btn_cancel);
 
         //设置监听事件
         mRegisterButton.setOnClickListener(mListener);
         mLoginButton.setOnClickListener(mListener);
-        mCancelButton.setOnClickListener(mListener);
 
         handler = new Handler() {
             public void handleMessage(Message msg) {
@@ -81,13 +82,9 @@ public class Login extends AppCompatActivity {                 //登录界面活
                 case R.id.login_btn_register:                            //登录界面的注册按钮
                     Intent intent_Login_to_Register = new Intent(Login.this, Register.class);    //切换Login Activity至User Activity
                     startActivity(intent_Login_to_Register);
-                    finish();
                     break;
                 case R.id.login_btn_login:                              //登录界面的登录按钮
                     login();
-                    break;
-                case R.id.login_btn_cancel:                             //登录界面的注销按钮
-                    cancel();
                     break;
             }
         }

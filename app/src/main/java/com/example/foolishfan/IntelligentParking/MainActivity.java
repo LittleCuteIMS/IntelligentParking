@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    static private boolean isLogin;//全局获取当前软件的登录状态
+    static public boolean isLogin;//全局获取当前软件的登录状态
     private DrawerLayout drawer;
 
     @Override
