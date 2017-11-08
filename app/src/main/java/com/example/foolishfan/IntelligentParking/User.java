@@ -16,6 +16,7 @@ public class User extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user);
 
+
         //设置toolbar导航栏，设置导航按钮
         Toolbar user_toolbar = (Toolbar) findViewById(R.id.user_toolbar);
         setSupportActionBar(user_toolbar);

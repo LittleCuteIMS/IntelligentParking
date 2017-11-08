@@ -36,19 +36,6 @@
         android:layout_alignLeft="@+id/resetpwd_edit_name"
         android:layout_alignStart="@+id/resetpwd_edit_name" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="取消"
-        android:id="@+id/resetpwd_btn_cancel"
-        android:textSize="20dp"
-        android:onClick="not_to_reset"
-        android:background="#f7181c"
-        android:layout_below="@+id/resetpwd_btn_sure"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
-
     <EditText
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
         android:layout_width="fill_parent"
@@ -61,19 +48,6 @@
         android:hint="请确认您的新密码"
         />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="确定"
-        android:id="@+id/resetpwd_btn_sure"
-        android:textSize="20dp"
-        android:onClick="sure_to_reset"
-        android:background="#18f7c7"
-        android:layout_marginTop="92dp"
-        android:layout_below="@+id/resetpwd_edit_pwd_new"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <EditText
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
         android:layout_width="fill_parent"
@@ -85,5 +59,31 @@
         android:layout_below="@+id/resetpwd_edit_pwd_new"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/resetpwd_btn_sure"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/resetpwd_edit_pwd_new"
+        android:layout_marginTop="92dp"
+        android:background="#18f7c7"
+        android:onClick="sure_to_reset"
+        android:text="确定"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/resetpwd_btn_cancel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/resetpwd_btn_sure"
+        android:layout_marginTop="20dp"
+        android:background="#f7181c"
+        android:onClick="not_to_reset"
+        android:text="取消"
+        android:textSize="20dp" />
 
 </RelativeLayout>

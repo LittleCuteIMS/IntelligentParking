@@ -36,44 +36,6 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/register_edit_pwd_new"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/register_edit_pwd_old"
-                android:layout_marginTop="19dp"
-                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-                android:ems="10"
-                android:hint="请确认您的密码"
-                android:inputType="textPassword" />
-
-            <EditText
-                android:id="@+id/register_edit_pwd_old"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/register_edit_mobile"
-                android:layout_marginTop="13dp"
-                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-                android:ems="10"
-                android:hint="请输入您的密码"
-                android:inputType="textPassword" />
-
-            <Button
-                android:id="@+id/register_btn_sure"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/register_edit_pwd_new"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="30dp"
-                android:background="#188bf7"
-                android:text="确定"
-                android:textSize="20dp" />
-
-            <EditText
                 android:id="@+id/register_edit_name"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -102,6 +64,45 @@
                 android:ems="10"
                 android:hint="请输入您的手机号码"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/register_edit_pwd_old"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/register_edit_mobile"
+                android:layout_marginTop="13dp"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:ems="10"
+                android:hint="请输入您的密码"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/register_edit_pwd_new"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/register_edit_pwd_old"
+                android:layout_marginTop="19dp"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:ems="10"
+                android:hint="请确认您的密码"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/register_btn_sure"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/register_edit_pwd_new"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp"
+                android:background="#188bf7"
+                android:text="确定"
+                android:textSize="20dp" />
+
         </RelativeLayout>
     </LinearLayout>
 
