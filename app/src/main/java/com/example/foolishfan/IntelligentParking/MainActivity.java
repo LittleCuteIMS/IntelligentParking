@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
     //页面点击事件
     View.OnClickListener mainOnClick= new View.OnClickListener() {
         @Override
@@ -142,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case R.id.parkNearby://点击附近停车场的监听事件
                     break;
                 case R.id.wallet://点击我的钱包的监听事件
+                    if(isLogin) {
+                        Intent intent = new Intent(getApplicationContext(),Finance.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "未登录！", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }
