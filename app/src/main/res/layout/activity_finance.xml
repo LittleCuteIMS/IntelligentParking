@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/adverse"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Finance">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/finance_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+            android:id="@+id/finance"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/hed_pic"
+            android:layout_marginTop="100dp"
+        android:layout_below="@+id/finance_toolbar"
+        android:layout_alignRight="@+id/amount"
+        android:layout_alignEnd="@+id/amount" />
+
+    <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总金额（元）"
+            android:textSize="18sp"
+        android:layout_below="@+id/finance"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/amountshow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/amount"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/charge"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#f505a61f"
+        android:text="充值"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/amountshow"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/chargeshow"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:text="查看交易记录"
+        android:textSize="18sp"
+        android:textColor="#f505a61f"
+        android:layout_below="@+id/charge"
+        android:layout_alignLeft="@+id/charge"
+        android:layout_alignStart="@+id/charge"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>
