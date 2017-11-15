@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,15 +21,30 @@ import org.json.JSONObject;
  * Created by zhanglin on 2017/11/7.
  */
 public class Finance extends AppCompatActivity{
-    private Handler handler;        //接收服务器查询返回的余额信息
+    private Handler handler = new Handler() {//接收服务器查询返回的余额信息
+        public void handleMessage(Message msg) {
+            if (msg.obj != null) {
+                //保存当前账户余额
+                SharedPreferences.Editor statusEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+                statusEditor.putString("balance", msg.obj.toString());
+                statusEditor.apply();
+            } else {
+                Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
+            }
+            super.handleMessage(msg);
+        }
+    };
     private Handler handler1;        //接收服务器查询返回的充值记录
+    TextView userbalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance);
 
-        TextView userbalance = (TextView) findViewById(R.id.amountshow);//动态显示余额
+        getBalance();
+
+        userbalance = (TextView) findViewById(R.id.amountshow);//动态显示余额
         SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
         String balance = pref.getString("balance","0.00");//余额刚开始为0
         userbalance.setText(balance);
@@ -51,38 +65,28 @@ public class Finance extends AppCompatActivity{
         charge.setOnClickListener(setListener);
         chargeShow.setOnClickListener(setListener);
 
-        //将返回的账户余额保存
-        handler = new Handler() {
-            public void handleMessage(Message msg) {
-                if (msg.obj != null) {
-                    //保存当前账户余额
-                    SharedPreferences.Editor statusEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
-                    statusEditor.putString("balance", msg.obj.toString());
-                    statusEditor.apply();
-                } else {
-                    Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
-                }
-                super.handleMessage(msg);
-            }
-        };
-
         //将返回的充值记录保存
         handler1 = new Handler() {
             public void handleMessage(Message msg) {
                 if(msg.obj != null) {//如果不为空
-                    //解析json数据
+                    //解析json数据并保存
                     String jsonStr = msg.obj.toString();
-                    String json = jsonStr.substring(jsonStr.indexOf("{"), jsonStr.lastIndexOf("}") + 1);
-                    String string = JSONTokener(json);
-                    parseJSONWithJSONObject(string);
-                    //显示当前账户充值记录
-
+                    parseJSONWithJSONObject(jsonStr);
                 } else{
                     Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
                 }
                 super.handleMessage(msg);
             }
         };
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
+        String balance = pref.getString("balance","0.00");//余额刚开始为0
+        userbalance.setText(balance);
+
     }
 
     public void getBalance() {                                           //获取账户余额
@@ -125,12 +129,6 @@ public class Finance extends AppCompatActivity{
     }
 
     //解析json数据
-    public static String JSONTokener(String in) {
-        if (in != null && in.startsWith("\ufeff")) {
-            in = in.substring(1);
-        }
-        return in;
-    }
     private void parseJSONWithJSONObject (String jsondata) {
         try {
             //？得到json数组
@@ -141,9 +139,12 @@ public class Finance extends AppCompatActivity{
                 String id = jsonObject.getString("id");
                 String time = jsonObject.getString("datetime");
                 String amount = jsonObject.getString("amount");
-                Log.d("打印", "id is " + id);
-                Log.d("woider", "time is " + time);
-                Log.d("woider", "amount is " + amount);
+
+                //保存当前账户充值记录
+                SharedPreferences.Editor recordEditor = getSharedPreferences("chargeRecord", Context.MODE_PRIVATE).edit();
+                recordEditor.putString("id",id);
+                recordEditor.putString("datetime",time);
+                recordEditor.putString("amount",amount);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,7 +158,6 @@ public class Finance extends AppCompatActivity{
             int id=v.getId();
             switch (id){
                 case R.id.charge:
-                    getBalance();
                     Intent intent = new Intent(getApplicationContext(),Charge.class);
                     startActivity(intent);
                     break;
