@@ -37,7 +37,10 @@
             android:label="我的钱包" />
         <activity
             android:name=".ChargeShow"
-            android:label="交易记录"/>
+            android:label="交易记录" />
+        <activity
+            android:name=".Charge"
+            android:label="充值" />
     </application>
 
 </manifest>
