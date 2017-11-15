@@ -28,9 +28,9 @@ public class Resetpwd extends AppCompatActivity {
         setContentView(R.layout.resetpwd);
 
         //设置toolbar导航栏，设置导航按钮
-        Toolbar user_toolbar = (Toolbar) findViewById(R.id.user_toolbar);
-        setSupportActionBar(user_toolbar);
-        user_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        Toolbar resetpwd_toolbar = (Toolbar) findViewById(R.id.resetpwd_toolbar);
+        setSupportActionBar(resetpwd_toolbar);
+        resetpwd_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();

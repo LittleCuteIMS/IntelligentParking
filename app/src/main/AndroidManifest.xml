@@ -22,6 +22,9 @@
         <activity
             android:name=".Resetpwd"
             android:label="密码修改" />
+        <activity
+            android:name=".UserCar"
+            android:label="我的车辆" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
