@@ -98,18 +98,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id){
             case R.id.nav_me://停车历史
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),ParkingHistory.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_message://我的车辆
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),UserCar.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_friend://消息中心
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),MessageCenter.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_notification://我的收藏
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),Collecting.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_manage://应用管理
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),Collecting.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_night://夜间模式
                 break;
             case R.id.nav_suggestion://意见反馈
+                if(isLogin){
+                    Intent intent=new Intent(getApplicationContext(),Suggestion.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_setting://设置
                 Intent intent=new Intent(MainActivity.this,SoftwareSet.class);
@@ -140,6 +176,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     break;
                 case R.id.addCar://点击添加车辆的监听事件
+                    if(isLogin){
+                        Intent intent=new Intent(getApplicationContext(),AddUserCar.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "未登录！", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.parkNearby://点击附近停车场的监听事件
                     break;
