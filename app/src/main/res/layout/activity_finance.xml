@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Finance">
+    tools:context=".Finance"
+    android:background="#f1f0f0">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/finance_toolbar"
@@ -26,9 +27,9 @@
             android:layout_height="120dp"
             android:src="@drawable/hed_pic"
             android:layout_marginTop="100dp"
-        android:layout_below="@+id/finance_toolbar"
-        android:layout_alignRight="@+id/amount"
-        android:layout_alignEnd="@+id/amount" />
+            android:layout_below="@+id/finance_toolbar"
+            android:layout_alignRight="@+id/amount"
+            android:layout_alignEnd="@+id/amount" />
 
     <TextView
             android:id="@+id/amount"

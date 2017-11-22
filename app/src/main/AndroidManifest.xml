@@ -59,6 +59,9 @@
         <activity
             android:name=".Collecting"
             android:label="w我的收藏"/>
+        <activity
+            android:name=".Charge"
+            android:label="充值" />
     </application>
 
 </manifest>
