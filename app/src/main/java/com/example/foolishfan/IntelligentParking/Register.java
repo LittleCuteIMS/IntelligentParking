@@ -3,11 +3,9 @@ package com.example.foolishfan.IntelligentParking;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +41,7 @@ public class Register extends AppCompatActivity {
         mPwdCheck = (EditText) findViewById(R.id.register_edit_pwd_new);
 
         Button mSureButton = (Button) findViewById(R.id.register_btn_sure);
-        mSureButton.setOnClickListener(m_register_Listener);      //注册界面两个按钮的监听事件
+        mSureButton.setOnClickListener(m_register_Listener);      //注册界面确定按钮的监听事件
 
         handler = new Handler(){
             public void handleMessage(Message msg){

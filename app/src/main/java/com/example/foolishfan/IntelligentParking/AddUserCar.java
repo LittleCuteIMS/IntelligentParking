@@ -18,10 +18,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 public class AddUserCar extends AppCompatActivity {          //用户添加车辆信息界面
 
-    private EditText mPlateNumber;                        //用户车牌号
+    private EditText mPlateNumber;                        //用户车牌号编辑
+    private EditText mMobile;                        //用户手机号编辑
     private EditText mRemark;                            //备注编辑
     private Handler handler;                   //登录接收服务器返回的信息
 
@@ -41,8 +46,9 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
         });
 
         //通过id找到相应的控件
+        mMobile = (EditText) findViewById(R.id.addusercar_edit_mobile);
         mPlateNumber = (EditText) findViewById(R.id.addusercar_edit_plate_number);
-        mRemark = (EditText) findViewById(R.id.addusercar_edit_remarks);
+        mRemark = (EditText) findViewById(R.id.addusercar_edit_remark);
         Button mAddButton = (Button) findViewById(R.id.addusercar_btn_add);
         Button mCancelButton = (Button) findViewById(R.id.addusercar_btn_cancel);
 
@@ -84,28 +90,31 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
                     startActivity(intent_UserCar_to_Main);
                     break;
                 case R.id.addusercar_btn_cancel:                              //用户车辆界面的取消新增按钮
-                    //add();
+                    Add();
                     break;
             }
         }
     };
 
-    /*public void add() {                                              //登录按钮监听事件
-        if (isUserNameAndPwdValid()) {
-            String mobile = mMobile.getText().toString().trim();    //获取当前输入的用户名和密码信息
-            String userPwd = mPwd.getText().toString().trim();
+    public void Add() {                                              //确认新增按钮监听事件
+        if (isUserCarValid()) {
+            String mobile = mMobile.getText().toString().trim();    //获取当前输入的用户手机号信息
+            String plate_number = mPlateNumber.getText().toString().trim();    //获取当前输入的车牌号和备注信息
+            String remark = mRemark.getText().toString().trim();
 
-            //将用户的登录信息保存在sharedPreference里面
+            //将用户的车辆信息保存在sharedPreference里面
             SharedPreferences.Editor userEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
             userEditor.putString("mobile", mobile);
-            userEditor.putString("userPwd", userPwd);
+            userEditor.putString("plateNumber", plate_number);
+            userEditor.putString("Remark", remark);
             userEditor.apply();
 
             //将用户手机号，密码转为json
             JSONObject json = new JSONObject();
             try {
-                json.put("platenumber", mobile);
-                json.put("password", userPwd);
+                json.put("mobile",mobile);
+                json.put("plateNumber", plate_number);
+                json.put("remark", remark);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -114,5 +123,25 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
             HttpJson http = new HttpJson(path, json.toString(), handler);
             new Thread(http.getHttpThread()).start();
         }
-    }*/
+    }
+
+
+    public boolean isUserCarValid() {
+        if (mMobile.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.mobile_empty),
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (mPlateNumber.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.plate_number_empty),
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (mRemark.getText().toString().trim().equals("")) {
+            Toast.makeText(this, getString(R.string.remark_empty),
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
 }

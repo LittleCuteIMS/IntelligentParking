@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id){
             case R.id.nav_me://停车历史
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),ParkingHistory.class);
+                    Intent intent=new Intent(MainActivity.this,ParkingHistory.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_message://我的车辆
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),UserCar.class);
+                    Intent intent=new Intent(MainActivity.this,UserCar.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_friend://消息中心
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),MessageCenter.class);
+                    Intent intent=new Intent(MainActivity.this,MessageCenter.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_notification://我的收藏
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),Collecting.class);
+                    Intent intent=new Intent(MainActivity.this,Collecting.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_manage://应用管理
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),Collecting.class);
+                    Intent intent=new Intent(MainActivity.this,ApplicationManagement.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_suggestion://意见反馈
                 if(isLogin){
-                    Intent intent=new Intent(getApplicationContext(),Suggestion.class);
+                    Intent intent=new Intent(MainActivity.this,Suggestion.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Intent intent=new Intent(getApplicationContext(),AddUserCar.class);
                         startActivity(intent);
                     }else{
-                        Toast.makeText(getApplicationContext(), "未登录！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case R.id.parkNearby://点击附近停车场的监听事件
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Intent intent = new Intent(getApplicationContext(),Finance.class);
                         startActivity(intent);
                     }else {
-                        Toast.makeText(getApplicationContext(), "未登录！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                     }
                     break;
             }

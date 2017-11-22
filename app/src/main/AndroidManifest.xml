@@ -23,7 +23,7 @@
             android:name=".Resetpwd"
             android:label="密码修改" />
         <activity
-            android:name=".AddUserCar"
+            android:name=".UserCar"
             android:label="我的车辆" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -41,6 +41,24 @@
         <activity
             android:name=".ChargeShow"
             android:label="交易记录"/>
+        <activity
+            android:name=".AddUserCar"
+            android:label="添加车辆"/>
+        <activity
+            android:name=".ApplicationManagement"
+            android:label="应用管理"/>
+        <activity
+            android:name=".ParkingHistory"
+            android:label="停车历史"/>
+        <activity
+            android:name=".MessageCenter"
+            android:label="消息中心"/>
+        <activity
+            android:name=".Suggestion"
+            android:label="意见反馈"/>
+        <activity
+            android:name=".Collecting"
+            android:label="w我的收藏"/>
     </application>
 
 </manifest>

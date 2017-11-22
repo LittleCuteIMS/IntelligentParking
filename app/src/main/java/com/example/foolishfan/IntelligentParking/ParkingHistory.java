@@ -37,12 +37,12 @@ public class ParkingHistory extends AppCompatActivity {          //用户停车�
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_car);
+        setContentView(R.layout.parkinghistory);
 
         //设置toolbar导航栏，设置导航按钮
-        Toolbar usercar_toolbar = (Toolbar) findViewById(R.id.usercar_toolbar);
-        setSupportActionBar(usercar_toolbar);
-        usercar_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        Toolbar parkinghistory_toolbar = (Toolbar) findViewById(R.id.parkinghistory_toolbar);
+        setSupportActionBar(parkinghistory_toolbar);
+        parkinghistory_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();

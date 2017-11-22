@@ -115,11 +115,7 @@ public class Login extends AppCompatActivity {                 //登录界面活
         }
     }
 
-    public void cancel() {//取消
-        Intent intent_Login_to_main = new Intent(Login.this, MainActivity.class);    //切换Login Activity至Main Activity
-        startActivity(intent_Login_to_main);
-        finish();
-    }
+
 
     public boolean isUserNameAndPwdValid() {
         if (mMobile.getText().toString().trim().equals("")) {

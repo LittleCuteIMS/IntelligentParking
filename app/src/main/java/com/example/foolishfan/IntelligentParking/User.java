@@ -16,6 +16,9 @@ public class User extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user);
 
+
+
+
         //重置密码按钮
         Button mResetPwdButton = (Button) findViewById(R.id.resetpwd_button);
         //设置监听事件
