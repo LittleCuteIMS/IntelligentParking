@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -116,11 +115,7 @@ public class Login extends AppCompatActivity {                 //登录界面活
         }
     }
 
-    public void cancel() {//取消
-        Intent intent_Login_to_main = new Intent(Login.this, MainActivity.class);    //切换Login Activity至Main Activity
-        startActivity(intent_Login_to_main);
-        finish();
-    }
+
 
     public boolean isUserNameAndPwdValid() {
         if (mMobile.getText().toString().trim().equals("")) {

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/adverse"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".AddUserCar">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/addusercar_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addusercar_edit_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        android:hint="请输入手机号"
+        android:inputType="text"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/addusercar_toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addusercar_edit_plate_number"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        android:hint="请输入车牌号"
+        android:inputType="text"
+        android:layout_marginTop="82dp"
+        android:layout_alignTop="@+id/addusercar_edit_mobile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/addusercar_edit_remark"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/addusercar_edit_plate_number"
+        android:layout_marginTop="38dp"
+        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        android:hint="请输入备注名"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/addusercar_btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:background="?attr/colorPrimary"
+        android:text="确认新增"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_above="@+id/addusercar_btn_cancel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/addusercar_btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:text="取消新增"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_marginBottom="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

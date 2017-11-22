@@ -28,9 +28,9 @@ public class Resetpwd extends AppCompatActivity {
         setContentView(R.layout.resetpwd);
 
         //设置toolbar导航栏，设置导航按钮
-        Toolbar user_toolbar = (Toolbar) findViewById(R.id.user_toolbar);
-        setSupportActionBar(user_toolbar);
-        user_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        Toolbar resetpwd_toolbar = (Toolbar) findViewById(R.id.resetpwd_toolbar);
+        setSupportActionBar(resetpwd_toolbar);
+        resetpwd_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();
@@ -88,7 +88,7 @@ public class Resetpwd extends AppCompatActivity {
             String userPwd_old = mPwd_old.getText().toString().trim();
             String userPwd_new = mPwd_new.getText().toString().trim();
             String userPwdCheck = mPwdCheck.getText().toString().trim();
-            if(!userPwd_new.equals(userPwd_old)){     //新密码与新密码不一致
+            if(!userPwd_new.equals(userPwdCheck)){     //新密码与新密码不一致
                 Toast.makeText(this, getString(R.string.pwd_not_the_same),Toast.LENGTH_SHORT).show();
             } else {
                 //将手机号，密码转为json
@@ -96,12 +96,13 @@ public class Resetpwd extends AppCompatActivity {
                 try {
 
                     json.put("mobile",mobile);
-                    json.put("password",userPwdCheck);
+                    json.put("oldpassword",userPwd_old);
+                    json.put("newpassword",userPwdCheck);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 //服务器上注册
-                String path="user/register.php";
+                String path="user/password_revise.php";
                 HttpJson http=new HttpJson(path,json.toString(),handler);
                 new Thread(http.getHttpThread()).start();
             }
