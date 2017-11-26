@@ -17,9 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.Util.QRcode;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     static public boolean isLogin;//全局获取当前软件的登录状态
     private DrawerLayout drawer;
+    private QRcode qr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //获取登录状态
         SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
         isLogin=statusPreferences.getBoolean("isLogin",false);
+
+        //二维码初始化
+        qr=new QRcode();
 
         //获取相关按钮
         Button addCar=(Button)findViewById(R.id.addCar);
@@ -74,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //实现切换网络连接
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
+/*        // Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.switchLocalhost) {
@@ -88,8 +94,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.switchLAN) {
             HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
             Toast.makeText(getApplicationContext(), "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
+        }*/
+        switch(item.getItemId()){
+            case R.id.switchLocalhost:
+                HttpJson.setWebsite("http://10.0.2.2/ParkingWeb/");
+                Toast.makeText(getApplicationContext(), "已设置为10.0.2.2", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.switchServer:
+                HttpJson.setWebsite("http://120.78.173.73/ParkingWeb/");
+                Toast.makeText(getApplicationContext(), "已设置为120.78.173.73", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.switchLAN:
+                HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
+                Toast.makeText(getApplicationContext(), "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.switchScan:
+                qr.scanQRcode(MainActivity.this,ScanActivity.class);
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        qr.setResult(requestCode, resultCode, data);
+        if(qr.getResult()!= null) {
+            if(qr.getResult().getContents() == null) {
+                Toast.makeText(this, "扫码取消！", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "扫描成功，条码值: " + qr.getResult().getContents(), Toast.LENGTH_LONG).show();
+                //rsView.setText(qr.getResult().getContents());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     //设置点击左边菜单栏每一个选项的回应方式
@@ -157,8 +194,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
 
     }
-
-
 
     //页面点击事件
     View.OnClickListener mainOnClick= new View.OnClickListener() {
