@@ -98,13 +98,14 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
 
     public void Add() {                                              //确认新增按钮监听事件
         if (isUserCarValid()) {
-            String mobile = mMobile.getText().toString().trim();    //获取当前输入的用户手机号信息
+            //从sharedPreference里面获取当前账户手机号
+            SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
+            String mobile = pref.getString("mobile", null);
             String plate_number = mPlateNumber.getText().toString().trim();    //获取当前输入的车牌号和备注信息
             String remark = mRemark.getText().toString().trim();
 
             //将用户的车辆信息保存在sharedPreference里面
             SharedPreferences.Editor userEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
-            userEditor.putString("mobile", mobile);
             userEditor.putString("plateNumber", plate_number);
             userEditor.putString("Remark", remark);
             userEditor.apply();
@@ -127,11 +128,7 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
 
 
     public boolean isUserCarValid() {
-        if (mMobile.getText().toString().trim().equals("")) {
-            Toast.makeText(this, getString(R.string.mobile_empty),
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (mPlateNumber.getText().toString().trim().equals("")) {
+       if (mPlateNumber.getText().toString().trim().equals("")) {
             Toast.makeText(this, getString(R.string.plate_number_empty),
                     Toast.LENGTH_SHORT).show();
             return false;
