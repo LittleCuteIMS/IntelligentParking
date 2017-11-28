@@ -225,6 +225,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.parkNearby://点击附近停车场的监听事件
+                Intent intent1=new Intent(MainActivity.this,BDMap.class);
+                startActivity(intent1);
                 break;
             case R.id.wallet://点击我的钱包的监听事件
                 if(isLogin) {

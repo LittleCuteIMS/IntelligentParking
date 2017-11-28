@@ -4,6 +4,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -40,8 +49,7 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name=".SoftwareSet"
             android:label="系统设置" />
@@ -50,28 +58,38 @@
             android:label="我的钱包" />
         <activity
             android:name=".ChargeShow"
-            android:label="交易记录"/>
+            android:label="交易记录" />
         <activity
             android:name=".AddUserCar"
-            android:label="添加车辆"/>
+            android:label="添加车辆" />
         <activity
             android:name=".ApplicationManagement"
-            android:label="应用管理"/>
+            android:label="应用管理" />
         <activity
             android:name=".ParkingHistory"
-            android:label="停车历史"/>
+            android:label="停车历史" />
         <activity
             android:name=".MessageCenter"
-            android:label="消息中心"/>
+            android:label="消息中心" />
         <activity
             android:name=".Suggestion"
-            android:label="意见反馈"/>
+            android:label="意见反馈" />
         <activity
             android:name=".Collecting"
-            android:label="w我的收藏"/>
+            android:label="w我的收藏" />
         <activity
             android:name=".Charge"
             android:label="充值" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="q48TLKD8QmjCrBEkSEGvG1pNq0nzZWoE" />
+        <activity android:name=".BDMap"
+            android:label="附近停车场"></activity>
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
