@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.Util;
 
 import android.os.Handler;
 import android.os.Message;

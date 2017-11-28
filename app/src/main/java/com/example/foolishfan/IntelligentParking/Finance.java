@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.Util.HttpJson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,12 +23,16 @@ import org.json.JSONObject;
  * Created by zhanglin on 2017/11/7.
  */
 public class Finance extends AppCompatActivity{
+    private Handler handler1;        //接收服务器查询返回的充值记录
+    TextView userbalance;
     private Handler handler = new Handler() {//接收服务器查询返回的余额信息
         public void handleMessage(Message msg) {
             if (msg.obj != null) {
                 //保存当前账户余额
+                String balance=msg.obj.toString();
+                userbalance.setText(balance);
                 SharedPreferences.Editor statusEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
-                statusEditor.putString("balance", msg.obj.toString());
+                statusEditor.putString("balance", balance);
                 statusEditor.apply();
             } else {
                 Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
@@ -34,8 +40,6 @@ public class Finance extends AppCompatActivity{
             super.handleMessage(msg);
         }
     };
-    private Handler handler1;        //接收服务器查询返回的充值记录
-    TextView userbalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +108,7 @@ public class Finance extends AppCompatActivity{
         }
 
         //3.把手机号发送到服务器上进行查询
-        String path="financialPHP/queryUserBalance1.php";
+        String path="financialPHP/queryUserBalance.php";
         HttpJson http=new HttpJson(path,json.toString(),handler);
         new Thread(http.getHttpThread()).start();
     }
