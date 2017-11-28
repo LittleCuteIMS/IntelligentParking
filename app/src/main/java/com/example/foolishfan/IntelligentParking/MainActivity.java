@@ -36,10 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //获取登录状态
-        SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
-        isLogin=statusPreferences.getBoolean("isLogin",false);
-
         //二维码初始化
         qr=new QRcode();
 
@@ -62,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //实现侧边栏滑入滑出
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取登录状态
+        SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
+        isLogin=statusPreferences.getBoolean("isLogin",false);
     }
 
     @Override
