@@ -101,7 +101,6 @@ public class Login extends AppCompatActivity {                 //登录界面活
             userEditor.putString("mobile", mobile);
             userEditor.putString("userPwd", userPwd);
             userEditor.apply();
-
             //将用户手机号，密码转为json
             JSONObject json = new JSONObject();
             try {
@@ -116,7 +115,6 @@ public class Login extends AppCompatActivity {                 //登录界面活
             new Thread(http.getHttpThread()).start();
         }
     }
-
 
 
     public boolean isUserNameAndPwdValid() {
