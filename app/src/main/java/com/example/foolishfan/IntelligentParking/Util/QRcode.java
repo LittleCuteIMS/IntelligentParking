@@ -23,7 +23,7 @@ public class QRcode {
 // 设置要扫描的条码类型，ONE_D_CODE_TYPES：一维码，QR_CODE_TYPES-二维码
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
         integrator.setCaptureActivity(captureActivity);
-        integrator.setPrompt("请扫描"); //底部的提示文字，设为""可以置空
+        integrator.setPrompt("将二维码放入框内，即可自动扫描"); //底部的提示文字，设为""可以置空
         integrator.setCameraId(0); //前置或者后置摄像头
         integrator.setBeepEnabled(false); //扫描成功的「哔哔」声，默认开启
         integrator.setBarcodeImageEnabled(true);

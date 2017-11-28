@@ -23,7 +23,6 @@ import org.json.JSONObject;
  * Created by zhanglin on 2017/11/7.
  */
 public class Finance extends AppCompatActivity{
-    private Handler handler1;        //接收服务器查询返回的充值记录
     TextView userbalance;
     private Handler handler = new Handler() {//接收服务器查询返回的余额信息
         public void handleMessage(Message msg) {
@@ -35,11 +34,23 @@ public class Finance extends AppCompatActivity{
                 statusEditor.putString("balance", balance);
                 statusEditor.apply();
             } else {
-                Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Finance.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
             super.handleMessage(msg);
         }
     };
+    private Handler handler1 = new Handler() {
+        public void handleMessage(Message msg) {
+            if(msg.obj != null) {//如果不为空
+                //解析json数据并保存
+                String jsonStr = msg.obj.toString();
+                parseJSONWithJSONObject(jsonStr);
+            } else{
+                Toast.makeText(Finance.this, "网络错误", Toast.LENGTH_SHORT).show();
+            }
+            super.handleMessage(msg);
+        }
+    };;        //接收服务器查询返回的充值记录
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +79,6 @@ public class Finance extends AppCompatActivity{
         Button chargeShow=(Button)findViewById(R.id.chargeshow);
         charge.setOnClickListener(setListener);
         chargeShow.setOnClickListener(setListener);
-
-        //将返回的充值记录保存
-        handler1 = new Handler() {
-            public void handleMessage(Message msg) {
-                if(msg.obj != null) {//如果不为空
-                    //解析json数据并保存
-                    String jsonStr = msg.obj.toString();
-                    parseJSONWithJSONObject(jsonStr);
-                } else{
-                    Toast.makeText(getApplicationContext(), "网络错误", Toast.LENGTH_SHORT).show();
-                }
-                super.handleMessage(msg);
-            }
-        };
     }
 
     @Override
@@ -97,7 +94,6 @@ public class Finance extends AppCompatActivity{
         //1.从sharedPreference里面获取当前账户手机号
         SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
         String mobile = pref.getString("mobile", null);
-        //Toast.makeText(getApplicationContext(),"the mobile id " + mobile,Toast.LENGTH_SHORT).show();//测试用
 
         //2.将用户手机号转为json
         JSONObject json=new JSONObject();
@@ -149,6 +145,7 @@ public class Finance extends AppCompatActivity{
                 recordEditor.putString("id",id);
                 recordEditor.putString("datetime",time);
                 recordEditor.putString("amount",amount);
+                recordEditor.apply();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,12 +159,12 @@ public class Finance extends AppCompatActivity{
             int id=v.getId();
             switch (id){
                 case R.id.charge:
-                    Intent intent = new Intent(getApplicationContext(),Charge.class);
+                    Intent intent = new Intent(Finance.this,Charge.class);
                     startActivity(intent);
                     break;
                 case R.id.chargeshow:
                     getRecord();
-                    Intent intent1 = new Intent(getApplicationContext(),ChargeShow.class);
+                    Intent intent1 = new Intent(Finance.this,ChargeShow.class);
                     startActivity(intent1);
                     break;
             }
