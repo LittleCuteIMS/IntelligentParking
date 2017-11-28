@@ -21,18 +21,6 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/addusercar_edit_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:drawableLeft="@android:drawable/ic_menu_myplaces"
-        android:hint="请输入手机号"
-        android:inputType="text"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/addusercar_toolbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:id="@+id/addusercar_edit_plate_number"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -60,7 +48,7 @@
         android:id="@+id/addusercar_btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="83dp"
         android:background="?attr/colorPrimary"
         android:text="确认新增"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -75,7 +63,7 @@
         android:background="@android:color/darker_gray"
         android:text="取消新增"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="56dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
