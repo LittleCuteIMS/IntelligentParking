@@ -76,6 +76,10 @@ public class SoftwareSet extends AppCompatActivity {
         userEditor.clear();
         userEditor.apply();
 
+        SharedPreferences.Editor chargeRecordEditor=getSharedPreferences("chargeRecord", Context.MODE_PRIVATE).edit();
+        chargeRecordEditor.clear();
+        chargeRecordEditor.apply();
+
         Intent intent = new Intent(SoftwareSet.this,MainActivity.class) ;
         startActivity(intent);
         finish();
