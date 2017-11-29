@@ -21,20 +21,27 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/query"
         android:layout_below="@id/finance_toolbar"
-        android:id="@+id/recent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="最近三个月"
-        android:textColor="#000"
-        android:textSize="14sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <Button
+            android:id="@+id/start_query"
+            android:layout_below="@+id/recent"
+            android:layout_width="75dp"
+            android:layout_height="40dp"
+            android:text="开始查询"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:background="#f505a61f"
+            android:textSize="12sp"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_below="@+id/recent"
+        android:layout_below="@+id/query"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
