@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -40,6 +42,17 @@ public class BDMap extends AppCompatActivity {
         mapView = (MapView) findViewById(R.id.bmapview);//获取地图实例
         baiduMap = mapView.getMap();//获取BaiduMap的实例
         baiduMap.setMyLocationEnabled(true);//开启移动定位功能
+
+        //设置toolbar导航栏，设置导航按钮
+        Toolbar finance_toolbar = (Toolbar) findViewById(R.id.map_toolbar);
+        setSupportActionBar(finance_toolbar);
+        finance_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //在运行时一次申请3个权限
         List<String> permissionList = new ArrayList<>();
         //判断没有被授权则添加到List集合
