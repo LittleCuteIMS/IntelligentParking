@@ -60,11 +60,6 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
             public void handleMessage(Message msg) {
                 if (msg.obj != null) {//如果不为空
                     if (msg.obj.toString().equals("SUCCEED")) {
-                        //保存登录状态
-                        SharedPreferences.Editor statusEditor = getSharedPreferences("status", Context.MODE_PRIVATE).edit();
-                        statusEditor.putBoolean("isLogin", true);
-                        statusEditor.apply();
-
                         Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
 
                         //切换AddUserCar Activity至Main Activity

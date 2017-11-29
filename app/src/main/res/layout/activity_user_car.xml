@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/adverse"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".UserCar">
+    tools:context=".UserCar"
+    android:background="#f1f0f0">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/usercar_toolbar"
@@ -22,13 +22,13 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/carinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/usercar_toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="这里显示用户车辆信息"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp" />
+
+
 </RelativeLayout>

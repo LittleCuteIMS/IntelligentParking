@@ -66,6 +66,7 @@ public class Finance extends AppCompatActivity{
         chargeShow.setOnClickListener(setListener);
 
         //将返回的充值记录保存
+
         handler1 = new Handler() {
             public void handleMessage(Message msg) {
                 if(msg.obj != null) {//如果不为空
