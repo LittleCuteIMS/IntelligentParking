@@ -8,38 +8,54 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.example.foolishfan.IntelligentParking.Util.Data;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ChargeShow extends AppCompatActivity {
-    private String[] data = {"1","2","3","4"};
+import java.util.ArrayList;
+import java.util.List;
 
-    //接收服务器查询返回的充值记录信息
-    private Handler handler1 = new Handler() {
+public class ChargeShow extends AppCompatActivity {
+    private ListView listView;
+    private List<Data> datas = new ArrayList<Data>();//要填充的数据
+
+    //主线程创建消息处理器
+    private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
-            if(msg.obj != null) {
-                String jsonStr = msg.obj.toString();
-                parseJSONWithJSONObject(jsonStr);//解析json数据并保存
-            } else{
-                Toast.makeText(ChargeShow.this, "网络错误", Toast.LENGTH_SHORT).show();
+            if (msg.obj != null) {
+                try {
+                    //把传回来的字符串转换成json数组
+                    JSONArray jsonArray = new JSONArray(msg.obj.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
+                        Data data = new Data();
+                        data.setImageId(jsonObject.getInt("id"));
+                        data.setTime(jsonObject.getString("datetime"));
+                        data.setAmount(jsonObject.getString("amount"));//传入Data类
+                        datas.add(data);//添加到要填充的数据列表
+                    }
+                    listView.setAdapter(new MyAdapter());//传入适配器对象，和listview建立关联
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-            super.handleMessage(msg);
-        }
+        };
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_charge_show);
+        setContentView(R.layout.charge_show);
+        listView = (ListView) findViewById(R.id.list_view);
+        select();//获取数据
 
         //设置toolbar导航栏，设置导航按钮
         Toolbar finance_toolbar = (Toolbar) findViewById(R.id.finance_toolbar);
@@ -50,31 +66,9 @@ public class ChargeShow extends AppCompatActivity {
                 finish();
             }
         });
-
-        Button button = (Button) findViewById(R.id.start_query);//获取按钮实例
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getRecord();
-            }
-        });
-
-
-
-        //ListView适配器:
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ChargeShow.this,android.R.layout.simple_list_item_1,data);
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
-        //点击事件
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //to do
-            }
-        });
     }
 
-    public void getRecord(){
+    private void select(){
         //1.从sharedPreference里面获取当前账户手机号
         SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
         String mobile = pref.getString("mobile", null);
@@ -89,34 +83,33 @@ public class ChargeShow extends AppCompatActivity {
 
         //3.把手机号发送到服务器上进行查询
         String path="financialPHP/queryRecord.php";
-        HttpJson http=new HttpJson(path,json.toString(),handler1);
+        HttpJson http=new HttpJson(path,json.toString(),handler);
         new Thread(http.getHttpThread()).start();
     }
 
-    //解析json数据
-    private void parseJSONWithJSONObject (String jsondata) {
-        try {
-            //把传回来的字符串转换成json数组
-            JSONArray jsonArray = new JSONArray(jsondata);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
-
-                String id = jsonObject.getString("id");
-                Toast.makeText(getApplicationContext(),id,Toast.LENGTH_SHORT).show();
-                String time = jsonObject.getString("datetime");
-                Toast.makeText(getApplicationContext(),time,Toast.LENGTH_SHORT).show();
-                String amount = jsonObject.getString("amount");
-                Toast.makeText(getApplicationContext(),amount,Toast.LENGTH_SHORT).show();
-
-                /*不应该保存，应该将数据填充
-                SharedPreferences.Editor recordEditor = getSharedPreferences("chargeRecord", Context.MODE_PRIVATE).edit();
-                recordEditor.putString("id",id);
-                recordEditor.putString("datetime",time);
-                recordEditor.putString("amount",amount);
-                recordEditor.apply();*/
+    class MyAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {return datas.size();}
+        @Override
+        public Object getItem(int position) {return datas.get(position);}
+        @Override
+        public long getItemId(int position) {return position;}
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view;
+            //为子项动态加载布局：若有缓存的加载好的布局则使用；否则重新加载
+            if (convertView == null){
+                view = View.inflate(ChargeShow.this, R.layout.charge_show_item, null);
+                TextView imageId = (TextView) view.findViewById(R.id.tv_id);
+                TextView time = (TextView) view.findViewById(R.id.tv_name);
+                TextView amount = (TextView) view.findViewById(R.id.tv_tech);
+                imageId.setText(String.valueOf(datas.get(position).getImageId()));
+                time.setText(datas.get(position).getTime());
+                amount.setText(datas.get(position).getAmount());
+            }else {
+                view = convertView;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return view;
         }
     }
 }
