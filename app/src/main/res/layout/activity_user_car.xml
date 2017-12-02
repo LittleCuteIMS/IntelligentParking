@@ -22,13 +22,42 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/carinfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/usercar_toolbar"
+        android:id="@+id/showplatenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
+        android:layout_below="@+id/usercar_toolbar"
+        android:layout_marginTop="87dp"
+        android:text="车牌号码" />
+
+    <TextView
+        android:id="@+id/plateNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/showplatenumber"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/showremarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/plateNumber"
+        android:layout_marginTop="96dp"
+        android:text="车辆备注" />
+
+    <TextView
+        android:id="@+id/remarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/showremarks"
+        android:layout_marginTop="20dp" />
 
 
 </RelativeLayout>
