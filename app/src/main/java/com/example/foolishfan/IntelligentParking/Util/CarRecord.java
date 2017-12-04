@@ -5,16 +5,9 @@ package com.example.foolishfan.IntelligentParking.Util;
  */
 
 public class CarRecord {
-    private int imageId;
     private String plateNumber;
     private String remarks;
 
-    public int getImageId() {
-        return imageId;
-    }
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
     public String getPlateNumber() {
         return plateNumber;
     }

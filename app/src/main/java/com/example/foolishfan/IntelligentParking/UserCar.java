@@ -41,7 +41,6 @@ public class UserCar extends AppCompatActivity {          //用户车辆信息�
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
                         CarRecord carrecord = new CarRecord();
-                        carrecord.setImageId(jsonObject.getInt("id"));
                         carrecord.setPlateNumber(jsonObject.getString("plateNumber"));
                         carrecord.setRemarks(jsonObject.getString("remarks"));//传入CarRecord类
                         datas.add(carrecord);//添加到要填充的数据列表
@@ -104,10 +103,8 @@ public class UserCar extends AppCompatActivity {          //用户车辆信息�
             //为子项动态加载布局：若有缓存的加载好的布局则使用；否则重新加载
             if (convertView == null){
                 view = View.inflate(UserCar.this, R.layout.activity_user_car_item, null);
-                TextView imageId = (TextView) view.findViewById(R.id.tv_id);
                 TextView plateNumber = (TextView) view.findViewById(R.id.tv_plateNumber);
                 TextView remarks = (TextView) view.findViewById(R.id.tv_remarks) ;
-                imageId.setText(String.valueOf(datas.get(position).getImageId()));
                 plateNumber.setText(datas.get(position).getPlateNumber());
                 remarks.setText(datas.get(position).getRemarks());
             }else {
