@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChargeShow extends AppCompatActivity {
+public class ChargeShowActivity extends AppCompatActivity {
     private ListView listView;
     private List<Data> datas = new ArrayList<Data>();//要填充的数据
 
@@ -53,7 +53,7 @@ public class ChargeShow extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.charge_show);
+        setContentView(R.layout.activity_charge_show);
         listView = (ListView) findViewById(R.id.list_view);
         select();//获取数据
 
@@ -99,7 +99,7 @@ public class ChargeShow extends AppCompatActivity {
             View view;
             //为子项动态加载布局：若有缓存的加载好的布局则使用；否则重新加载
             if (convertView == null){
-                view = View.inflate(ChargeShow.this, R.layout.charge_show_item, null);
+                view = View.inflate(ChargeShowActivity.this, R.layout.charge_show_item, null);
                 TextView imageId = (TextView) view.findViewById(R.id.tv_id);
                 TextView time = (TextView) view.findViewById(R.id.tv_name);
                 TextView amount = (TextView) view.findViewById(R.id.tv_tech);

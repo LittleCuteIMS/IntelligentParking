@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
@@ -230,12 +229,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.parkNearby://点击附近停车场的监听事件
-                Intent intent1=new Intent(MainActivity.this,BDMap.class);
+                Intent intent1=new Intent(MainActivity.this,BDMapActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.wallet://点击我的钱包的监听事件
                 if(isLogin) {
-                    Intent intent = new Intent(MainActivity.this,Finance.class);
+                    Intent intent = new Intent(MainActivity.this,FinanceActivity.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();

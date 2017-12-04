@@ -21,7 +21,7 @@ import org.json.JSONObject;
 /**
  * Created by zhanglin on 2017/11/7.
  */
-public class Finance extends AppCompatActivity{
+public class FinanceActivity extends AppCompatActivity{
     TextView userbalance;
 
     //接收服务器查询返回的余额信息
@@ -34,7 +34,7 @@ public class Finance extends AppCompatActivity{
                 statusEditor.putString("balance", balance);
                 statusEditor.apply();//保存当前账户余额
             } else {
-                Toast.makeText(Finance.this, "网络错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FinanceActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
             super.handleMessage(msg);
         }
@@ -103,11 +103,11 @@ public class Finance extends AppCompatActivity{
             int id=v.getId();
             switch (id){
                 case R.id.charge:
-                    Intent intent = new Intent(Finance.this,Charge.class);
+                    Intent intent = new Intent(FinanceActivity.this,ChargeActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.chargeshow:
-                    Intent intent1 = new Intent(Finance.this,ChargeShow.class);
+                    Intent intent1 = new Intent(FinanceActivity.this,ChargeShowActivity.class);
                     startActivity(intent1);
                     break;
             }
