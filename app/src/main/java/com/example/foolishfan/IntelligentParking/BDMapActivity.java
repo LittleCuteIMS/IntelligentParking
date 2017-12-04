@@ -1,11 +1,14 @@
 package com.example.foolishfan.IntelligentParking;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,7 +28,7 @@ import com.baidu.mapapi.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BDMap extends AppCompatActivity {
+public class BDMapActivity extends AppCompatActivity {
     public LocationClient mLocationClient;//定位类
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
@@ -56,19 +59,19 @@ public class BDMap extends AppCompatActivity {
         //在运行时一次申请3个权限
         List<String> permissionList = new ArrayList<>();
         //判断没有被授权则添加到List集合
-        if (ContextCompat.checkSelfPermission(BDMap.this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(BDMapActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (ContextCompat.checkSelfPermission(BDMap.this, android.Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(BDMapActivity.this, android.Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
         }
-        if (ContextCompat.checkSelfPermission(BDMap.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(BDMapActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
         //将List转换成数组
         if (!permissionList.isEmpty()){
             String[] permissons = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(BDMap.this,permissons,1);//一次性申请权限
+            ActivityCompat.requestPermissions(BDMapActivity.this,permissons,1);//一次性申请权限
         }else {
             requestLocation();
         }
@@ -162,5 +165,22 @@ public class BDMap extends AppCompatActivity {
                 navigateTo(bdLocation);
             }
         }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.map_parkings,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.parkings:
+                Intent intent = new Intent(BDMapActivity.this,ParkingsDetailsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+        }
+        return true;
     }
 }

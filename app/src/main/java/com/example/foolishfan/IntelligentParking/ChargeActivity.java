@@ -19,7 +19,7 @@ import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Charge extends AppCompatActivity {
+public class ChargeActivity extends AppCompatActivity {
     private EditText editText = null;//获取用户充值金额
     private Handler handler;//保存服务器返回消息
 
@@ -100,13 +100,13 @@ public class Charge extends AppCompatActivity {
                     HttpJson http=new HttpJson(path,json.toString(),handler);
                     new Thread(http.getHttpThread()).start();
 
-                    AlertDialog.Builder builder  = new AlertDialog.Builder(Charge.this);
+                    AlertDialog.Builder builder  = new AlertDialog.Builder(ChargeActivity.this);
                     builder.setTitle("提示：" ) ;
                     builder.setMessage("已提交充值信息，请稍后查看余额！" ) ;
                     builder.setPositiveButton("好的" ,  null );
                     builder.show();
                 }else {
-                    AlertDialog.Builder builder  = new AlertDialog.Builder(Charge.this);
+                    AlertDialog.Builder builder  = new AlertDialog.Builder(ChargeActivity.this);
                     builder.setTitle("提示：" ) ;
                     builder.setMessage("请输入充值金额！" ) ;
                     builder.setPositiveButton("好的" ,  null );

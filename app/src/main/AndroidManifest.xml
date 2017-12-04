@@ -49,15 +49,15 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".SoftwareSet"
             android:label="系统设置" />
         <activity
-            android:name=".Finance"
+            android:name=".FinanceActivity"
             android:label="我的钱包" />
         <activity
-            android:name=".ChargeShow"
+            android:name=".ChargeShowActivity"
             android:label="交易记录" />
         <activity
             android:name=".AddUserCar"
@@ -78,18 +78,29 @@
             android:name=".Collecting"
             android:label="w我的收藏" />
         <activity
-            android:name=".Charge"
+            android:name=".ChargeActivity"
             android:label="充值" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="q48TLKD8QmjCrBEkSEGvG1pNq0nzZWoE" />
-        <activity android:name=".BDMap"
-            android:label="附近停车场"></activity>
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+
+        <activity
+            android:name=".BDMapActivity"
+            android:label="附近停车场" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".ParkingsDetailsActivity"
+            android:label="查看附近停车场"/>
     </application>
 
 </manifest>
