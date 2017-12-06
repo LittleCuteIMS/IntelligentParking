@@ -1,67 +1,52 @@
 package com.example.foolishfan.IntelligentParking;
 
-/**
- * Created by LiangJiacheng on 2017/11/19 0019.
- */
-
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import android.view.LayoutInflater;
 import android.view.View;
+
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.foolishfan.IntelligentParking.Util.CarRecord;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class UserCar extends AppCompatActivity {          //用户车辆信息界面
-    private ListView listView;
-    private List<CarRecord> datas = new ArrayList<CarRecord>();//要填充的数据
+/*
+Created by liangjaicheng on 2017/12/3.
+ */
+class UserCar extends ApplicationManagement{
 
-    //主线程创建消息处理器
-    private Handler handler = new Handler(){
-        public void handleMessage(Message msg) {
-            if (msg.obj != null) {
-                try {
-                    //把传回来的字符串转换成json数组
-                    JSONArray jsonArray = new JSONArray(msg.obj.toString());
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
-                        CarRecord carrecord = new CarRecord();
-                        carrecord.setPlateNumber(jsonObject.getString("plateNumber"));
-                        carrecord.setRemarks(jsonObject.getString("remarks"));//传入CarRecord类
-                        datas.add(carrecord);//添加到要填充的数据列表
-                    }
-                    listView.setAdapter(new MyAdapter());//传入适配器对象，和listview建立关联
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-    };
+    private ListView lv;
+    List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();//设置数据源或者说数据集合
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_car);
-        listView = (ListView) findViewById(R.id.list_view);
-        select();//获取数据
+        lv = (ListView) findViewById(R.id.list_view);
+
+        getData();
 
         //设置toolbar导航栏，设置导航按钮
-        Toolbar usercar_toolbar = (Toolbar) findViewById(R.id.usercar_toolbar);
+        Toolbar usercar_toolbar = (Toolbar) findViewById(R.id.usercar_toolbar );
         setSupportActionBar(usercar_toolbar);
         usercar_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
@@ -71,7 +56,8 @@ public class UserCar extends AppCompatActivity {          //用户车辆信息�
         });
     }
 
-    private void select(){
+    //从sharedPreference中获取数据并发送到服务器进行查询
+    private void getData(){
         //1.从sharedPreference里面获取当前账户手机号
         SharedPreferences pref = getSharedPreferences("user", Context.MODE_PRIVATE);
         String mobile = pref.getString("mobile", null);
@@ -85,28 +71,61 @@ public class UserCar extends AppCompatActivity {          //用户车辆信息�
         }
 
         //3.把手机号发送到服务器上进行查询
-        String path="user/carinfo_inquiry.php";
+        String path="user/carinfo_inquiry";
         HttpJson http=new HttpJson(path,json.toString(),handler);
         new Thread(http.getHttpThread()).start();
     }
 
-    class MyAdapter extends BaseAdapter {
+    //将返回的json数据进行转化
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg) {
+            if (msg.obj != null) {
+                try {
+                    //把传回来的字符串转换成json数组
+                    JSONArray jsonArray = new JSONArray(msg.obj.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
+                        Map<String,Object> map = new HashMap<String,Object>();
+                        map.put("plate_number",jsonObject.getString("plate_number"));
+                        map.put("remarks",jsonObject.getString("remarks"));
+                        list.add(map);
+                    }
+                    lv.setAdapter(new RecordAdapter());//传入适配器对象，和listview建立关联
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    };
+
+    //自定义适配器RecordAdapter,继承BaseAdapter
+    class RecordAdapter extends BaseAdapter {
         @Override
-        public int getCount() {return datas.size();}
+        public int getCount() {                 //必填，是渲染的行数
+            return list.size();
+        }
         @Override
-        public Object getItem(int position) {return datas.get(position);}
+        public Object getItem(int position) {
+            return list.get(position);
+        }
         @Override
-        public long getItemId(int position) {return position;}
+        public long getItemId(int position) {
+            return position;
+        }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view;
-            //为子项动态加载布局：若有缓存的加载好的布局则使用；否则重新加载
+
             if (convertView == null){
                 view = View.inflate(UserCar.this, R.layout.activity_user_car_item, null);
+                //view = LayoutInflater.from(UserCar.this).inflate(R.layout.activity_user_car_item, parent,false);
+
                 TextView plateNumber = (TextView) view.findViewById(R.id.tv_plateNumber);
-                TextView remarks = (TextView) view.findViewById(R.id.tv_remarks) ;
-                plateNumber.setText(datas.get(position).getPlateNumber());
-                remarks.setText(datas.get(position).getRemarks());
+                TextView remarks = (TextView) view.findViewById(R.id.tv_remarks);
+                Map maplist = list.get(position);
+                plateNumber.setText((String)maplist.get("plate_number"));
+                remarks.setText((String)maplist.get("remarks"));
+
             }else {
                 view = convertView;
             }
@@ -114,3 +133,5 @@ public class UserCar extends AppCompatActivity {          //用户车辆信息�
         }
     }
 }
+
+
