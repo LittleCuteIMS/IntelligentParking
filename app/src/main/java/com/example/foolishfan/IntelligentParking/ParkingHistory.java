@@ -24,14 +24,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 /*
 Created by RongYuting on 2017/12/3.
  */
-class ParkingHistory extends AppCompatActivity{
+public class ParkingHistory extends AppCompatActivity{
 
     private ListView lv;
     List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();//设置数据源或者说数据集合
