@@ -91,7 +91,7 @@ public class FinanceActivity extends AppCompatActivity{
         }
 
         //3.把手机号发送到服务器上进行查询
-        String path="financialPHP/queryUserBalance.php";
+        String path="financialPHP/queryUserBalance1.php";
         HttpJson http=new HttpJson(path,json.toString(),handler);
         new Thread(http.getHttpThread()).start();
     }
