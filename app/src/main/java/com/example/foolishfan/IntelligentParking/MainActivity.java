@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,12 +27,35 @@ import android.widget.Toast;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     static public boolean isLogin;//全局获取当前软件的登录状态
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private QRcode qr;
     private TextView tvNavMobile,tvNavNickname;
+    //用于实现广告轮播
+    private ViewPager mViewPaper;
+    private List<ImageView> images;
+    private List<View> dots;
+    private int currentItem;
+    //记录上一次点的位置
+    private int oldPosition = 0;
+    //存放图片的id
+    private int[] imageIds = new int[]{
+            R.drawable.a,
+            R.drawable.b,
+            R.drawable.c,
+            R.drawable.d,
+            R.drawable.e
+    };
+    private ViewPagerAdapter adapter;
+    private ScheduledExecutorService scheduledExecutorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +89,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //实现侧边栏滑入滑出
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
+        //实现广告轮播
+        mViewPaper = (ViewPager) findViewById(R.id.vp);
+
+        //显示的图片
+        images = new ArrayList<ImageView>();
+        for(int i = 0; i < imageIds.length; i++){
+            ImageView imageView = new ImageView(this);
+            imageView.setBackgroundResource(imageIds[i]);
+            images.add(imageView);
+        }
+        //显示的小点
+        dots = new ArrayList<View>();
+        dots.add(findViewById(R.id.dot_0));
+        dots.add(findViewById(R.id.dot_1));
+        dots.add(findViewById(R.id.dot_2));
+        dots.add(findViewById(R.id.dot_3));
+        dots.add(findViewById(R.id.dot_4));
+
+
+        adapter = new ViewPagerAdapter();
+        mViewPaper.setAdapter(adapter);
+
+        mViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                dots.get(position).setBackgroundResource(R.drawable.dot_focused);
+                dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
+                oldPosition = position;
+                currentItem = position;
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+
+            }
+        });
     }
 
     @Override
@@ -84,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tvNavNickname.setText("请登录");
             tvNavMobile.setText("");
         }
+
+        //实现广告自动轮播
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleWithFixedDelay(
+                new ViewPageTask(),
+                2,
+                2,
+                TimeUnit.SECONDS);
     }
 
     @Override
@@ -96,6 +173,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStop() {
         super.onStop();
         drawer.closeDrawers();
+        if(scheduledExecutorService != null){
+            scheduledExecutorService.shutdown();
+            scheduledExecutorService = null;
+        }
     }
 
     @Override
@@ -252,5 +333,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
     }
+
+    //广告轮播的适配器
+    private class ViewPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return images.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup view, int position, Object object) {
+            // TODO Auto-generated method stub
+//          super.destroyItem(container, position, object);
+//          view.removeView(view.getChildAt(position));
+//          view.removeViewAt(position);
+            view.removeView(images.get(position));
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup view, int position) {
+            // TODO Auto-generated method stub
+            view.addView(images.get(position));
+            return images.get(position);
+        }
+    }
+
+    //图片轮播任务
+    private class ViewPageTask implements Runnable{
+
+        @Override
+        public void run() {
+            currentItem = (currentItem + 1) % imageIds.length;
+            mHandler.sendEmptyMessage(0);
+        }
+    }
+
+    /**
+     * 接收子线程传递过来的数据
+     */
+    private Handler mHandler = new Handler(){
+        public void handleMessage(android.os.Message msg) {
+            mViewPaper.setCurrentItem(currentItem);
+        };
+    };
 }
 
