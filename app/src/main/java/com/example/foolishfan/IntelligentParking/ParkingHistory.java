@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ import java.util.Map;
 /*
 Created by RongYuting on 2017/12/3.
  */
-class ParkingHistory extends ApplicationManagement{
+class ParkingHistory extends AppCompatActivity{
 
     private ListView lv;
     List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();//设置数据源或者说数据集合
