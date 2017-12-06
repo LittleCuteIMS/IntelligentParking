@@ -45,7 +45,7 @@ public class UserCar extends AppCompatActivity{
         //设置toolbar导航栏，设置导航按钮
         Toolbar usercar_toolbar = (Toolbar) findViewById(R.id.usercar_toolbar );
         setSupportActionBar(usercar_toolbar);
-        usercar_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        usercar_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -60,9 +60,9 @@ public class UserCar extends AppCompatActivity{
         String mobile = pref.getString("mobile", null);
 
         //2.将用户手机号转为json
-        JSONObject json=new JSONObject();
+        JSONObject json = new JSONObject();
         try {
-            json.put("mobile",mobile);
+            json.put("mobile", mobile);
         } catch (JSONException e) {
             e.printStackTrace();
         }
