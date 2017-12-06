@@ -31,20 +31,17 @@ import java.util.Map;
 /*
 Created by liangjiacheng on 2017/12/3.
  */
-class UserCar extends AppCompatActivity{
+public class UserCar extends AppCompatActivity{
 
     private ListView lv;
     List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();//设置数据源或者说数据集合
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_car);
         lv = (ListView) findViewById(R.id.list_view);
-
         getData();
-
         //设置toolbar导航栏，设置导航按钮
         Toolbar usercar_toolbar = (Toolbar) findViewById(R.id.usercar_toolbar );
         setSupportActionBar(usercar_toolbar);
