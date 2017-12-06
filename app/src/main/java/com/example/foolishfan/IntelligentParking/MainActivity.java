@@ -11,11 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private QRcode qr;
+    private TextView tvNavMobile,tvNavNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
         ImageView mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
-
+        tvNavMobile=(TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
+        tvNavNickname=(TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
 
         //注册监听事件
         addCar.setOnClickListener(mainOnClick);
@@ -66,6 +70,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //获取登录状态
         SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
         isLogin=statusPreferences.getBoolean("isLogin",false);
+
+        //更改用户名显示
+        if(isLogin){
+            String nickname;
+            String mobile;
+            SharedPreferences userPref=getSharedPreferences("user",Context.MODE_PRIVATE);
+            nickname=userPref.getString("nickname",null);
+            mobile=userPref.getString("mobile",null);
+            tvNavNickname.setText(nickname);
+            tvNavMobile.setText(mobile);
+        }else{
+            tvNavNickname.setText("请登录");
+            tvNavMobile.setText("");
+        }
     }
 
     @Override
