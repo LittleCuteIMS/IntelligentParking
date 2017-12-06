@@ -55,7 +55,6 @@ public class ChargeShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charge_show);
         listView = (ListView) findViewById(R.id.list_view);
-        select();//获取数据
 
         //设置toolbar导航栏，设置导航按钮
         Toolbar finance_toolbar = (Toolbar) findViewById(R.id.finance_toolbar);
@@ -66,6 +65,12 @@ public class ChargeShowActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        select();//获取数据
     }
 
     private void select(){

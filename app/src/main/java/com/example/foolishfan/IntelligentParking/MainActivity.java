@@ -188,14 +188,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.nav_manage://应用管理
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,ApplicationManagement.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
             case R.id.nav_night://夜间模式
                 break;
             case R.id.nav_suggestion://意见反馈
