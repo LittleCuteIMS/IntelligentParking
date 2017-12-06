@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 /*
-Created by liangjaicheng on 2017/12/3.
+Created by liangjiacheng on 2017/12/3.
  */
-class UserCar extends ApplicationManagement{
+class UserCar extends AppCompatActivity{
 
     private ListView lv;
     List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();//设置数据源或者说数据集合
@@ -117,8 +117,8 @@ class UserCar extends ApplicationManagement{
             View view;
 
             if (convertView == null){
-                view = View.inflate(UserCar.this, R.layout.activity_user_car_item, null);
-                //view = LayoutInflater.from(UserCar.this).inflate(R.layout.activity_user_car_item, parent,false);
+                //view = View.inflate(UserCar.this, R.layout.activity_user_car_item, null);
+                view = LayoutInflater.from(UserCar.this).inflate(R.layout.activity_user_car_item, parent,false);
 
                 TextView plateNumber = (TextView) view.findViewById(R.id.tv_plateNumber);
                 TextView remarks = (TextView) view.findViewById(R.id.tv_remarks);
