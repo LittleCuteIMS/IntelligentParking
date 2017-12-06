@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.System;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.foolishfan.IntelligentParking.MainActivity;
+import com.example.foolishfan.IntelligentParking.R;
 
 /**
  * Created by Administrator on 2017/11/6 0006.

@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +23,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.Finance.FinanceActivity;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
+import com.example.foolishfan.IntelligentParking.System.Login;
+import com.example.foolishfan.IntelligentParking.System.MessageCenter;
+import com.example.foolishfan.IntelligentParking.System.ScanActivity;
+import com.example.foolishfan.IntelligentParking.System.SoftwareSet;
+import com.example.foolishfan.IntelligentParking.System.Suggestion;
+import com.example.foolishfan.IntelligentParking.User.AddUserCar;
+import com.example.foolishfan.IntelligentParking.User.ParkCollecting;
+import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
+import com.example.foolishfan.IntelligentParking.User.User;
+import com.example.foolishfan.IntelligentParking.User.UserCar;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
 
@@ -263,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_notification://我的收藏
                 if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,Collecting.class);
+                    Intent intent=new Intent(MainActivity.this,ParkCollecting.class);
                     startActivity(intent);
                 }else{
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();

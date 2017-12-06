@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
 
-    tools:context=".SoftwareSet">
+    tools:context=".System.SoftwareSet">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/softwareset_toolbar"

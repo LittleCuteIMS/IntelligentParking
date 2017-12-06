@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -33,6 +33,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.example.foolishfan.IntelligentParking.R;
 
 import java.util.ArrayList;
 import java.util.List;

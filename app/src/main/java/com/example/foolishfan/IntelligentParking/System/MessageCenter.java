@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.System;
 
 /**
  * Created by LiangJiacheng on 2017/11/19 0019.
@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.foolishfan.IntelligentParking.R;
 
 public class MessageCenter extends AppCompatActivity {          //消息中心界面
 

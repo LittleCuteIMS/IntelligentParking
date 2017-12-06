@@ -17,7 +17,7 @@ import java.net.URL;
  */
 
 public class HttpJson {
-    static private  String website="http://10.0.2.2/ParkingWeb/";    //设置访问IP地址值
+    static private  String website="http://120.78.173.73/ParkingWeb/";    //设置访问IP地址值
     private String path=null;     //获取访问的php文件的URL地址
     private String json=null;       //获取要传输的json格式字符串数据
     private Handler handler=null;   //接受子线程发送的数据， 并用此数据配合主线程更新UI
