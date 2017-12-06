@@ -40,6 +40,7 @@ public class User extends AppCompatActivity {
                 //保存用户昵称到手机
                 SharedPreferences.Editor recordEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
                 recordEditor.putString("nickname", nickNameString);
+                recordEditor.apply();
                 //将相应消息放在对应的控件显示
                 SharedPreferences userPref=getSharedPreferences("user",Context.MODE_PRIVATE);
                 String mobileString=userPref.getString("mobile",null);

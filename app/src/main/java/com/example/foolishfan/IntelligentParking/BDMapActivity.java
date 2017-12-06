@@ -132,6 +132,9 @@ public class BDMapActivity extends AppCompatActivity {
         showMarkers();//显示停车场位置图标
     }
 
+    //1.查询得出停车场数量
+    //2.循环，对每个停车场都执行一遍showMarkers
+    //3.传入不同的参数
     private void showMarkers(){
         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);//构建Marker图标
         final LatLng point1 = new LatLng(30.638251183288837,104.08398602054602);//设置停车场的经纬度

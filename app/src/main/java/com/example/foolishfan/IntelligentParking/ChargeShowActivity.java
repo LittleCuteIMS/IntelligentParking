@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -34,6 +35,7 @@ public class ChargeShowActivity extends AppCompatActivity {
                 try {
                     //把传回来的字符串转换成json数组
                     JSONArray jsonArray = new JSONArray(msg.obj.toString());
+                    Log.d("Feedback",jsonArray.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
                         Data data = new Data();
@@ -55,7 +57,6 @@ public class ChargeShowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charge_show);
         listView = (ListView) findViewById(R.id.list_view);
-        select();//获取数据
 
         //设置toolbar导航栏，设置导航按钮
         Toolbar finance_toolbar = (Toolbar) findViewById(R.id.finance_toolbar);
@@ -66,6 +67,12 @@ public class ChargeShowActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        select();//获取数据
     }
 
     private void select(){

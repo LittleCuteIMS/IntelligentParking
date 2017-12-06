@@ -25,6 +25,26 @@ public class Login extends AppCompatActivity {                 //登录界面活
     private EditText mMobile;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
     private Handler handler;                   //登录接收服务器返回的信息
+    private Handler handler0 = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.obj != null) {//如果不为空
+                String jsonStr = msg.obj.toString();
+                JSONObject jsonObject;
+                String nickNameString=null;
+                try {
+                    jsonObject = new JSONObject(jsonStr);
+                    nickNameString=jsonObject.getString("nickname");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                SharedPreferences.Editor recordEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+                recordEditor.putString("nickname", nickNameString);
+                recordEditor.apply();
+            }
+            super.handleMessage(msg);
+        }
+    };
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +106,7 @@ public class Login extends AppCompatActivity {                 //登录界面活
                     break;
                 case R.id.login_btn_login:                              //登录界面的登录按钮
                     login();
+                    getUserInfo();
                     break;
             }
         }
@@ -114,6 +135,19 @@ public class Login extends AppCompatActivity {                 //登录界面活
             HttpJson http = new HttpJson(path, json.toString(), handler);
             new Thread(http.getHttpThread()).start();
         }
+    }
+
+    public void getUserInfo() {
+        String mobile = mMobile.getText().toString().trim();
+        JSONObject json = new JSONObject();
+        try {
+            json.put("mobile", mobile);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String path = "user/userinfo_inquiry.php";
+        HttpJson http = new HttpJson(path, json.toString(), handler0);
+        new Thread(http.getHttpThread()).start();
     }
 
 
