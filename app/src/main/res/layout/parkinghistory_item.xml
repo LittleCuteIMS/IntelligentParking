@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:src="@drawable/parksimble_picture" />
+    <LinearLayout
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.29"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/plate"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="车牌号"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/intime"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="进入时间"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/outtime"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_weight="1.10"
+            android:gravity="center"
+            android:text="离开时间"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lv_plate"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/lv_intime"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1.10"
+            android:gravity="center"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/lv_outtime"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1.10"
+            android:gravity="center"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.29"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/parkid"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1.10"
+            android:gravity="center"
+            android:text="停车场编号"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/lv_parkId"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+</LinearLayout>
