@@ -72,9 +72,6 @@
             android:name=".System.Suggestion"
             android:label="意见反馈" />
         <activity
-            android:name=".User.ParkCollecting"
-            android:label="w我的收藏" />
-        <activity
             android:name=".Finance.ChargeActivity"
             android:label="充值" />
 

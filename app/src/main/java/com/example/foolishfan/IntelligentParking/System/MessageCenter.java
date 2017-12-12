@@ -32,7 +32,7 @@ public class MessageCenter extends AppCompatActivity {          //消息中心�
         //设置toolbar导航栏，设置导航按钮center
         Toolbar messagecenter_toolbar = (Toolbar) findViewById(R.id.messagecenter_toolbar);
         setSupportActionBar(messagecenter_toolbar);
-        messagecenter_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        messagecenter_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

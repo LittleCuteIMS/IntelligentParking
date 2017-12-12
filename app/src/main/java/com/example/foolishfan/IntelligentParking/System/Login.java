@@ -32,10 +32,10 @@ public class Login extends AppCompatActivity {                 //登录界面活
             if (msg.obj != null) {//如果不为空
                 String jsonStr = msg.obj.toString();
                 JSONObject jsonObject;
-                String nickNameString=null;
+                String nickNameString = null;
                 try {
                     jsonObject = new JSONObject(jsonStr);
-                    nickNameString=jsonObject.getString("nickname");
+                    nickNameString = jsonObject.getString("nickname");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {                 //登录界面活
         //设置toolbar导航栏，设置导航按钮
         Toolbar login_toolbar = (Toolbar) findViewById(R.id.login_toolbar);
         setSupportActionBar(login_toolbar);
-        login_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        login_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
