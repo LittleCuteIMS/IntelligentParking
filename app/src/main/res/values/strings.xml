@@ -38,4 +38,8 @@
     <string name="snackbar_short">在short时间段内显示Snackbar</string>
     <string name="snackbar_action">设置Snackbar的action</string>
     <string name="snackbar_color">自定义Snackbar的文字颜色</string>
+
+    <string name="send">提交</string>
+    <string name="send_success">成功提交</string>
+    <string name="network_error">网络错误</string>
 </resources>
