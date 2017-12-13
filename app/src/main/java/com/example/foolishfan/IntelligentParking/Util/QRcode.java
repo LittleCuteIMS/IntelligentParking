@@ -2,13 +2,12 @@ package com.example.foolishfan.IntelligentParking.Util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.Finance.BillingActivity;
-import com.example.foolishfan.IntelligentParking.MainActivity;
-import com.example.foolishfan.IntelligentParking.System.Login;
-import com.example.foolishfan.IntelligentParking.System.Register;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkInfoActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -71,16 +70,12 @@ public class QRcode {
         String jsonRs=result.getContents();
         try {
             JSONObject jsonObj=new JSONObject(jsonRs);
-            String mode=null;
-            String parkName=null;
-            mode=jsonObj.getString("mode");
-            parkName=jsonObj.getString("parkName");
-            if(mode.equals("park")){
-                Intent intent_Login_to_Register = new Intent(context, BillingActivity.class);
+            if(jsonObj.getString("mode").equals("park")){
+                Intent intent_Login_to_Register = new Intent(context, ParkInfoActivity.class);
+                Bundle bundle=new Bundle();//创建email内容
+                bundle.putString("parkInfoJson",jsonRs);
+                intent_Login_to_Register.putExtra("qr_code_info",bundle);
                 context.startActivity(intent_Login_to_Register);
-                Toast.makeText(context, parkName, Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(context, jsonRs, Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -76,8 +76,8 @@
             android:name=".Finance.ChargeActivity"
             android:label="充值" />
         <activity
-            android:name=".Finance.BillingActivity"
-            android:label="计时计费" />
+            android:name=".ParkNavigation.ParkInfoActivity"
+            android:label="停车场信息" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
