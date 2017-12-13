@@ -1,7 +1,14 @@
 package com.example.foolishfan.IntelligentParking.Util;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.Finance.BillingActivity;
+import com.example.foolishfan.IntelligentParking.MainActivity;
+import com.example.foolishfan.IntelligentParking.System.Login;
+import com.example.foolishfan.IntelligentParking.System.Register;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -9,6 +16,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2017/11/26 0026.
@@ -54,5 +64,27 @@ public class QRcode {
     //获取结果
     public IntentResult getResult(){
         return result;
+    }
+
+    //扫描到停车场信息的二维码，跳转到计时计费页面
+    public void startBilling(Context context){
+        String jsonRs=result.getContents();
+        try {
+            JSONObject jsonObj=new JSONObject(jsonRs);
+            String mode=null;
+            String parkName=null;
+            mode=jsonObj.getString("mode");
+            parkName=jsonObj.getString("parkName");
+            if(mode.equals("park")){
+                Intent intent_Login_to_Register = new Intent(context, BillingActivity.class);
+                context.startActivity(intent_Login_to_Register);
+                Toast.makeText(context, parkName, Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(context, jsonRs, Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

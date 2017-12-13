@@ -38,6 +38,9 @@ import com.example.foolishfan.IntelligentParking.User.UserCar;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -234,8 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (qr.getResult().getContents() == null) {
                 Toast.makeText(this, "扫码取消！", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "扫描成功，条码值: " + qr.getResult().getContents(), Toast.LENGTH_LONG).show();
-                //rsView.setText(qr.getResult().getContents());
+                qr.startBilling(MainActivity.this);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

@@ -44,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".System.ScanActivity"
             android:screenOrientation="portrait"
@@ -74,6 +75,9 @@
         <activity
             android:name=".Finance.ChargeActivity"
             android:label="充值" />
+        <activity
+            android:name=".Finance.BillingActivity"
+            android:label="计时计费" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

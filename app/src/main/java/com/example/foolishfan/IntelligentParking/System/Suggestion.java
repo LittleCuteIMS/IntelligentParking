@@ -29,6 +29,8 @@ public class Suggestion extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if(msg.obj!=null){
                 Toast.makeText(Suggestion.this, R.string.send_success, Toast.LENGTH_SHORT).show();
+                EditText suggestionEdTxt=(EditText)findViewById(R.id.suggestionEdTxt);
+                suggestionEdTxt.setText("");
             }else{
                 Toast.makeText(Suggestion.this, R.string.network_error, Toast.LENGTH_SHORT).show();
             }
