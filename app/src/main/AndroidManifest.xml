@@ -98,7 +98,9 @@
 
         <activity
             android:name=".ParkNavigation.ParkingsDetailsActivity"
-            android:label="查看附近停车场"/>
+            android:label="查看附近停车场" />
+        <activity android:name=".ParkNavigation.RoutePlanActivity"
+            android:label="导航"/>
     </application>
 
 </manifest>

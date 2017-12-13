@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:clickable="true"/>
 
-        <LinearLayout
+        <!--LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,8 +67,7 @@
                     android:textColor="#000" />
             </LinearLayout>
 
-        </LinearLayout>
-
+        </LinearLayout-->
 
     </FrameLayout>
 

@@ -11,8 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -30,8 +29,8 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.foolishfan.IntelligentParking.R;
 
@@ -43,6 +42,7 @@ public class BDMapActivity extends AppCompatActivity {
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
     private boolean isFirstLocate = true;//如果是第一次定位的话要将自己的位置显示在地图中间
+    private InfoWindow mInfoWindow;//每个marker的弹窗显示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class BDMapActivity extends AppCompatActivity {
     private void navigateTo(BDLocation location){
         if (isFirstLocate){
             LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
-
             //创建一个新的MapStatus
             MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(16).build();
             mapView.removeViewAt(1);// 不显示百度地图Logo
@@ -117,7 +116,6 @@ public class BDMapActivity extends AppCompatActivity {
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();//信息封装完毕后调用build()方法
         baiduMap.setMyLocationData(locationData);//在地图上显示当前位置
-
     }
 
     private void  requestLocation(){
@@ -130,42 +128,88 @@ public class BDMapActivity extends AppCompatActivity {
         option.setScanSpan(10000);//设置更新的时间间隔
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
-        showMarkers();//显示停车场位置图标
+        // 当前地点修改为自定义marker
+        BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.icon_geo);
+        baiduMap.setMyLocationConfiguration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker, 0xAAFFFF88, 0xAA00FF00));
+        initOverlay();//显示停车场位置图标
     }
 
-    //1.查询得出停车场数量
-    //2.循环，对每个停车场都执行一遍showMarkers
-    //3.传入不同的参数
-    private void showMarkers(){
-        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);//构建Marker图标
-        final LatLng point1 = new LatLng(30.638251183288837,104.08398602054602);//设置停车场的经纬度
-        OverlayOptions option = new MarkerOptions().position(point1).icon(bitmap); //构建MarkerOption，用于在地图上添加Marker
-        baiduMap.addOverlay(option);//在地图上添加Marker，并显示
+    public void initOverlay() {
+        //1.查询得出停车场数量
+        //2.循环，对每个停车场都执行一遍showMarkers
+        //3.传入不同的参数
+
+        // 添加四个覆盖物
+        BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);//构建Marker图标
+        BitmapDescriptor bdB = BitmapDescriptorFactory.fromResource(R.drawable.icon_markb);
+        BitmapDescriptor bdC = BitmapDescriptorFactory.fromResource(R.drawable.icon_markc);
+
+        final LatLng llA = new LatLng(30.6274,104.083);//设置停车场的经纬度
+        final LatLng llB = new LatLng(30.6188,104.096);//设置停车场的经纬度
+        final LatLng llC = new LatLng(30.6383,104.084);//设置停车场的经纬度
+
+        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA).zIndex(9).draggable(true); //构建MarkerOption，用于在地图上添加Marker
+        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdB).zIndex(9).draggable(true);
+        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdC).zIndex(9).draggable(true);
+
+        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);// 掉下动画
+        ooB.animateType(MarkerOptions.MarkerAnimateType.drop);
+        ooC.animateType(MarkerOptions.MarkerAnimateType.drop);
+
+        final Marker mMarkerA = (Marker) (baiduMap.addOverlay(ooA));//在地图上添加Marker，并显示
+        final Marker mMarkerB = (Marker) (baiduMap.addOverlay(ooB));
+        final Marker mMarkerC = (Marker) (baiduMap.addOverlay(ooC));
+
         //设置点击事件
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener()  {
             @Override
             public boolean onMarkerClick(final Marker marker)  {
-                TextView textView = new TextView(getApplication());//创建InfoWindow展示的view
-                textView.setBackgroundResource(R.color.colorHalftransparent);//设置InfoWindow的背景半透明
-                textView.setText("四川大学停车场 ");
-                InfoWindow mInfoWindow = new InfoWindow(textView, point1, 80);//创建InfoWindow , 传入view，地理坐标，y轴偏移量
-                baiduMap.showInfoWindow(mInfoWindow);//显示InfoWindow
-
-                ImageView imageView = (ImageView) findViewById(R.id.photo);
-                imageView.setImageResource(R.drawable.advanse1);
-
-                TextView textView1 = (TextView) findViewById(R.id.tohere);
-                textView1.setBackgroundColor(Color.WHITE);
-                textView1.setText("到这里去");
-
-                TextView textView2 = (TextView) findViewById(R.id.parking_name);
-                textView2.setBackgroundColor(Color.WHITE);
-                textView2.setText("名称：");
-                textView2.append(textView.getText());
-
-                TextView textView3 = (TextView) findViewById(R.id.parking_addr);
-                textView3.setBackgroundColor(Color.WHITE);
-                textView3.setText("地址：成都市武侯区一环路南一段");
+                Button button = new Button(getApplicationContext());
+                button.setBackgroundResource(R.drawable.popup);
+                InfoWindow.OnInfoWindowClickListener listener = null;
+                if (marker == mMarkerA) {
+                    button.setText("点击去：王府井停车场");
+                    button.setTextColor(Color.BLACK);
+                    button.setWidth(300);
+                    listener = new InfoWindow.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick() {
+                            Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
+                            startActivity(intent);
+                            baiduMap.hideInfoWindow();
+                        }
+                    };
+                    LatLng ll = marker.getPosition();//获取当前地点
+                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                    baiduMap.showInfoWindow(mInfoWindow);
+                }else if (marker == mMarkerB) {
+                    button.setText("点击去：万达广场停车场");
+                    button.setTextColor(Color.BLACK);
+                    button.setWidth(300);
+                    listener = new InfoWindow.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick() {
+                            Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
+                            startActivity(intent);
+                            baiduMap.hideInfoWindow();
+                        }
+                    };
+                    LatLng ll = marker.getPosition();//获取当前地点
+                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                    baiduMap.showInfoWindow(mInfoWindow);
+                } else if (marker == mMarkerC) {
+                    button.setText("点击去：四川大学停车场");
+                    button.setTextColor(Color.BLACK);
+                    button.setWidth(300);
+                    listener = new InfoWindow.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick() {
+                            Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
+                            startActivity(intent);
+                            baiduMap.hideInfoWindow();
+                        }
+                    };
+                    LatLng ll = marker.getPosition();//获取当前地点
+                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
+                    baiduMap.showInfoWindow(mInfoWindow);
+                }
                 return true;
             }
         });
