@@ -16,12 +16,49 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <TextView
-        android:id="@+id/hintView"
+        android:id="@+id/parkNameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="扫描开启此页面"
-        android:textSize="24sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/park_info_toolbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        android:text="停车场名称："
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/parkAddressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/parkNameView"
+        android:layout_alignStart="@+id/parkNameView"
+        android:layout_below="@+id/parkNameView"
+        android:layout_marginTop="25dp"
+        android:text="停车场地址："
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/parkPhoneView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/parkAddressView"
+        android:layout_alignStart="@+id/parkAddressView"
+        android:layout_below="@+id/parkAddressView"
+        android:layout_marginTop="25dp"
+        android:text="停车场电话："
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/parkChargeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/parkPhoneView"
+        android:layout_alignStart="@+id/parkPhoneView"
+        android:layout_below="@+id/parkPhoneView"
+        android:layout_marginTop="25dp"
+        android:text="停车场费率："
+        android:textSize="24sp" />
+
 </RelativeLayout>
