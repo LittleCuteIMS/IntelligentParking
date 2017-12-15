@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.Finance;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
 import org.json.JSONException;

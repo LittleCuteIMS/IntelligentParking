@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.User;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,7 +70,7 @@ public class UserCar extends AppCompatActivity{
         }
 
         //3.把手机号发送到服务器上进行查询
-        String path="user/carinfo_inquiry";
+        String path="user/carinfo_inquiry.php";
         HttpJson http=new HttpJson(path,json.toString(),handler);
         new Thread(http.getHttpThread()).start();
     }
@@ -78,6 +80,7 @@ public class UserCar extends AppCompatActivity{
         public void handleMessage(Message msg) {
             if (msg.obj != null) {
                 try {
+                    Log.d("message",msg.obj.toString());
                     //把传回来的字符串转换成json数组
                     JSONArray jsonArray = new JSONArray(msg.obj.toString());
                     for (int i = 0; i < jsonArray.length(); i++) {

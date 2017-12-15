@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.System;
 
 /**
  * Created by LiangJiacheng on 2017/11/19 0019.
@@ -17,20 +17,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Collecting extends AppCompatActivity {          //用户车辆信息界面
+import com.example.foolishfan.IntelligentParking.R;
 
-    private EditText mRemark;                            //备注编辑
+public class MessageCenter extends AppCompatActivity {          //消息中心界面
+
+    private EditText mMessage;                        //用户车牌号
     private Handler handler;                   //登录接收服务器返回的信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collecting);
+        setContentView(R.layout.activity_message_center);
 
-        //设置toolbar导航栏，设置导航按钮
-        Toolbar collecting_toolbar = (Toolbar) findViewById(R.id.collecting_toolbar);
-        setSupportActionBar(collecting_toolbar);
-        collecting_toolbar.setNavigationOnClickListener(new View.OnClickListener(){
+        //设置toolbar导航栏，设置导航按钮center
+        Toolbar messagecenter_toolbar = (Toolbar) findViewById(R.id.messagecenter_toolbar);
+        setSupportActionBar(messagecenter_toolbar);
+        messagecenter_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.ParkingsData;
 import com.example.foolishfan.IntelligentParking.Util.ParkingAdapter;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingsDetailsActivity extends AppCompatActivity {
-    private ParkingsData[] parkingsDatas = {new ParkingsData("停车场1",R.drawable.apple),new ParkingsData("停车场2",R.drawable.watermelon),new ParkingsData("停车场3",R.drawable.orange),new ParkingsData("停车场4",R.drawable.huolongguo),new ParkingsData("停车场5",R.drawable.lemon),new ParkingsData("停车场6",R.drawable.caomei),new ParkingsData("停车场7",R.drawable.shiliu),new ParkingsData("停车场8",R.drawable.pic_8),new ParkingsData("停车场9",R.drawable.pic_9),new ParkingsData("停车场10",R.drawable.pic_10)};
+    private ParkingsData[] parkingsDatas = {new ParkingsData("停车场1", R.drawable.apple),new ParkingsData("停车场2",R.drawable.watermelon),new ParkingsData("停车场3",R.drawable.orange),new ParkingsData("停车场4",R.drawable.huolongguo),new ParkingsData("停车场5",R.drawable.lemon),new ParkingsData("停车场6",R.drawable.caomei),new ParkingsData("停车场7",R.drawable.shiliu),new ParkingsData("停车场8",R.drawable.pic_8),new ParkingsData("停车场9",R.drawable.pic_9),new ParkingsData("停车场10",R.drawable.pic_10)};
     private List<ParkingsData> parkingsDataList = new ArrayList<>();//数据列表
     private ParkingAdapter adapter;//数据适配器
     private SwipeRefreshLayout swipeRefresh;//实现下拉刷新

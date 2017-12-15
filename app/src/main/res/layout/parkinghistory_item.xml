@@ -7,7 +7,7 @@
      android:id="@+id/logo"
      android:layout_width="45dp"
      android:layout_height="70dp"
-     android:src="@drawable/parking_picture"
+     android:src="@drawable/history"
         android:layout_weight="0.01" />
 
 

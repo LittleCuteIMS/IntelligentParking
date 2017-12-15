@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.User;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.System.Resetpwd;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
 import org.json.JSONException;
