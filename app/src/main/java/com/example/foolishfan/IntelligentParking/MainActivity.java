@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +32,14 @@ import com.example.foolishfan.IntelligentParking.System.ScanActivity;
 import com.example.foolishfan.IntelligentParking.System.SoftwareSet;
 import com.example.foolishfan.IntelligentParking.System.Suggestion;
 import com.example.foolishfan.IntelligentParking.User.AddUserCar;
-import com.example.foolishfan.IntelligentParking.User.ParkCollecting;
 import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
 import com.example.foolishfan.IntelligentParking.User.User;
 import com.example.foolishfan.IntelligentParking.User.UserCar;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
     private QRcode qr;
-    private TextView tvNavMobile,tvNavNickname;
+    private TextView tvNavMobile, tvNavNickname;
     //用于实现广告轮播
     private ViewPager mViewPaper;
     private List<ImageView> images;
@@ -78,23 +81,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         //二维码初始化
-        qr=new QRcode();
+        qr = new QRcode();
 
         //获取相关按钮
-        Button addCar=(Button)findViewById(R.id.addCar);
-        Button parkNearby=(Button)findViewById(R.id.parkNearby);
-        Button wallet=(Button)findViewById(R.id.wallet);
+        Button addCar = (Button) findViewById(R.id.addCar);
+        Button parkNearby = (Button) findViewById(R.id.parkNearby);
+        Button wallet = (Button) findViewById(R.id.wallet);
+        ImageButton scanImageButton = (ImageButton) findViewById(R.id.scanImageButton);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
         ImageView mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
-        tvNavMobile=(TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
-        tvNavNickname=(TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
+        tvNavMobile = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
+        tvNavNickname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
 
         //注册监听事件
         addCar.setOnClickListener(mainOnClick);
         parkNearby.setOnClickListener(mainOnClick);
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
+        scanImageButton.setOnClickListener(mainOnClick);
         navigationView.setNavigationItemSelectedListener(this);
 
         //实现侧边栏滑入滑出
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //显示的图片
         images = new ArrayList<ImageView>();
-        for(int i = 0; i < imageIds.length; i++){
+        for (int i = 0; i < imageIds.length; i++) {
             ImageView imageView = new ImageView(this);
             imageView.setBackgroundResource(imageIds[i]);
             images.add(imageView);
@@ -148,19 +153,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         //获取登录状态
-        SharedPreferences statusPreferences=getSharedPreferences("status",Context.MODE_PRIVATE);
-        isLogin=statusPreferences.getBoolean("isLogin",false);
+        SharedPreferences statusPreferences = getSharedPreferences("status", Context.MODE_PRIVATE);
+        isLogin = statusPreferences.getBoolean("isLogin", false);
 
         //更改用户名显示
-        if(isLogin){
+        if (isLogin) {
             String nickname;
             String mobile;
-            SharedPreferences userPref=getSharedPreferences("user",Context.MODE_PRIVATE);
-            nickname=userPref.getString("nickname",null);
-            mobile=userPref.getString("mobile",null);
+            SharedPreferences userPref = getSharedPreferences("user", Context.MODE_PRIVATE);
+            nickname = userPref.getString("nickname", null);
+            mobile = userPref.getString("mobile", null);
             tvNavNickname.setText(nickname);
             tvNavMobile.setText(mobile);
-        }else{
+        } else {
             tvNavNickname.setText("请登录");
             tvNavMobile.setText("");
         }
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStop() {
         super.onStop();
         drawer.closeDrawers();
-        if(scheduledExecutorService != null){
+        if (scheduledExecutorService != null) {
             scheduledExecutorService.shutdown();
             scheduledExecutorService = null;
         }
@@ -209,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //实现切换网络连接
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.switchLocalhost:
                 HttpJson.setWebsite("http://10.0.2.2/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为10.0.2.2", Toast.LENGTH_SHORT).show();
@@ -222,21 +227,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.switchScan:
-                qr.scanQRcode(MainActivity.this,ScanActivity.class);
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         qr.setResult(requestCode, resultCode, data);
-        if(qr.getResult()!= null) {
-            if(qr.getResult().getContents() == null) {
+        if (qr.getResult() != null) {
+            if (qr.getResult().getContents() == null) {
                 Toast.makeText(this, "扫码取消！", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "扫描成功，条码值: " + qr.getResult().getContents(), Toast.LENGTH_LONG).show();
-                //rsView.setText(qr.getResult().getContents());
+                qr.startBilling(MainActivity.this);
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -247,51 +248,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.nav_me://停车历史
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,ParkingHistory.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, ParkingHistory.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.nav_message://我的车辆
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,UserCar.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, UserCar.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.nav_friend://消息中心
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,MessageCenter.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, MessageCenter.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
-                break;
-            case R.id.nav_notification://我的收藏
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,ParkCollecting.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_night://夜间模式
                 break;
             case R.id.nav_suggestion://意见反馈
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,Suggestion.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, Suggestion.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.nav_setting://设置
-                Intent intent=new Intent(MainActivity.this,SoftwareSet.class);
+                Intent intent = new Intent(MainActivity.this, SoftwareSet.class);
                 startActivity(intent);
                 break;
 
@@ -302,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //页面点击事件
-    View.OnClickListener mainOnClick= new View.OnClickListener() {
+    View.OnClickListener mainOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             mainOnClick(v);
@@ -310,37 +301,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
 
     //页面按钮点击事件的方法
-    private void mainOnClick(View v){
-        int id=v.getId();
-        switch (id){
+    private void mainOnClick(View v) {
+        int id = v.getId();
+        switch (id) {
             case R.id.ivAvatar://点击头像的跳转事件
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,User.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, User.class);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(MainActivity.this,Login.class);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, Login.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.addCar://点击添加车辆的监听事件
-                if(isLogin){
-                    Intent intent=new Intent(MainActivity.this,AddUserCar.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, AddUserCar.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.parkNearby://点击附近停车场的监听事件
-                Intent intent1=new Intent(MainActivity.this,BDMapActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, BDMapActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.wallet://点击我的钱包的监听事件
-                if(isLogin) {
-                    Intent intent = new Intent(MainActivity.this,FinanceActivity.class);
+                if (isLogin) {
+                    Intent intent = new Intent(MainActivity.this, FinanceActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.scanImageButton:
+                qr.scanQRcode(MainActivity.this, ScanActivity.class);
                 break;
         }
     }
@@ -376,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //图片轮播任务
-    private class ViewPageTask implements Runnable{
+    private class ViewPageTask implements Runnable {
 
         @Override
         public void run() {
@@ -388,10 +382,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * 接收子线程传递过来的数据
      */
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             mViewPaper.setCurrentItem(currentItem);
-        };
+        }
+
+        ;
     };
 }
 

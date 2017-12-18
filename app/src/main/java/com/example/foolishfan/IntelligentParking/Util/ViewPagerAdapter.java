@@ -9,6 +9,8 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017-12-6.
+ * @author 蔡创
+ * 轮询广告的适配器
  */
 
 public class ViewPagerAdapter extends PagerAdapter {

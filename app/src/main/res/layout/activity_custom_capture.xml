@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="闪光灯" />
+
     <!-- 这个控件就是扫描的窗口了 -->
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/dbv_custom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/dbv_custom"
-        app:zxing_framing_rect_width="250dp"
         app:zxing_framing_rect_height="250dp"
+        app:zxing_framing_rect_width="250dp"
         app:zxing_preview_scaling_strategy="fitXY"
-        app:zxing_use_texture_view="true"
-        >
+        app:zxing_use_texture_view="true">
+
+        <Button
+            android:id="@+id/btn_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:text="闪光灯" />
     </com.journeyapps.barcodescanner.DecoratedBarcodeView>
 
 </LinearLayout>
