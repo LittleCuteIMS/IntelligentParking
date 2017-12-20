@@ -45,7 +45,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BDMapActivity extends AppCompatActivity implements  View.OnClickListener{
+public class BDMapActivity extends AppCompatActivity{
     public LocationClient mLocationClient;//定位类
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
@@ -100,9 +100,6 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
             }
         });
 
-        Button button = (Button) findViewById(R.id.start);
-        button.setOnClickListener(this);
-
         //在运行时一次申请3个权限
         List<String> permissionList = new ArrayList<>();
         //判断没有被授权则添加到List集合
@@ -122,13 +119,10 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
         }else {
             requestLocation();
         }
-    }
 
-    @Override
-    public void onClick(View v) {
-                String path="parkPHP/parkAddressSelect.php";
-                HttpJson http=new HttpJson(path,"",handler);
-                new Thread(http.getHttpThread()).start();
+        String path="parkPHP/parkAddressSelect.php";
+        HttpJson http=new HttpJson(path,"",handler);
+        new Thread(http.getHttpThread()).start();
     }
 
     public class MyLocationListener implements BDLocationListener{
@@ -145,7 +139,7 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
         if (isFirstLocate){
             LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
             //创建一个新的MapStatus
-            MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(16).build();
+            MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(15).build();
             mapView.removeViewAt(1);// 不显示百度地图Logo
             mapView.showZoomControls(false);// 不显示缩放比例尺
 
@@ -181,7 +175,7 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
     }
 
     public void initOverlay(final ParkingsData parkingsData) {
-        BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_marka);//构建Marker图标
+        BitmapDescriptor bdA = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);//构建Marker图标
         final LatLng llA = new LatLng(parkingsData.getLatitude(),parkingsData.getLongitude());//设置停车场的经纬度
         MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA).zIndex(9).draggable(true); //构建MarkerOption，用于在地图上添加Marker
         ooA.animateType(MarkerOptions.MarkerAnimateType.drop);// 掉下动画
