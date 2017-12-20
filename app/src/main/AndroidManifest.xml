@@ -44,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".System.ScanActivity"
             android:screenOrientation="portrait"
@@ -55,10 +54,10 @@
             android:name=".System.SoftwareSet"
             android:label="系统设置" />
         <activity
-            android:name=".Finance.FinanceActivity"
+            android:name=".ParkNavigation.FinanceActivity"
             android:label="我的钱包" />
         <activity
-            android:name=".Finance.ChargeShowActivity"
+            android:name=".ParkNavigation.ChargeShowActivity"
             android:label="交易记录" />
         <activity
             android:name=".User.AddUserCar"
@@ -73,7 +72,7 @@
             android:name=".System.Suggestion"
             android:label="意见反馈" />
         <activity
-            android:name=".Finance.ChargeActivity"
+            android:name=".ParkNavigation.ChargeActivity"
             android:label="充值" />
         <activity
             android:name=".ParkNavigation.ParkInfoActivity"
@@ -99,8 +98,10 @@
         <activity
             android:name=".ParkNavigation.ParkingsDetailsActivity"
             android:label="查看附近停车场" />
-        <activity android:name=".ParkNavigation.RoutePlanActivity"
-            android:label="导航"/>
+        <activity
+            android:name=".ParkNavigation.RoutePlanActivity"
+            android:label="导航" />
+        <activity android:name=".ParkNavigation.DetailedActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.Finance;
+package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.Data;
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.Util.Data;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
 import org.json.JSONArray;
@@ -49,7 +50,10 @@ public class ChargeShowActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else {
+                Toast.makeText(ChargeShowActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
             }
+            super.handleMessage(msg);
         };
     };
 

@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
 
 /**
  * Created by zhanglin on 2017/12/1.

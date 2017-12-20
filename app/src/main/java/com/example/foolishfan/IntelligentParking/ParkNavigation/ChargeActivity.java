@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.Finance;
+package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.content.Context;
 import android.content.SharedPreferences;

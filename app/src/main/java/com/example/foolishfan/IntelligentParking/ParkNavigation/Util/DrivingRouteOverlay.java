@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
 
 import android.graphics.Color;
 import android.os.Bundle;
