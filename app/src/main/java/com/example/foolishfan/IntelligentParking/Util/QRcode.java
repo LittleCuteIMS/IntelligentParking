@@ -20,7 +20,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Administrator on 2017/11/26 0026.
+ * Created by CaiChuang on 2017/11/26 0026.
+ * 二维码扫描类
  */
 
 public class QRcode {

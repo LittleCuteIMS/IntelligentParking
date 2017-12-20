@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.Util;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
@@ -8,8 +8,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017-12-6.
- * @author 蔡创
+ * Created by CaiChuang on 2017-12-6.
  * 轮询广告的适配器
  */
 

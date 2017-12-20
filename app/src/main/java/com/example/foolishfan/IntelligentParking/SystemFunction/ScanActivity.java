@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.System;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -16,7 +16,8 @@ import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 /**
- * Created by Administrator on 2017/11/26 0026.
+ * Created by CaiChuang on 2017/11/26 0026.
+ * 自定义二维码扫描页面
  */
 
 public class ScanActivity extends Activity implements DecoratedBarcodeView.TorchListener{

@@ -124,7 +124,7 @@
 
         <!-- User defined.  用户自定义的广播接收器-->
         <receiver
-            android:name="com.example.foolishfan.IntelligentParking.System.MyReceiver"
+            android:name="com.example.foolishfan.IntelligentParking.SystemFunction.MyReceiver"
             android:exported="false"
             android:enabled="true">
             <intent-filter>
@@ -142,22 +142,22 @@
 
 
         <activity
-            android:name=".System.Login"
+            android:name=".User.Login"
             android:label="登录" />
         <activity
             android:name=".User.User"
             android:label="个人中心" />
         <activity
-            android:name=".System.Register"
+            android:name=".User.Register"
             android:label="用户注册" />
         <activity
-            android:name=".System.Resetpwd"
+            android:name=".User.Resetpwd"
             android:label="密码修改" />
         <activity
             android:name=".User.UserCar"
             android:label="我的车辆" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SystemFunction.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -166,13 +166,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".System.ScanActivity"
+            android:name=".SystemFunction.ScanActivity"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".System.SoftwareSet"
+            android:name=".SystemFunction.SoftwareSet"
             android:label="系统设置" />
         <activity
             android:name=".ParkNavigation.FinanceActivity"
@@ -187,11 +187,11 @@
             android:name=".User.ParkingHistory"
             android:label="停车历史" />
         <activity
-            android:name=".System.MessageCenter"
+            android:name=".SystemFunction.MessageCenter"
             android:label="消息中心"
             android:launchMode="singleTask"/>
         <activity
-            android:name=".System.Suggestion"
+            android:name=".SystemFunction.Suggestion"
             android:label="意见反馈" />
         <activity
             android:name=".ParkNavigation.ChargeActivity"

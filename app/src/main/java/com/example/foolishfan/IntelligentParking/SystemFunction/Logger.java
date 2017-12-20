@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.System;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.util.Log;
 

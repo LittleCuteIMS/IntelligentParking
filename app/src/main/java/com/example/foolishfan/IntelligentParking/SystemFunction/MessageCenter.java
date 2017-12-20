@@ -1,10 +1,8 @@
-package com.example.foolishfan.IntelligentParking.System;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 /**
  * Created by LiangJiacheng on 2017/11/19 0019.
  */
-
-
 
 import android.content.Context;
 import android.content.SharedPreferences;

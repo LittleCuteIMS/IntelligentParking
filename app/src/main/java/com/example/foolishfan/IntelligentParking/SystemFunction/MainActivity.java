@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,11 +26,8 @@ import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
-import com.example.foolishfan.IntelligentParking.System.Login;
-import com.example.foolishfan.IntelligentParking.System.MessageCenter;
-import com.example.foolishfan.IntelligentParking.System.ScanActivity;
-import com.example.foolishfan.IntelligentParking.System.SoftwareSet;
-import com.example.foolishfan.IntelligentParking.System.Suggestion;
+import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.User.Login;
 import com.example.foolishfan.IntelligentParking.User.AddUserCar;
 import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
 import com.example.foolishfan.IntelligentParking.User.User;
