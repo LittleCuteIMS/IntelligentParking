@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.foolishfan.IntelligentParking"
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion 15
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -22,6 +22,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/BaiduLBS_Android.jar')
+<<<<<<< HEAD
+=======
+
+    //Toolbar
+    //RecyclerView
+>>>>>>> b13b2a9dc03cd532b45b886eafc5207dafa3a831
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.google.zxing:core:3.3.0'
     compile 'com.android.support:appcompat-v7:25.3.1'

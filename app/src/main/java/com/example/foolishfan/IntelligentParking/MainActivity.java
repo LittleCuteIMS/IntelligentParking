@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.Finance.FinanceActivity;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.System.Login;
 import com.example.foolishfan.IntelligentParking.System.MessageCenter;
@@ -37,9 +37,6 @@ import com.example.foolishfan.IntelligentParking.User.User;
 import com.example.foolishfan.IntelligentParking.User.UserCar;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

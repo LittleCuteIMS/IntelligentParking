@@ -30,44 +30,11 @@
             android:layout_height="match_parent"
             android:clickable="true"/>
 
-        <!--LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="435dp"
-            android:background="@color/colorTransparent">
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorTransparent"
-                android:layout_weight="5"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5">
-                <TextView
-                    android:id="@+id/tohere"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="21sp"
-                    android:textColor="#000" />
-                <TextView
-                    android:id="@+id/parking_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#000" />
-                <TextView
-                    android:id="@+id/parking_addr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="#000" />
-            </LinearLayout>
-
-        </LinearLayout-->
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"/>
 
     </FrameLayout>
 

@@ -1,6 +1,7 @@
 package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -40,10 +41,10 @@ import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.Util.DrivingRouteOverlay;
-import com.example.foolishfan.IntelligentParking.Util.OverlayManager;
-import com.example.foolishfan.IntelligentParking.Util.TransitRouteOverlay;
-import com.example.foolishfan.IntelligentParking.Util.WalkingRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.DrivingRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.OverlayManager;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.TransitRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.WalkingRouteOverlay;
 
 public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickListener, OnGetRoutePlanResultListener {
     private MapView mMapView = null;//地图对象
@@ -53,8 +54,10 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
     public LocationClient mLocClient;//定位类
     private boolean isFirstLoc = true;// 是否首次定位
     public MyLocationListenner myListener = new MyLocationListenner();//定位监听器
-    private double myLongitude; //经度
-    private double myLatitude;  //纬度
+    private double myLongitude; //纬度
+    private double myLatitude;  //经度
+    private double latitude;//停车场经度
+    private double longitude;//停车场纬度
 
     //浏览路线节点相关
     Button mBtnPre = null;//上一个节点
@@ -74,6 +77,10 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
         mLocClient.registerLocationListener(myListener);//注册一个定位监听器，获取到位置信息则回调这个定位监听器
         setContentView(R.layout.activity_routeplan);
 
+        Intent intent = getIntent();
+        latitude = intent.getDoubleExtra("latitude",0);
+        longitude = intent.getDoubleExtra("longitude",0);
+
         //初始化地图
         mMapView = (MapView) findViewById(R.id.map);
         mBaidumap = mMapView.getMap();
@@ -82,7 +89,6 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
         // 定位初始化
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);// 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
@@ -165,8 +171,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
         mBtnNext.setVisibility(View.INVISIBLE);
         mBaidumap.clear();
         PlanNode stNode = PlanNode.withLocation(new LatLng(myLatitude, myLongitude));
-        //TODO 服务器数据接口
-        PlanNode enNode = PlanNode.withLocation(new LatLng(30.6274,104.083)); //如果使用服务器传递数据将shop的经纬度替换
+        PlanNode enNode = PlanNode.withLocation(new LatLng(latitude,longitude)); //如果使用服务器传递数据将shop的经纬度替换
         DrivingRoutePlanOption drivingOption = new DrivingRoutePlanOption();
         mSearch.drivingSearch((drivingOption).from(stNode).to(enNode));// 发起驾车路线规划
     }
@@ -177,13 +182,8 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
         mBtnNext.setVisibility(View.INVISIBLE);
         mBaidumap.clear();
         PlanNode stNode = PlanNode.withLocation(new LatLng(myLatitude, myLongitude));
-        //TODO 服务器数据接口
-        PlanNode enNode = PlanNode.withLocation(new LatLng(30.6274,104.083)); //如果使用服务器传递数据将shop的经纬度替换
-        DrivingRoutePlanOption drivingOption = new DrivingRoutePlanOption();
+        PlanNode enNode = PlanNode.withLocation(new LatLng(latitude,longitude)); //如果使用服务器传递数据将shop的经纬度替换
         mSearch.transitSearch((new TransitRoutePlanOption()).from(stNode).city("成都").to(enNode));// 发起公交路线规划
-        /*if (v.getId() == R.id.walk) {
-            mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));
-        }*/
     }
     public void SearchButtonProcessWalk(View v) {
         //重置浏览节点的路线数据
@@ -192,9 +192,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
         mBtnNext.setVisibility(View.INVISIBLE);
         mBaidumap.clear();
         PlanNode stNode = PlanNode.withLocation(new LatLng(myLatitude, myLongitude));
-        //TODO 服务器数据接口
-        PlanNode enNode = PlanNode.withLocation(new LatLng(30.6274,104.083)); //如果使用服务器传递数据将shop的经纬度替换
-        DrivingRoutePlanOption drivingOption = new DrivingRoutePlanOption();
+        PlanNode enNode = PlanNode.withLocation(new LatLng(latitude,longitude)); //如果使用服务器传递数据将shop的经纬度替换
         mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(enNode));// 发起公交路线规划
     }
 
@@ -202,8 +200,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
      * 节点浏览示例
      */
     public void nodeClick(View v) {
-        if (route == null ||
-                route.getAllStep() == null) {
+        if (route == null || route.getAllStep() == null) {
             return;
         }
         if (nodeIndex == -1 && v.getId() == R.id.pre) {
@@ -275,7 +272,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
             mBaidumap.setOnMarkerClickListener(overlay);
             routeOverlay = overlay;
             int totalLine = result.getRouteLines().size();
-            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路，"+"已经为您规划最优路线。", Toast.LENGTH_SHORT).show();
             overlay.setData(result.getRouteLines().get(0));
             overlay.addToMap();
             overlay.zoomToSpan();
@@ -308,7 +305,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
             mBaidumap.setOnMarkerClickListener(overlay);
             routeOverlay = overlay;
             int totalLine = result.getRouteLines().size();
-            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路，"+"已经为您规划最优路线。", Toast.LENGTH_SHORT).show();
             overlay.setData(result.getRouteLines().get(0));
             overlay.addToMap();
             overlay.zoomToSpan();
@@ -336,7 +333,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
             routeOverlay = overlay;
             mBaidumap.setOnMarkerClickListener(overlay);
             int totalLine = result.getRouteLines().size();
-            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RoutePlanActivity.this, "共查询出" + totalLine + "条符合条件的线路，"+"已经为您规划最优路线。", Toast.LENGTH_SHORT).show();
             overlay.setData(result.getRouteLines().get(0));// 设置一条最近的驾车路线方案
             overlay.addToMap();
             overlay.zoomToSpan();
