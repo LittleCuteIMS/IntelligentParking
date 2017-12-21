@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:background="@color/colorHalftransparent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/finance_toolbar"
@@ -17,50 +17,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:padding="5dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/finance_toolbar">
-
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:textColor="@android:color/black"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="充值编号"/>
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:textColor="@android:color/black"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="充值时间"/>
-
-        <TextView
-            android:id="@+id/tv_tech"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="充值金额"/>
-
-    </LinearLayout>
-
-    <ListView
+    <com.example.foolishfan.IntelligentParking.ParkNavigation.Util.LoadListView
+        android:layout_below="@id/finance_toolbar"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fastScrollEnabled="true"></ListView>
+        android:background="#fff"
+        android:dividerHeight="10dp"
+        android:fastScrollEnabled="true"></com.example.foolishfan.IntelligentParking.ParkNavigation.Util.LoadListView>
 
-</LinearLayout>
+</RelativeLayout>
