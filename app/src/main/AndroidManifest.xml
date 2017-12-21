@@ -197,7 +197,7 @@
             android:name=".ParkNavigation.ChargeActivity"
             android:label="充值" />
         <activity
-            android:name=".ParkNavigation.ParkInfoActivity"
+            android:name=".SystemFunction.HourlyBilling"
             android:label="停车场信息" />
 
         <meta-data
