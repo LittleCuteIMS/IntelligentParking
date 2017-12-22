@@ -5,15 +5,15 @@ package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
  */
 
 public class Data {
-    private int imageId;
+    private String id;
     private String time;
     private String amount;
 
-    public int getImageId() {
-        return imageId;
+    public String getId() {
+        return id;
     }
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
+    public void setId(String imageId) {
+        this.id = imageId;
     }
     public String getTime() {
         return time;

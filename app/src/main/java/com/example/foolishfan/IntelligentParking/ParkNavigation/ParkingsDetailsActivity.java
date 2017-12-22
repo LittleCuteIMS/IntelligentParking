@@ -1,7 +1,6 @@
 package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,8 +30,6 @@ public class ParkingsDetailsActivity extends AppCompatActivity {
     private List<ParkingsData> parkingsDataList = new ArrayList<>();//数据列表
     private ParkingAdapter adapter;//数据适配器
     private SwipeRefreshLayout swipeRefresh;//实现下拉刷新
-    private Bitmap bitmap;
-
     //主线程创建消息处理器
     private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
@@ -40,6 +37,7 @@ public class ParkingsDetailsActivity extends AppCompatActivity {
                 try {
                     //把传回来的字符串转换成json数组
                     JSONArray jsonArray = new JSONArray(msg.obj.toString());
+                    parkingsDataList.clear();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);//解析为json对象
                         parkingsDatas = new ParkingsData();
@@ -116,9 +114,7 @@ public class ParkingsDetailsActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String path="parkPHP/parkAddressSelect.php";
-                        HttpJson http=new HttpJson(path,"",handler);
-                        new Thread(http.getHttpThread()).start();//本地数据刷新
+                        send();
                         adapter.notifyDataSetChanged();//刷新数据列表
                         swipeRefresh.setRefreshing(false);
                     }
