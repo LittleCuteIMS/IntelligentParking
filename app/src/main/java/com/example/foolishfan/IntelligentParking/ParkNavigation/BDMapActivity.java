@@ -49,6 +49,8 @@ public class BDMapActivity extends AppCompatActivity{
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
     private boolean isFirstLocate = true;//如果是第一次定位的话要将自己的位置显示在地图中间
+    private double localLatitude;//当前经度
+    private double localLongitude;//当前维度
 
     //接收返回的停车场的经纬度
     private Handler handler = new Handler(){
@@ -135,7 +137,9 @@ public class BDMapActivity extends AppCompatActivity{
 
     private void navigateTo(BDLocation location){
         if (isFirstLocate){
-            LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
+            localLatitude = location.getLatitude();
+            localLongitude = location.getLongitude();
+            LatLng ll = new LatLng(localLatitude,localLongitude);//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
             //创建一个新的MapStatus
             MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(15).build();
             mapView.removeViewAt(1);// 不显示百度地图Logo
@@ -190,16 +194,21 @@ public class BDMapActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
-                            double latitude = parkingsData.getLatitude();
-                            double longitude = parkingsData.getLongitude();
-                            intent.putExtra("latitude",latitude);
-                            intent.putExtra("longitude",longitude);
+                            intent.putExtra("latitude",parkingsData.getLatitude());
+                            intent.putExtra("longitude",parkingsData.getLongitude());
                             startActivity(intent);
                         }
                     });
                     builder.setNeutralButton("立刻前往", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(BDMapActivity.this,NavigationActivity.class);
+                            intent.putExtra("parkLatitude",parkingsData.getLatitude());
+                            intent.putExtra("parkLongitude",parkingsData.getLongitude());
+                            intent.putExtra("localLatitude",localLatitude);
+                            intent.putExtra("localLongitude",localLongitude);
+                            startActivity(intent);
+                        }
                     });
                     builder.show();// 显示出该对话框
                 }

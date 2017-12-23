@@ -225,10 +225,14 @@
         <activity
             android:name=".ParkNavigation.RoutePlanActivity"
             android:label="导航" />
-        <activity android:name=".ParkNavigation.DetailedActivity"
-            android:label="停车场详情"/>
-        <activity android:name=".ParkNavigation.RecordShowActivity"
-            android:label="充值详情"/>
+        <activity
+            android:name=".ParkNavigation.DetailedActivity"
+            android:label="停车场详情" />
+        <activity
+            android:name=".ParkNavigation.RecordShowActivity"
+            android:label="充值详情" />
+        <activity android:name=".ParkNavigation.NavigationActivity" />
+        <activity android:name=".ParkNavigation.GuideActivity"></activity>
     </application>
 
 </manifest>
