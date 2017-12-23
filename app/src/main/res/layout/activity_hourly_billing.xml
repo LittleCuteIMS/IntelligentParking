@@ -16,11 +16,6 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <ImageView
-        android:id="@+id/park_photo"
-        android:layout_width="match_parent"
-        android:layout_height="140dp" />
-
     <TextView
         android:id="@+id/line"
         android:layout_width="match_parent"
@@ -42,7 +37,7 @@
             android:src="@drawable/icons1" />
 
         <TextView
-            android:id="@+id/parking_name"
+            android:id="@+id/billing_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -69,7 +64,7 @@
             android:src="@drawable/icons4" />
 
         <TextView
-            android:id="@+id/parking_phone"
+            android:id="@+id/billing_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -98,7 +93,7 @@
             android:src="@drawable/icons2" />
 
         <TextView
-            android:id="@+id/parking_shoufei"
+            android:id="@+id/billing_charge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -127,7 +122,7 @@
             android:src="@drawable/clock" />
 
         <TextView
-            android:id="@+id/in_time"
+            android:id="@+id/billing_in_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -164,11 +159,10 @@
             android:textSize="18sp" />
 
         <Chronometer
-            android:id="@+id/park_time"
+            android:id="@+id/billing_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="6.5" />
-
 
     </LinearLayout>
 
@@ -189,15 +183,21 @@
             android:src="@drawable/hourglass" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/car_chosen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:layout_weight="7.5"
             android:text="车辆选择:"
             android:textColor="#000000"
             android:textSize="18sp" />
 
+        <Spinner
+            android:id="@+id/car_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="8" />
 
     </LinearLayout>
 
@@ -212,7 +212,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="180dp"
         android:orientation="horizontal">
 
         <Button
@@ -227,7 +227,7 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/end_park"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

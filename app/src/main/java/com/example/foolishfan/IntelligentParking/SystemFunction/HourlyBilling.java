@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.foolishfan.IntelligentParking.R;
@@ -34,33 +35,56 @@ public class HourlyBilling extends AppCompatActivity {
             }
         });
 
-        showParkInfo();
-    }
-
-    private void showParkInfo(){
-        //接受二维码扫描的信息
-        Intent intent = getIntent();// 收取 email
-        Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
-        String parkInfoJson = bundle.getString("parkInfoJson");// 读取内容
-        TextView parkNameView,parkAddressView,parkPhoneView,parkChargeView;
-        parkNameView=(TextView)findViewById(R.id.parkNameView);
-        parkAddressView=(TextView)findViewById(R.id.parkAddressView);
-        parkPhoneView=(TextView)findViewById(R.id.parkPhoneView);
-        parkChargeView=(TextView)findViewById(R.id.parkChargeView);
-
+        JSONObject parkInfoJsonObj = null;
+        String park_id = null;
         try {
-            JSONObject jsonObj=new JSONObject(parkInfoJson);
-            String parkName=parkNameView.getText().toString()+jsonObj.getString("name");
-            parkNameView.setText(parkName);
-            String parkAddress=parkAddressView.getText().toString()+jsonObj.getString("address");
-            parkAddressView.setText(parkAddress);
-            String parkPhone=parkPhoneView.getText().toString()+jsonObj.getString("phone");
-            parkPhoneView.setText(parkPhone);
-            String parkCharge=parkChargeView.getText().toString()+jsonObj.getString("charge");
-            parkChargeView.setText(parkCharge);
+            parkInfoJsonObj = getParkInfoJson();
+            park_id = showParkInfo(parkInfoJsonObj);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        setStartPark();
+    }
 
+    //从二维码中获取停车场信息
+    private JSONObject getParkInfoJson() throws JSONException {
+        //接受二维码扫描的信息
+        Intent intent = getIntent();// 收取 email
+        Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
+        String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
+        return new JSONObject(parkInfoStr);//转换为json对象
+    }
+
+    //显示停车场的相关信息，返回停车场的编号
+    private String showParkInfo(JSONObject parkInfoJsonObj) throws JSONException {
+        //获取显示停车场信息的textview
+        TextView parkNameView, parkPhoneView, parkChargeView;
+        parkNameView = (TextView) findViewById(R.id.billing_name);
+        parkPhoneView = (TextView) findViewById(R.id.billing_phone);
+        parkChargeView = (TextView) findViewById(R.id.billing_charge);
+        String park_id = null;
+
+        //将二维码扫描到的信息放入相应的textview
+        String parkName = parkNameView.getText().toString() + parkInfoJsonObj.getString("park_name");
+        parkNameView.setText(parkName);
+        String parkPhone = parkPhoneView.getText().toString() + parkInfoJsonObj.getString("park_phone");
+        parkPhoneView.setText(parkPhone);
+        String parkCharge = parkChargeView.getText().toString() + parkInfoJsonObj.getString("park_charge");
+        parkChargeView.setText(parkCharge);
+        park_id = parkInfoJsonObj.getString("park_id");
+
+        return park_id;
+    }
+
+    //对开始停车按钮设置监听事件
+    private void setStartPark() {
+        Button startParkBtn = (Button) findViewById(R.id.start_park);
+        startParkBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
