@@ -21,8 +21,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.foolishfan.IntelligentParking.R.id.booking;
+import static com.example.foolishfan.IntelligentParking.R.id.tothere;
+
 public class DetailedActivity extends AppCompatActivity implements View.OnClickListener{
     private String imageID;//图片路径
+    private String latitude;
+    private String longitude;
     private String phone;
     ImageView imageView;
     TextView parkingName;
@@ -44,6 +49,8 @@ public class DetailedActivity extends AppCompatActivity implements View.OnClickL
                     parkAddress.setText("地址："+jsonObject.getString("address"));
                     parkMobile.setText("联系电话："+jsonObject.getString("phone"));
                     charge.setText("收费标准："+jsonObject.getString("charge")+"元/时");
+                    latitude = jsonObject.getString("latitude");
+                    longitude = jsonObject.getString("longitude");
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -77,6 +84,8 @@ public class DetailedActivity extends AppCompatActivity implements View.OnClickL
         freeNumber = (TextView) findViewById(R.id.free_number);//空闲车位
         charge = (TextView) findViewById(R.id.parking_shoufei);//收费
 
+        Button booking = (Button) findViewById(R.id.booking);
+        booking.setOnClickListener(this);
         Button tothere = (Button) findViewById(R.id.tothere);
         tothere.setOnClickListener(this);
 
@@ -112,10 +121,15 @@ public class DetailedActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-           case R.id.tothere:
+           case booking:
                Intent intent = new Intent(Intent.ACTION_DIAL);
                intent.setData(Uri.parse("tel:"+phone));
                startActivity(intent);
+                break;
+            case tothere:
+                Intent intent1 = new Intent();
+                intent1.setData(Uri.parse("baidumap://map/navi?location="+latitude+","+longitude));
+                startActivity(intent1);
                 break;
             default:
                 break;

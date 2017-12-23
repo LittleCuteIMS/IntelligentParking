@@ -218,16 +218,31 @@
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_below="@+id/details7"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:id="@+id/tothere"
-                android:layout_width="match_parent"
+                android:id="@+id/booking"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="立刻预定车位"
+                android:text="预定车位"
                 android:textSize="18sp"
                 android:textColor="#fff"
+                android:background="#f505a61f"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"/>
+            <Button
+                android:id="@+id/tothere"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="现在出发"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:layout_marginRight="5dp"
                 android:background="#f505a61f"
                 android:layout_marginTop="30dp"/>
         </LinearLayout>

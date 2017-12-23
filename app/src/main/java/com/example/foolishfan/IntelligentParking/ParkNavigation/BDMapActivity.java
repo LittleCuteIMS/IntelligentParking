@@ -1,19 +1,19 @@
 package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -183,28 +183,27 @@ public class BDMapActivity extends AppCompatActivity{
         //设置点击事件
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener()  {
             @Override
-            public boolean onMarkerClick(final Marker marker)  {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.drawable.popup);
-                InfoWindow.OnInfoWindowClickListener listener = null;
+            public boolean onMarkerClick (final Marker marker)  {
+                AlertDialog.Builder builder = new AlertDialog.Builder(BDMapActivity.this);
+                builder.setIcon(R.drawable.icons6);//    设置Title的图标
                 if (marker == mMarkerA) {
-                    button.setText("点击去："+parkingsData.getName());
-                    button.setTextColor(Color.BLACK);
-                    button.setWidth(300);
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
+                    builder.setTitle("您将要去："+parkingsData.getName());//    设置Title的内容
+                    builder.setNegativeButton("查看路线", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
                             double latitude = parkingsData.getLatitude();
                             double longitude = parkingsData.getLongitude();
                             intent.putExtra("latitude",latitude);
                             intent.putExtra("longitude",longitude);
                             startActivity(intent);
-                            baiduMap.hideInfoWindow();
                         }
-                    };
-                    LatLng ll = marker.getPosition();//获取当前地点
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    baiduMap.showInfoWindow(mInfoWindow);
+                    });
+                    builder.setNeutralButton("立刻前往", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    });
+                    builder.show();// 显示出该对话框
                 }
                 return true;
             }
