@@ -24,7 +24,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -50,7 +49,6 @@ public class BDMapActivity extends AppCompatActivity{
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
     private boolean isFirstLocate = true;//如果是第一次定位的话要将自己的位置显示在地图中间
-    private InfoWindow mInfoWindow;//每个marker的弹窗显示
 
     //接收返回的停车场的经纬度
     private Handler handler = new Handler(){
@@ -83,7 +81,7 @@ public class BDMapActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         mLocationClient = new LocationClient(getApplicationContext());//创建实例，构造函数接收一个Context参数
         mLocationClient.registerLocationListener(new MyLocationListener());//注册一个定位监听器，获取到位置信息则回调这个定位监听器
-        SDKInitializer.initialize(getApplicationContext());//初始化操作要在setContentView()之前调用？
+        SDKInitializer.initialize(getApplicationContext());//初始化操作要在setContentView()之前调用
         setContentView(R.layout.activity_bdmap);
 
         mapView = (MapView) findViewById(R.id.bmapview);//获取地图实例
