@@ -227,7 +227,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="预定车位"
+                android:text="电话预约"
                 android:textSize="18sp"
                 android:textColor="#fff"
                 android:background="#f505a61f"

@@ -66,6 +66,11 @@ public class BDMapActivity extends AppCompatActivity{
                         parkingsData.setLatitude(jsonObject.getDouble("latitude"));
                         parkingsData.setLongitude(jsonObject.getDouble("longitude"));
                         parkingsData.setName(jsonObject.getString("name"));
+                        parkingsData.setImageId(jsonObject.getString("image"));
+                        parkingsData.setcarportNumber(jsonObject.getInt("carport_sum"));
+                        parkingsData.setFreeNumber(jsonObject.getInt("carport_free_num"));
+                        parkingsData.setCharge(jsonObject.getDouble("charge"));
+                        parkingsData.setPhone(jsonObject.getString("phone"));
                         initOverlay(parkingsData);//将每一个停车场在地图上标注出来
                     }
                 } catch (JSONException e) {
@@ -205,6 +210,12 @@ public class BDMapActivity extends AppCompatActivity{
                             Intent intent = new Intent(BDMapActivity.this,NavigationActivity.class);
                             intent.putExtra("parkLatitude",parkingsData.getLatitude());
                             intent.putExtra("parkLongitude",parkingsData.getLongitude());
+                            intent.putExtra("parkName",parkingsData.getName());
+                            intent.putExtra("parkImage",parkingsData.getImageId());
+                            intent.putExtra("parkNumber",parkingsData.getCarportNumber());
+                            intent.putExtra("parkFreeNumber",parkingsData.getFreeNumber());
+                            intent.putExtra("charge",parkingsData.getCharge());
+                            intent.putExtra("phone",parkingsData.getPhone());
                             intent.putExtra("localLatitude",localLatitude);
                             intent.putExtra("localLongitude",localLongitude);
                             startActivity(intent);

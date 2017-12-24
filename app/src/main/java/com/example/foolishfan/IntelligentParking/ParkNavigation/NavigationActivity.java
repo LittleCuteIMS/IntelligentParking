@@ -2,14 +2,19 @@ package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.navisdk.adapter.BNCommonSettingParam;
@@ -19,6 +24,7 @@ import com.baidu.navisdk.adapter.BNRoutePlanNode;
 import com.baidu.navisdk.adapter.BNRoutePlanNode.CoordinateType;
 import com.baidu.navisdk.adapter.BNaviSettingManager;
 import com.baidu.navisdk.adapter.BaiduNaviManager;
+import com.bumptech.glide.Glide;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.BNEventHandler;
 import com.example.foolishfan.IntelligentParking.R;
 
@@ -38,18 +44,19 @@ public class NavigationActivity extends Activity {
     private final static int authComRequestCode = 2;
     private boolean hasInitSuccess = false;
     private boolean hasRequestComAuth = false;
-    private Button startNavi;
     private CoordinateType mCoordinateType = null;
     private double parkLatitude;//停车场经度
     private double parkLongitude;//停车场维度
     private double localLatitude;//当前经度
     private double localLongitude;//当前维度
+    private Button startNavi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityList.add(this);
         setContentView(R.layout.activity_navigation);
+        startNavi = (Button) findViewById(R.id.start_navi);
 
         //设置toolbar导航栏，设置导航按钮
         Toolbar finance_toolbar = (Toolbar) findViewById(R.id.navi_toolbar);
@@ -60,10 +67,8 @@ public class NavigationActivity extends Activity {
             }
         });
 
-        startNavi = (Button) findViewById(R.id.start_navi);
         BNOuterLogUtil.setLogSwitcher(true);
         initListener();
-
         if (initDirs()) {
            initNavi();
         }
@@ -73,6 +78,46 @@ public class NavigationActivity extends Activity {
         parkLongitude = intent.getDoubleExtra("parkLongitude",0);
         localLatitude = intent.getDoubleExtra("localLatitude",0);
         localLongitude = intent.getDoubleExtra("localLongitude",0);
+        final String parkPhone = intent.getStringExtra("phone");
+        final String parkName = intent.getStringExtra("parkName");
+        ImageView imageView = (ImageView) findViewById(R.id.park_photo);
+        Glide.with(this).load("http://120.78.173.73/ParkingWeb/parkPhoto/"+intent.getStringExtra("parkImage")).into(imageView);
+        final TextView park_name = (TextView) findViewById(R.id.parking_name);
+        park_name.setText(parkName);
+        TextView park_number = (TextView) findViewById(R.id.parking_number);
+        park_number.setText("停车位: "+intent.getIntExtra("parkNumber",0)+"个");
+        TextView park_free_number = (TextView) findViewById(R.id.free_number);
+        park_free_number.setText("空闲车位: "+intent.getIntExtra("parkFreeNumber",0)+"个");
+        TextView charge_view = (TextView) findViewById(R.id.parking_shoufei);
+        charge_view.setText("收费标准："+intent.getDoubleExtra("charge",0)+"元/时");
+
+        Button duanxin = (Button) findViewById(R.id.booking);
+        duanxin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(NavigationActivity.this);
+                builder.setIcon(R.drawable.icons6);//    设置Title的图标
+                builder.setTitle("请选择预定方式：");//    设置Title的内容
+                builder.setNegativeButton("短信预定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + parkPhone));
+                        String body = "【停了么】  在" + parkName + "预定一个车位，将在30分钟之内到达。";
+                        intent .putExtra("sms_body", body);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNeutralButton("电话预定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:"+parkPhone));
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @Override

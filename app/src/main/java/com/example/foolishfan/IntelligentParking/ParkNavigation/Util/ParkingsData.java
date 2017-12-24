@@ -10,7 +10,7 @@ public class ParkingsData {
     private int freeNumber;//空闲数量
     private String address;//地址
     private String phone;//电话
-    private float charge;//收费标准
+    private double charge;//收费标准
     private String imageId;//图片的路径
     private double latitude;
     private double longitude;
@@ -30,7 +30,7 @@ public class ParkingsData {
     public void setPhone(String phone){
         this.phone = phone;
     }
-    public void setCharge(float charge){
+    public void setCharge(double charge){
         this.charge = charge;
     }
     public void setImageId(String imageId){
@@ -58,7 +58,7 @@ public class ParkingsData {
     public String getPhone(){
         return phone;
     }
-    public float getCharge(){return  charge;}
+    public double getCharge(){return  charge;}
     public String getImageId(){
         return imageId;
     }
