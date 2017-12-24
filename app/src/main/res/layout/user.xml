@@ -17,6 +17,24 @@
         android:theme="@style/AppTheme.AppBarOverlay"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/iv_image"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/user_toolbar"
+        android:layout_alignLeft="@+id/btn_add_image"
+        android:src="@mipmap/ic_account_circle_white_48dp"
+        android:layout_alignStart="@+id/btn_add_image" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改头像"
+        android:layout_marginTop="24dp"
+        android:id="@+id/btn_add_image"
+        android:layout_below="@+id/iv_image"
+        android:layout_centerHorizontal="true" />
     <Button
         android:id="@+id/resetpwd_button"
         android:layout_width="wrap_content"
@@ -33,9 +51,10 @@
         android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/resetpwd_button"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="50dp" />
 
     <TextView
         android:id="@+id/shownickname"
@@ -51,18 +70,18 @@
         android:id="@+id/showmobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="手机号码"
+        android:layout_above="@+id/mobile"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/user_toolbar"
-        android:layout_marginTop="51dp"
-        android:text="手机号码" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/shownickname"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/showmobile" />
+        android:layout_marginBottom="54dp" />
 
 </RelativeLayout>
