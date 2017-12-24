@@ -40,14 +40,29 @@ public class HourlyBilling extends AppCompatActivity {
     final private int CARINFO = 1;
     final private int STARTPARK=2;
     final private int STOPPARK=3;
+    final private int PARKINFO=4;
     private Handler billingHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
+                case PARKINFO:
+                    if(msg.obj != null){
+                        String message=msg.obj.toString();
+                        if(!message.equals("FALSE")){
+                            showParkInfo(message);
+                        }else{
+                            Toast.makeText(HourlyBilling.this,"系统中无此停车场",Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 case CARINFO:
                     if (msg.obj != null) {
                         setCarSpinner(msg.obj.toString());
+                    }else{
+                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case STARTPARK:
@@ -83,52 +98,62 @@ public class HourlyBilling extends AppCompatActivity {
             }
         });
 
-        JSONObject parkInfoJsonObj = null;
-        String park_id = null;
-        parkInfoJsonObj = getParkInfoJson();
-        park_id = showParkInfo(parkInfoJsonObj);
+        String park_id = getParkID();
+        getParkInfoDetails(park_id);
         getCarInfo();
         setStartPark(park_id);
         setStopPark(park_id);
     }
 
     //从二维码中获取停车场信息
-    private JSONObject getParkInfoJson() {
+    private String getParkID() {
         //接受二维码扫描的信息
         Intent intent = getIntent();// 收取 email
         Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
         String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
+        String string=null;
         try {
-            return new JSONObject(parkInfoStr);//转换为json对象
+            string=new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return string;
     }
 
-    //显示停车场的相关信息，返回停车场的编号
-    private String showParkInfo(JSONObject parkInfoJsonObj) {
+    private void getParkInfoDetails(String parkID){
+        Log.d("message",parkID);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("park_id", parkID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String path = "parkPHP/getParkInfoDetails.php";
+        HttpJsonModified http = new HttpJsonModified(path, json.toString(), billingHandler, PARKINFO);
+        new Thread(http.getHttpThread()).start();
+    }
+
+    //显示停车场的相关信息
+    private void showParkInfo(String parkInfoStr) {
         //获取显示停车场信息的textview
         TextView parkNameView, parkPhoneView, parkChargeView;
         parkNameView = (TextView) findViewById(R.id.billing_name);
         parkPhoneView = (TextView) findViewById(R.id.billing_phone);
         parkChargeView = (TextView) findViewById(R.id.billing_charge);
-        String park_id = null;
 
         //将二维码扫描到的信息放入相应的textview
-        String parkName = null;
         try {
-            parkName = parkNameView.getText().toString() + parkInfoJsonObj.getString("park_name");
+            JSONArray jsonArry=new JSONArray(parkInfoStr);
+            JSONObject parkInfoJsonObj=jsonArry.getJSONObject(0);
+            String parkName = parkNameView.getText().toString() + parkInfoJsonObj.getString("name");
             parkNameView.setText(parkName);
-            String parkPhone = parkPhoneView.getText().toString() + parkInfoJsonObj.getString("park_phone");
+            String parkPhone = parkPhoneView.getText().toString() + parkInfoJsonObj.getString("phone");
             parkPhoneView.setText(parkPhone);
-            String parkCharge = parkChargeView.getText().toString() + parkInfoJsonObj.getString("park_charge");
+            String parkCharge = parkChargeView.getText().toString() + parkInfoJsonObj.getString("charge");
             parkChargeView.setText(parkCharge);
-            park_id = parkInfoJsonObj.getString("park_id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return park_id;
     }
 
     //从服务器获取用户车辆信息
