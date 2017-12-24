@@ -1,10 +1,9 @@
-package com.example.foolishfan.IntelligentParking.ParkNavigation;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,15 +17,15 @@ import org.json.JSONObject;
  * 计入停车场的计时计费页面
  */
 
-public class ParkInfoActivity extends AppCompatActivity {
+public class HourlyBilling extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_park_info);
+        setContentView(R.layout.activity_hourly_billing);
 
         //设置toolbar导航栏，设置导航按钮
-        Toolbar park_info_toolbar = (Toolbar) findViewById(R.id.park_info_toolbar);
+        Toolbar park_info_toolbar = (Toolbar) findViewById(R.id.hourly_billing_toolbar);
         setSupportActionBar(park_info_toolbar);
         park_info_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,17 +1,17 @@
-package com.example.foolishfan.IntelligentParking.Util;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.foolishfan.IntelligentParking.MainActivity;
 import com.example.foolishfan.IntelligentParking.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017-12-6.
+ * Created by CaiChuang on 2017-12-6.
+ * 广告轮播类
  */
 
 public class CarouselAd {

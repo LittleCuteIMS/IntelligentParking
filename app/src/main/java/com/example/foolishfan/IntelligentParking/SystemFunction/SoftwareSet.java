@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.System;
+package com.example.foolishfan.IntelligentParking.SystemFunction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.MainActivity;
 import com.example.foolishfan.IntelligentParking.R;
 
 /**
- * Created by Administrator on 2017/11/6 0006.
+ * Created by CaiChuang on 2017/11/6 0006.
+ * 系统设置类
  */
 
 public class SoftwareSet extends AppCompatActivity {

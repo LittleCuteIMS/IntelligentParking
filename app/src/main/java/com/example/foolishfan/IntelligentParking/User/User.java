@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.MainActivity;
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.System.Resetpwd;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
 import org.json.JSONException;
