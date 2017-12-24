@@ -59,7 +59,7 @@ public class HourlyBilling extends AppCompatActivity {
                     break;
                 case STOPPARK:
                     if(msg.obj!=null){
-                        Toast.makeText(HourlyBilling.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                        handleTradingStatus(msg.obj.toString());
                     }else{
                         Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
@@ -230,7 +230,6 @@ public class HourlyBilling extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String path = "parkPHP/parking_record_out.php";
-                Log.d("outTime",jsonInfo.toString());
                 HttpJsonModified httpJson = new HttpJsonModified(path,jsonInfo.toString(),billingHandler,STOPPARK);
                 new Thread(httpJson.getHttpThread()).start();
                 //开始按钮可点击，结束按钮不可点击
@@ -245,5 +244,23 @@ public class HourlyBilling extends AppCompatActivity {
         Button stopParkBtn = (Button)findViewById(R.id.stop_park);
         startParkBtn.setEnabled(start);
         stopParkBtn.setEnabled(stop);
+    }
+
+    //结束停车后，接受服务器反馈信息后的处理过程
+    private void handleTradingStatus(String tradingStatusStr){
+        char[] tradingStatus=tradingStatusStr.toCharArray();
+        if(tradingStatus[0]=='0'){
+            Toast.makeText(HourlyBilling.this,R.string.tradingStatus0,Toast.LENGTH_SHORT).show();
+        }else if(tradingStatus[1]=='0'){
+            Toast.makeText(HourlyBilling.this,R.string.tradingStatus1,Toast.LENGTH_SHORT).show();
+        }else if(tradingStatus[2]=='0'){
+            Toast.makeText(HourlyBilling.this,R.string.tradingStatus2,Toast.LENGTH_SHORT).show();
+        }else if(tradingStatus[3]=='0'){
+            Toast.makeText(HourlyBilling.this,R.string.tradingStatus3,Toast.LENGTH_SHORT).show();
+        }else if(tradingStatus[4]=='0'){
+            Toast.makeText(HourlyBilling.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(HourlyBilling.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
+        }
     }
 }
