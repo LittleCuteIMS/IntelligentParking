@@ -33,6 +33,7 @@ import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
 import com.example.foolishfan.IntelligentParking.User.User;
 import com.example.foolishfan.IntelligentParking.User.UserCar;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
+import com.example.foolishfan.IntelligentParking.Util.HttpJsonModified;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
 
 import java.util.ArrayList;
@@ -211,14 +212,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.switchLocalhost:
                 HttpJson.setWebsite("http://10.0.2.2/ParkingWeb/");
+                HttpJsonModified.setWebsite("http://10.0.2.2/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为10.0.2.2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.switchServer:
                 HttpJson.setWebsite("http://120.78.173.73/ParkingWeb/");
+                HttpJsonModified.setWebsite("http://120.78.173.73/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为120.78.173.73", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.switchLAN:
                 HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
+                HttpJsonModified.setWebsite("http://192.168.155.1/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
                 break;
         }

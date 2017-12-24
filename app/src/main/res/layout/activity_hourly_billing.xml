@@ -221,19 +221,19 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="#f505a61f"
+            android:background="@drawable/button_selector"
             android:text="开始停车"
             android:textColor="#fff"
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/end_park"
+            android:id="@+id/stop_park"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="#f505a61f"
+            android:background="@drawable/button_selector"
             android:text="结束停车"
             android:textColor="#fff"
             android:textSize="18sp" />
