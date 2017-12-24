@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -121,7 +120,6 @@ public class HourlyBilling extends AppCompatActivity {
     }
 
     private void getParkInfoDetails(String parkID){
-        Log.d("message",parkID);
         JSONObject json = new JSONObject();
         try {
             json.put("park_id", parkID);

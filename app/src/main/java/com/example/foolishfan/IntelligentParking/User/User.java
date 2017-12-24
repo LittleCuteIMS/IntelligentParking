@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.MainActivity;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class User extends AppCompatActivity {
 
@@ -202,7 +203,7 @@ public class User extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.RESULT_OK) {
+        if (resultCode == User.RESULT_OK) {
             switch (requestCode) {
                 case TAKE_PICTURE:
                     cutImage(tempUri); // 对图片进行裁剪处理
@@ -211,8 +212,14 @@ public class User extends AppCompatActivity {
                     cutImage(data.getData()); // 对图片进行裁剪处理
                     break;
                 case CROP_SMALL_PICTURE:
-                    if (data != null) {
+                    /*if (data != null) {
                         setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
+                    }*/
+                    try {
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(tempUri));
+                        mImage.setImageBitmap(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
                     }
                     break;
             }
@@ -237,8 +244,12 @@ public class User extends AppCompatActivity {
         // outputX outputY 是裁剪图片宽高
         intent.putExtra("outputX", 150);
         intent.putExtra("outputY", 150);
-        intent.putExtra("return-data", true);
+        /*intent.putExtra("return-data", true);*/
+        tempUri = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent, CROP_SMALL_PICTURE);
+        Log.d("message", "已调用");
     }
     /**
      * 保存裁剪之后的图片数据
