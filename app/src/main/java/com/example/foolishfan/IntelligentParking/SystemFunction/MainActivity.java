@@ -3,6 +3,9 @@ package com.example.foolishfan.IntelligentParking.SystemFunction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,6 +33,9 @@ import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.HttpJsonModified;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity{
     private ActionBarDrawerToggle toggle;
     private QRcode qr;
     private TextView tvNavMobile, tvNavNickname;
+    private ImageView mImageView;
     //用于实现广告轮播
     private ViewPager mViewPaper;
     private List<View> dots;
@@ -71,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
         Button wallet = (Button) findViewById(R.id.wallet);
         ImageButton scanImageButton = (ImageButton) findViewById(R.id.scanImageButton);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
-        ImageView mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
+        mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
         tvNavMobile = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
         tvNavNickname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
@@ -129,9 +136,23 @@ public class MainActivity extends AppCompatActivity{
         if (isLogin) {
             String nickname;
             String mobile;
+            String url;
             SharedPreferences userPref = getSharedPreferences("user", Context.MODE_PRIVATE);
             nickname = userPref.getString("nickname", null);
             mobile = userPref.getString("mobile", null);
+            url=userPref.getString("userImage",null);
+            Uri uri=Uri.parse(url);
+            Bitmap userBitmap=null;
+            try {
+                FileInputStream fi=new FileInputStream(uri.getEncodedPath());
+                userBitmap= BitmapFactory.decodeStream(fi);
+                fi.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mImageView.setImageBitmap(userBitmap);
             tvNavNickname.setText(nickname);
             tvNavMobile.setText(mobile);
         } else {

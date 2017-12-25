@@ -30,7 +30,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class User extends AppCompatActivity {
@@ -104,6 +106,26 @@ public class User extends AppCompatActivity {
         //获取按钮，设置监听事件
         Button resetpwd_button = (Button) findViewById(R.id.resetpwd_button);
         resetpwd_button.setOnClickListener(setListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences pref=getSharedPreferences("user",Context.MODE_PRIVATE);
+        String url=pref.getString("userImage",null);
+        Uri uri=Uri.parse(url);
+        Bitmap user=null;
+        try {
+            FileInputStream fi=new FileInputStream(uri.getEncodedPath());
+            user=BitmapFactory.decodeStream(fi);
+            fi.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ImageView iv=(ImageView)findViewById(R.id.iv_image);
+        iv.setImageBitmap(user);
     }
 
     private void initUI() {
@@ -246,7 +268,11 @@ public class User extends AppCompatActivity {
         intent.putExtra("outputX", 150);
         intent.putExtra("outputY", 150);
         /*intent.putExtra("return-data", true);*/
-        tempUri = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        String userImage="file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg";
+        SharedPreferences.Editor recordEditor = getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+        recordEditor.putString("userImage", userImage);
+        recordEditor.apply();
+        tempUri = Uri.parse(userImage);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent, CROP_SMALL_PICTURE);
