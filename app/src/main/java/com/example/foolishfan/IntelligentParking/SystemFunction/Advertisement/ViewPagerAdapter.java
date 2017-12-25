@@ -19,6 +19,8 @@ import java.util.List;
 public class ViewPagerAdapter extends PagerAdapter {
     private List<ImageView> images;
     private int[] imageIds;
+    private String[] urls;
+    private AdvertisementListener advertisementListener;
 
     public ViewPagerAdapter(Context context){
         imageIds = new int[]{
@@ -28,10 +30,19 @@ public class ViewPagerAdapter extends PagerAdapter {
                 R.drawable.d,
                 R.drawable.e
         };
+        urls = new String[]{
+                "https://www.baidu.com/",
+                "http://www.zhihu.com/",
+                "https://www.douban.com/",
+                "https://www.bing.com/?mkt=zh-CN",
+                "https://www.taobao.com/"
+        };
         images = new ArrayList<ImageView>();
         for (int i = 0; i < imageIds.length; i++) {
+            advertisementListener=new AdvertisementListener(context,urls[i]);
             ImageView imageView = new ImageView(context);
             imageView.setBackgroundResource(imageIds[i]);
+            imageView.setOnClickListener(advertisementListener);
             images.add(imageView);
         }
     }
