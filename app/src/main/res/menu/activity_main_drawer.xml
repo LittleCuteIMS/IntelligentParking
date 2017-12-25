@@ -4,30 +4,27 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_me"
-            android:title="停车历史"
-            android:icon="@mipmap/ic_mine_gray_24"/>
+            android:id="@+id/nav_history"
+            android:title="@string/park_history"
+            android:icon="@mipmap/icons8_order_history_filled_50"/>
+        <item
+            android:id="@+id/nav_car"
+            android:title="@string/my_cars"
+            android:icon="@mipmap/icons8_automotive_50"/>
         <item
             android:id="@+id/nav_message"
-            android:title="我的车辆"
-            android:icon="@mipmap/ic_messages_gray_24"
-            />
-        <item
-            android:id="@+id/nav_friend"
-            android:title="消息中心"
-            android:icon="@mipmap/ic_friends_gray_24"/>
-    </group>
-    <group
-        android:checkableBehavior="none"
-        android:id="@+id/group_settings">
+            android:title="@string/message_center"
+            android:icon="@mipmap/icons8_group_message_filled_50"/>
         <item
             android:id="@+id/nav_suggestion"
-            android:title="意见反馈" />
-        <item android:id="@+id/nav_setting"
-            android:title="设置"/>
+            android:title="@string/feedback"
+            android:icon="@mipmap/icons8_feedback_50"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:title="@string/settings"
+            android:icon="@mipmap/icons8_automatic_50"/>
 
     </group>
 </menu>

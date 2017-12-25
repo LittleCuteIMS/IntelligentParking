@@ -26,6 +26,7 @@ import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.SystemFunction.Advertisement.ViewPagerAdapter;
+import com.example.foolishfan.IntelligentParking.SystemFunction.MainListeners.MainNavigationItemListener;
 import com.example.foolishfan.IntelligentParking.User.Login;
 import com.example.foolishfan.IntelligentParking.User.AddUserCar;
 import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
@@ -41,7 +42,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
     static public boolean isLogin;//全局获取当前软件的登录状态
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
         scanImageButton.setOnClickListener(mainOnClick);
-        navigationView.setNavigationItemSelectedListener(this);
+        MainNavigationItemListener navigationItemListener=new MainNavigationItemListener(this);
+        navigationView.setNavigationItemSelectedListener(navigationItemListener);
 
         //实现侧边栏滑入滑出
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -104,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dots.add(findViewById(R.id.dot_3));
         dots.add(findViewById(R.id.dot_4));
 
-
         adapter = new ViewPagerAdapter(this);
         mViewPaper.setAdapter(adapter);
 
@@ -116,15 +117,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 oldPosition = position;
                 currentItem = position;
             }
-
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-
             }
-
             @Override
             public void onPageScrollStateChanged(int arg0) {
-
             }
         });
     }
@@ -207,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.switchLAN:
                 HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
-                HttpJsonModified.setWebsite("http://192.168.155.1/ParkingWeb/");
+                HttpJsonModified.setWebsite("http:1//92.168.155.1/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -225,54 +222,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    //设置点击左边菜单栏每一个选项的回应方式
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_me://停车历史
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, ParkingHistory.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_message://我的车辆
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, UserCar.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_friend://消息中心
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, MessageCenterActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_suggestion://意见反馈
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, SuggestionActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_setting://设置
-                Intent intent = new Intent(MainActivity.this, SoftwareSetActivity.class);
-                startActivity(intent);
-                break;
-
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-
     }
 
     //页面点击事件

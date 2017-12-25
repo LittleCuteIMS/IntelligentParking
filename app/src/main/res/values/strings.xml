@@ -49,4 +49,9 @@
     <string name="tradingStatus2">扣费失败，请稍后重试</string>
     <string name="tradingStatus3">存入离开停车场时间失败</string>
     <string name="tradingStatus4">存入停车交易记录失败</string>
+    <string name="park_history">停车历史</string>
+    <string name="my_cars">我的车辆</string>
+    <string name="message_center">消息中心</string>
+    <string name="feedback">意见反馈</string>
+    <string name="settings">设置</string>
 </resources>
