@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.SystemFunction;
+package com.example.foolishfan.IntelligentParking.SystemFunction.PushFunction;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.SystemFunction.MessageCenter;
+import com.example.foolishfan.IntelligentParking.SystemFunction.PushFunction.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;

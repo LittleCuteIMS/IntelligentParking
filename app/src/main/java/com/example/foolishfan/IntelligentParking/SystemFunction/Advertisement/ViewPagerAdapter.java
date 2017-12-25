@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.SystemFunction;
+package com.example.foolishfan.IntelligentParking.SystemFunction.Advertisement;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

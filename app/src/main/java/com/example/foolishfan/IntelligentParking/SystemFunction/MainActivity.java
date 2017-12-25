@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.SystemFunction.Advertisement.ViewPagerAdapter;
 import com.example.foolishfan.IntelligentParking.User.Login;
 import com.example.foolishfan.IntelligentParking.User.AddUserCar;
 import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dots.add(findViewById(R.id.dot_4));
 
 
-        adapter = new ViewPagerAdapter();
+        adapter = new ViewPagerAdapter(images);
         mViewPaper.setAdapter(adapter);
 
         mViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -334,36 +335,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.scanImageButton:
                 qr.scanQRcode(MainActivity.this, ScanActivity.class);
                 break;
-        }
-    }
-
-    //广告轮播的适配器
-    private class ViewPagerAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return images.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup view, int position, Object object) {
-            // TODO Auto-generated method stub
-//          super.destroyItem(container, position, object);
-//          view.removeView(view.getChildAt(position));
-//          view.removeViewAt(position);
-            view.removeView(images.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup view, int position) {
-            // TODO Auto-generated method stub
-            view.addView(images.get(position));
-            return images.get(position);
         }
     }
 

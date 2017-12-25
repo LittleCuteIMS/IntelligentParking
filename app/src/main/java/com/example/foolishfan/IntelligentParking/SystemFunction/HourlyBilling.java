@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -203,6 +204,7 @@ public class HourlyBilling extends AppCompatActivity {
                 billInTime.setText(billInTimeStr);
                 //开始计时
                 Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
+                billingTimeChronometer.setBase(SystemClock.elapsedRealtime());
                 billingTimeChronometer.start();
                 //发送开始停车信息到后台服务器
                 JSONObject jsonInfo = new JSONObject();
