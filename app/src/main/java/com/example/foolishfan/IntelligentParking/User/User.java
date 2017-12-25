@@ -113,19 +113,21 @@ public class User extends AppCompatActivity {
         super.onStart();
         SharedPreferences pref=getSharedPreferences("user",Context.MODE_PRIVATE);
         String url=pref.getString("userImage",null);
-        Uri uri=Uri.parse(url);
-        Bitmap user=null;
-        try {
-            FileInputStream fi=new FileInputStream(uri.getEncodedPath());
-            user=BitmapFactory.decodeStream(fi);
-            fi.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(url!=null) {
+            Uri uri = Uri.parse(url);
+            Bitmap user = null;
+            try {
+                FileInputStream fi = new FileInputStream(uri.getEncodedPath());
+                user = BitmapFactory.decodeStream(fi);
+                fi.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageView iv = (ImageView) findViewById(R.id.iv_image);
+            iv.setImageBitmap(user);
         }
-        ImageView iv=(ImageView)findViewById(R.id.iv_image);
-        iv.setImageBitmap(user);
     }
 
     private void initUI() {

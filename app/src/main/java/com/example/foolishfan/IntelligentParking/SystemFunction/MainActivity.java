@@ -141,18 +141,20 @@ public class MainActivity extends AppCompatActivity{
             nickname = userPref.getString("nickname", null);
             mobile = userPref.getString("mobile", null);
             url=userPref.getString("userImage",null);
-            Uri uri=Uri.parse(url);
-            Bitmap userBitmap=null;
-            try {
-                FileInputStream fi=new FileInputStream(uri.getEncodedPath());
-                userBitmap= BitmapFactory.decodeStream(fi);
-                fi.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(url!=null) {
+                Uri uri = Uri.parse(url);
+                Bitmap userBitmap = null;
+                try {
+                    FileInputStream fi = new FileInputStream(uri.getEncodedPath());
+                    userBitmap = BitmapFactory.decodeStream(fi);
+                    fi.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mImageView.setImageBitmap(userBitmap);
             }
-            mImageView.setImageBitmap(userBitmap);
             tvNavNickname.setText(nickname);
             tvNavMobile.setText(mobile);
         } else {
