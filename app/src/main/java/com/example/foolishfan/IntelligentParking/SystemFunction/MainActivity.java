@@ -27,6 +27,7 @@ import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.SystemFunction.Advertisement.ViewPagerAdapter;
 import com.example.foolishfan.IntelligentParking.SystemFunction.MainListeners.MainNavigationItemListener;
+import com.example.foolishfan.IntelligentParking.SystemFunction.MainListeners.MainOnClickListener;
 import com.example.foolishfan.IntelligentParking.User.Login;
 import com.example.foolishfan.IntelligentParking.User.AddUserCar;
 import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
@@ -81,23 +82,22 @@ public class MainActivity extends AppCompatActivity{
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
         tvNavMobile = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
         tvNavNickname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
-
-        //注册监听事件
+        //注册页面按钮的监听事件
+        MainOnClickListener mainOnClick=new MainOnClickListener(this);
+        mainOnClick.getQR(qr);
         addCar.setOnClickListener(mainOnClick);
         parkNearby.setOnClickListener(mainOnClick);
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
         scanImageButton.setOnClickListener(mainOnClick);
+        //注册导航栏菜单的监听事件
         MainNavigationItemListener navigationItemListener=new MainNavigationItemListener(this);
         navigationView.setNavigationItemSelectedListener(navigationItemListener);
-
         //实现侧边栏滑入滑出
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-
         //实现广告轮播
         mViewPaper = (ViewPager) findViewById(R.id.vp);
-
         //显示的小点
         dots = new ArrayList<View>();
         dots.add(findViewById(R.id.dot_0));
@@ -105,10 +105,9 @@ public class MainActivity extends AppCompatActivity{
         dots.add(findViewById(R.id.dot_2));
         dots.add(findViewById(R.id.dot_3));
         dots.add(findViewById(R.id.dot_4));
-
+        //广告轮播适配器及页面变动时的监听事件
         adapter = new ViewPagerAdapter(this);
         mViewPaper.setAdapter(adapter);
-
         mViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -223,54 +222,6 @@ public class MainActivity extends AppCompatActivity{
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    //页面点击事件
-    View.OnClickListener mainOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mainOnClick(v);
-        }
-    };
-
-    //页面按钮点击事件的方法
-    private void mainOnClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.ivAvatar://点击头像的跳转事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, User.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this, Login.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.addCar://点击添加车辆的监听事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, AddUserCar.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.parkNearby://点击附近停车场的监听事件
-                Intent intent1 = new Intent(MainActivity.this, BDMapActivity.class);
-                startActivity(intent1);
-                break;
-            case R.id.wallet://点击我的钱包的监听事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, FinanceActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.scanImageButton:
-                qr.scanQRcode(MainActivity.this, ScanActivity.class);
-                break;
-        }
-    }
-
     //图片轮播任务
     private class ViewPageTask implements Runnable {
 
@@ -280,7 +231,6 @@ public class MainActivity extends AppCompatActivity{
             mHandler.sendEmptyMessage(0);
         }
     }
-
     /**
      * 接收子线程传递过来的数据
      */
