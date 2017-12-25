@@ -51,19 +51,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView tvNavMobile, tvNavNickname;
     //用于实现广告轮播
     private ViewPager mViewPaper;
-    private List<ImageView> images;
     private List<View> dots;
     private int currentItem;
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
-    private int[] imageIds = new int[]{
-            R.drawable.a,
-            R.drawable.b,
-            R.drawable.c,
-            R.drawable.d,
-            R.drawable.e
-    };
+
     private ViewPagerAdapter adapter;
     private ScheduledExecutorService scheduledExecutorService;
 
@@ -105,13 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //实现广告轮播
         mViewPaper = (ViewPager) findViewById(R.id.vp);
 
-        //显示的图片
-        images = new ArrayList<ImageView>();
-        for (int i = 0; i < imageIds.length; i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(imageIds[i]);
-            images.add(imageView);
-        }
         //显示的小点
         dots = new ArrayList<View>();
         dots.add(findViewById(R.id.dot_0));
@@ -121,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dots.add(findViewById(R.id.dot_4));
 
 
-        adapter = new ViewPagerAdapter(images);
+        adapter = new ViewPagerAdapter(this);
         mViewPaper.setAdapter(adapter);
 
         mViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -343,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         public void run() {
-            currentItem = (currentItem + 1) % imageIds.length;
+            currentItem = (currentItem + 1) % adapter.getImageIdsLength();
             mHandler.sendEmptyMessage(0);
         }
     }
