@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -34,7 +35,7 @@ import java.text.SimpleDateFormat;
  * 计入停车场的计时计费页面
  */
 
-public class HourlyBilling extends AppCompatActivity {
+public class HourlyBillingActivity extends AppCompatActivity {
 
     final private int CARINFO = 1;
     final private int STARTPARK=2;
@@ -51,31 +52,31 @@ public class HourlyBilling extends AppCompatActivity {
                         if(!message.equals("FALSE")){
                             showParkInfo(message);
                         }else{
-                            Toast.makeText(HourlyBilling.this,"系统中无此停车场",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(HourlyBillingActivity.this,"系统中无此停车场",Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case CARINFO:
                     if (msg.obj != null) {
                         setCarSpinner(msg.obj.toString());
                     }else{
-                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case STARTPARK:
                     if(msg.obj!=null){
-                        Toast.makeText(HourlyBilling.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HourlyBillingActivity.this,msg.obj.toString(),Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case STOPPARK:
                     if(msg.obj!=null){
                         handleTradingStatus(msg.obj.toString());
                     }else{
-                        Toast.makeText(HourlyBilling.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -184,7 +185,7 @@ public class HourlyBilling extends AppCompatActivity {
             e.printStackTrace();
         }
         Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
-        ArrayAdapter<String> carInfoAdapter = new ArrayAdapter<String>(HourlyBilling.this, android.R.layout.simple_spinner_item, carList);
+        ArrayAdapter<String> carInfoAdapter = new ArrayAdapter<String>(HourlyBillingActivity.this, android.R.layout.simple_spinner_item, carList);
         carInfoAdapter.setDropDownViewResource(R.layout.spinner_item);
         carSpinner.setAdapter(carInfoAdapter);
     }
@@ -203,6 +204,7 @@ public class HourlyBilling extends AppCompatActivity {
                 billInTime.setText(billInTimeStr);
                 //开始计时
                 Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
+                billingTimeChronometer.setBase(SystemClock.elapsedRealtime());
                 billingTimeChronometer.start();
                 //发送开始停车信息到后台服务器
                 JSONObject jsonInfo = new JSONObject();
@@ -273,17 +275,17 @@ public class HourlyBilling extends AppCompatActivity {
     private void handleTradingStatus(String tradingStatusStr){
         char[] tradingStatus=tradingStatusStr.toCharArray();
         if(tradingStatus[0]=='0'){
-            Toast.makeText(HourlyBilling.this,R.string.tradingStatus0,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus0,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[1]=='0'){
-            Toast.makeText(HourlyBilling.this,R.string.tradingStatus1,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus1,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[2]=='0'){
-            Toast.makeText(HourlyBilling.this,R.string.tradingStatus2,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus2,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[3]=='0'){
-            Toast.makeText(HourlyBilling.this,R.string.tradingStatus3,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus3,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[4]=='0'){
-            Toast.makeText(HourlyBilling.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(HourlyBilling.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(HourlyBillingActivity.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
         }
     }
 }

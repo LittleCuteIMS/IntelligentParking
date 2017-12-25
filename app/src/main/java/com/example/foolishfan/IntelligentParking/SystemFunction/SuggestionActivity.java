@@ -22,17 +22,17 @@ import org.json.JSONObject;
  * 功能：意见反馈
  * 日期：2017.12.12
  */
-public class Suggestion extends AppCompatActivity {
+public class SuggestionActivity extends AppCompatActivity {
 
     private Handler mHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             if(msg.obj!=null){
-                Toast.makeText(Suggestion.this, R.string.send_success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SuggestionActivity.this, R.string.send_success, Toast.LENGTH_SHORT).show();
                 EditText suggestionEdTxt=(EditText)findViewById(R.id.suggestionEdTxt);
                 suggestionEdTxt.setText("");
             }else{
-                Toast.makeText(Suggestion.this, R.string.network_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SuggestionActivity.this, R.string.network_error, Toast.LENGTH_SHORT).show();
             }
             super.handleMessage(msg);
         }

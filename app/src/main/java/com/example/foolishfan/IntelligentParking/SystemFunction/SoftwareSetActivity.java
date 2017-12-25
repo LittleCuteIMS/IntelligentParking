@@ -17,7 +17,7 @@ import com.example.foolishfan.IntelligentParking.R;
  * 系统设置类
  */
 
-public class SoftwareSet extends AppCompatActivity {
+public class SoftwareSetActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.softwareset);
@@ -83,7 +83,7 @@ public class SoftwareSet extends AppCompatActivity {
         chargeRecordEditor.clear();
         chargeRecordEditor.apply();
 
-        Intent intent = new Intent(SoftwareSet.this, MainActivity.class);
+        Intent intent = new Intent(SoftwareSetActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import cn.jpush.android.api.JPushInterface;
 
-public class MessageCenter extends AppCompatActivity {
+public class MessageCenterActivity extends AppCompatActivity {
     List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

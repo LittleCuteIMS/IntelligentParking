@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,21 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.User.Login;
-import com.example.foolishfan.IntelligentParking.User.AddUserCar;
-import com.example.foolishfan.IntelligentParking.User.ParkingHistory;
-import com.example.foolishfan.IntelligentParking.User.User;
-import com.example.foolishfan.IntelligentParking.User.UserCar;
+import com.example.foolishfan.IntelligentParking.SystemFunction.Advertisement.ViewPagerAdapter;
+import com.example.foolishfan.IntelligentParking.SystemFunction.Listeners.MainNavigationItemListener;
+import com.example.foolishfan.IntelligentParking.SystemFunction.Listeners.MainOnClickListener;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import com.example.foolishfan.IntelligentParking.Util.HttpJsonModified;
 import com.example.foolishfan.IntelligentParking.Util.QRcode;
@@ -42,7 +36,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
     static public boolean isLogin;//全局获取当前软件的登录状态
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -50,19 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView tvNavMobile, tvNavNickname;
     //用于实现广告轮播
     private ViewPager mViewPaper;
-    private List<ImageView> images;
     private List<View> dots;
     private int currentItem;
     //记录上一次点的位置
     private int oldPosition = 0;
     //存放图片的id
-    private int[] imageIds = new int[]{
-            R.drawable.a,
-            R.drawable.b,
-            R.drawable.c,
-            R.drawable.d,
-            R.drawable.e
-    };
+
     private ViewPagerAdapter adapter;
     private ScheduledExecutorService scheduledExecutorService;
 
@@ -88,29 +75,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);  //实现抽屉效果左滑拉出菜单栏
         tvNavMobile = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavMobile);
         tvNavNickname = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNavNickname);
-
-        //注册监听事件
+        //注册页面按钮的监听事件
+        MainOnClickListener mainOnClick=new MainOnClickListener(this);
+        mainOnClick.getQR(qr);
         addCar.setOnClickListener(mainOnClick);
         parkNearby.setOnClickListener(mainOnClick);
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
         scanImageButton.setOnClickListener(mainOnClick);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        //注册导航栏菜单的监听事件
+        MainNavigationItemListener navigationItemListener=new MainNavigationItemListener(this);
+        navigationView.setNavigationItemSelectedListener(navigationItemListener);
         //实现侧边栏滑入滑出
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-
         //实现广告轮播
         mViewPaper = (ViewPager) findViewById(R.id.vp);
-
-        //显示的图片
-        images = new ArrayList<ImageView>();
-        for (int i = 0; i < imageIds.length; i++) {
-            ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(imageIds[i]);
-            images.add(imageView);
-        }
         //显示的小点
         dots = new ArrayList<View>();
         dots.add(findViewById(R.id.dot_0));
@@ -118,11 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dots.add(findViewById(R.id.dot_2));
         dots.add(findViewById(R.id.dot_3));
         dots.add(findViewById(R.id.dot_4));
-
-
-        adapter = new ViewPagerAdapter();
+        //广告轮播适配器及页面变动时的监听事件
+        adapter = new ViewPagerAdapter(this);
         mViewPaper.setAdapter(adapter);
-
         mViewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -131,15 +109,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 oldPosition = position;
                 currentItem = position;
             }
-
             @Override
             public void onPageScrolled(int arg0, float arg1, int arg2) {
-
             }
-
             @Override
             public void onPageScrollStateChanged(int arg0) {
-
             }
         });
     }
@@ -222,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.switchLAN:
                 HttpJson.setWebsite("http://192.168.155.1/ParkingWeb/");
-                HttpJsonModified.setWebsite("http://192.168.155.1/ParkingWeb/");
+                HttpJsonModified.setWebsite("http:1//92.168.155.1/ParkingWeb/");
                 Toast.makeText(MainActivity.this, "已设置为192.168.155.1", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -241,142 +215,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    //设置点击左边菜单栏每一个选项的回应方式
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_me://停车历史
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, ParkingHistory.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_message://我的车辆
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, UserCar.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_friend://消息中心
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, MessageCenter.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_suggestion://意见反馈
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, Suggestion.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.nav_setting://设置
-                Intent intent = new Intent(MainActivity.this, SoftwareSet.class);
-                startActivity(intent);
-                break;
-
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-
-    }
-
-    //页面点击事件
-    View.OnClickListener mainOnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mainOnClick(v);
-        }
-    };
-
-    //页面按钮点击事件的方法
-    private void mainOnClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.ivAvatar://点击头像的跳转事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, User.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this, Login.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.addCar://点击添加车辆的监听事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, AddUserCar.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.parkNearby://点击附近停车场的监听事件
-                Intent intent1 = new Intent(MainActivity.this, BDMapActivity.class);
-                startActivity(intent1);
-                break;
-            case R.id.wallet://点击我的钱包的监听事件
-                if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, FinanceActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.scanImageButton:
-                qr.scanQRcode(MainActivity.this, ScanActivity.class);
-                break;
-        }
-    }
-
-    //广告轮播的适配器
-    private class ViewPagerAdapter extends PagerAdapter {
-
-        @Override
-        public int getCount() {
-            return images.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup view, int position, Object object) {
-            // TODO Auto-generated method stub
-//          super.destroyItem(container, position, object);
-//          view.removeView(view.getChildAt(position));
-//          view.removeViewAt(position);
-            view.removeView(images.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup view, int position) {
-            // TODO Auto-generated method stub
-            view.addView(images.get(position));
-            return images.get(position);
-        }
-    }
-
     //图片轮播任务
     private class ViewPageTask implements Runnable {
 
         @Override
         public void run() {
-            currentItem = (currentItem + 1) % imageIds.length;
+            currentItem = (currentItem + 1) % adapter.getImageIdsLength();
             mHandler.sendEmptyMessage(0);
         }
     }
-
     /**
      * 接收子线程传递过来的数据
      */

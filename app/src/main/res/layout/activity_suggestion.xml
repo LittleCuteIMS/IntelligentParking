@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:fitsSystemWindows="true"
-    tools:context=".SystemFunction.Suggestion"
+    tools:context=".SystemFunction.SuggestionActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
