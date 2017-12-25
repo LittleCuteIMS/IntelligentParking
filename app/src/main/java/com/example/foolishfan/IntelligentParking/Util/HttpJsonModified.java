@@ -16,19 +16,29 @@ import java.net.URL;
  * 此类为客户端向服务器发送json格式的数据并获取服务器的返回信息
  */
 
-public class HttpJson {
+public class HttpJsonModified {
     static private  String website="http://192.168.155.1/ParkingWeb/";    //设置访问IP地址值
     private String path=null;     //获取访问的php文件的URL地址
     private String json=null;       //获取要传输的json格式字符串数据
     private Handler handler=null;   //接受子线程发送的数据， 并用此数据配合主线程更新UI
     private HttpThread httpThread;  //处理通信的线程
+    private int messageNum;
 
-    public HttpJson(String initPath, String initJson, Handler initHandler){//构造函数
+    public HttpJsonModified(String initPath, String initJson, Handler initHandler){//不带消息序列的构造函数
 
         path=initPath;
         json=initJson;
         handler=initHandler;    //获取主线程的handler
         httpThread=new HttpThread();
+    }
+
+    public HttpJsonModified(String initPath, String initJson, Handler initHandler, int initMessageNum){//带消息序列的构造函数
+
+        path=initPath;
+        json=initJson;
+        handler=initHandler;    //获取主线程的handler
+        httpThread=new HttpThread();
+        messageNum=initMessageNum;
     }
 
     public HttpThread getHttpThread(){//获取网络通信线程
@@ -87,10 +97,12 @@ public class HttpJson {
             } catch (IOException e){
                 e.printStackTrace();
             }
-            Message m = handler.obtainMessage();//创建一个Message消息
-            if(result!="")
-                m.obj=result;//为消息添加从服务器上获取的消息
-            handler.sendMessage(m);//发送消息
+            Message message = new Message();//创建一个Message消息
+            if(result!=""){
+                message.what=messageNum;
+                message.obj=result;//为消息添加从服务器上获取的消息
+            }
+            handler.sendMessage(message);//发送消息
         }
     }
 }

@@ -42,4 +42,21 @@
     <string name="send">提交</string>
     <string name="send_success">成功提交</string>
     <string name="network_error">网络错误</string>
+
+    <!--停车交易状态 -->
+    <string name="tradingStatus0">无进入停车场记录</string>
+    <string name="tradingStatus1">余额不足，请充值</string>
+    <string name="tradingStatus2">扣费失败，请稍后重试</string>
+    <string name="tradingStatus3">存入离开停车场时间失败</string>
+    <string name="tradingStatus4">存入停车交易记录失败</string>
+    <string name="park_history">停车历史</string>
+    <string name="my_cars">我的车辆</string>
+    <string name="message_center">消息中心</string>
+    <string name="feedback">意见反馈</string>
+    <string name="settings">设置</string>
+    <string name="contact_customer_service">联系客服</string>
+    <string name="phone_ZhangLin">张琳：18782003437</string>
+    <string name="phone_RongYuting">荣誉婷：18780073534</string>
+    <string name="phone_LiangJiacheng">梁家铖：15520702168</string>
+    <string name="phone_CaiChuang">蔡创：13551374417</string>
 </resources>

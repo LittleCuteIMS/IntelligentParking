@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".System.Login"
+    tools:context=".User.Login"
     >
 
     <LinearLayout
