@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.MainActivity;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 
@@ -30,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+
 
 public class User extends AppCompatActivity {
 
@@ -202,7 +202,7 @@ public class User extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MainActivity.RESULT_OK) {
+        if (resultCode == User.RESULT_OK) {
             switch (requestCode) {
                 case TAKE_PICTURE:
                     cutImage(tempUri); // 对图片进行裁剪处理

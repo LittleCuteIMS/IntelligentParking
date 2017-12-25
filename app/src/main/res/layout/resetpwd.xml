@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="1">
 
     <android.support.v7.widget.Toolbar
@@ -73,28 +69,34 @@
 
     <Button
         android:id="@+id/resetpwd_btn_sure"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#18f7c7"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/resetpwd_btn_cancel"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="19dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:gravity="center"
         android:onClick="sure_to_reset"
         android:text="确定"
-        android:textSize="20dp"
-        android:layout_marginBottom="21dp"
-        android:layout_above="@+id/resetpwd_btn_cancel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        android:textColor="#FFF"
+        android:textSize="25dp"
+        android:textStyle="bold" />
     <Button
         android:id="@+id/resetpwd_btn_cancel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:background="#f7181c"
         android:onClick="not_to_reset"
         android:text="取消"
-        android:textSize="20dp"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="13dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="11dp" />
+        android:layout_alignLeft="@+id/resetpwd_btn_sure"
+        android:layout_alignStart="@+id/resetpwd_btn_sure" />
 
 </RelativeLayout>
