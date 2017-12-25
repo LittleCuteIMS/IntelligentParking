@@ -28,11 +28,11 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
         android:fontFamily="sans-serif"
         android:text="让您停车无忧！"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true" />
+        android:textSize="24sp" />
 </RelativeLayout>
