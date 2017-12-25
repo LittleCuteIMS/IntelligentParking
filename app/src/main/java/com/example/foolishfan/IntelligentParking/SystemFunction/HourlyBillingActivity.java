@@ -41,6 +41,8 @@ public class HourlyBillingActivity extends AppCompatActivity {
     final private int STARTPARK=2;
     final private int STOPPARK=3;
     final private int PARKINFO=4;
+    private SharedPreferences billingPref;
+    private SharedPreferences.Editor billingEdior;
     private Handler billingHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -94,13 +96,19 @@ public class HourlyBillingActivity extends AppCompatActivity {
         park_info_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent_billingToMain=new Intent(HourlyBillingActivity.this,MainActivity.class);
+                startActivity(intent_billingToMain);
             }
         });
 
+        billingPref=getSharedPreferences("billing",Context.MODE_PRIVATE);
+        billingEdior=billingPref.edit();
+
         String park_id = getParkID();
-        getParkInfoDetails(park_id);
-        getCarInfo();
+        if(park_id != null){
+            getParkInfoDetails(park_id);
+            getCarInfo();
+        }
         setStartPark(park_id);
         setStopPark(park_id);
     }
@@ -110,12 +118,14 @@ public class HourlyBillingActivity extends AppCompatActivity {
         //接受二维码扫描的信息
         Intent intent = getIntent();// 收取 email
         Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
-        String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
         String string=null;
-        try {
-            string=new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(bundle!=null){
+            String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
+            try {
+                string=new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return string;
     }

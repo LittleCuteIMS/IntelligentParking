@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity{
         Button addCar = (Button) findViewById(R.id.addCar);
         Button parkNearby = (Button) findViewById(R.id.parkNearby);
         Button wallet = (Button) findViewById(R.id.wallet);
+        Button main_billing=(Button)findViewById(R.id.main_billing);
         ImageButton scanImageButton = (ImageButton) findViewById(R.id.scanImageButton);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);   //创建导航试图对象
         mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
         wallet.setOnClickListener(mainOnClick);
         mImageView.setOnClickListener(mainOnClick);
         scanImageButton.setOnClickListener(mainOnClick);
+        main_billing.setOnClickListener(mainOnClick);
         //注册导航栏菜单的监听事件
         MainNavigationItemListener navigationItemListener=new MainNavigationItemListener(this);
         navigationView.setNavigationItemSelectedListener(navigationItemListener);

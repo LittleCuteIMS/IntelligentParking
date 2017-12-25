@@ -108,6 +108,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="我的钱包" />
+
+        <Button
+            android:id="@+id/main_billing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="计时计费" />
     </LinearLayout>
 
 </RelativeLayout>

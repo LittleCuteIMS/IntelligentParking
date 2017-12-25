@@ -220,6 +220,7 @@
         <activity
             android:name=".SystemFunction.HourlyBillingActivity"
             android:label="计时计费"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SystemFunction.WebActivity"
