@@ -103,14 +103,20 @@ public class HourlyBillingActivity extends AppCompatActivity {
 
         billingPref=getSharedPreferences("billing",Context.MODE_PRIVATE);
         billingEdior=billingPref.edit();
-
-        String park_id = getParkID();
-        if(park_id != null){
+        String park_id = null;
+        if(billingPref.getBoolean("isBilling",false)){//如果正在停车中，park_id从缓存中获取,开始停车按钮不可点击，结束停车可点击
+            park_id = billingPref.getString("park_id",null);
+            setButtonEnabled(false,true);
+        }else{//如果未停车，park_id从二维码中获取或为空，开始停车按钮可点击，结束停车不可点击
+            park_id=getParkID();
+            setButtonEnabled(true,false);
+        }
+        if(park_id != null){//如果park_id为空，则什么操作都不进行
             getParkInfoDetails(park_id);
             getCarInfo();
+            setStartPark(park_id);
+            setStopPark(park_id);
         }
-        setStartPark(park_id);
-        setStopPark(park_id);
     }
 
     //从二维码中获取停车场信息
@@ -119,10 +125,12 @@ public class HourlyBillingActivity extends AppCompatActivity {
         Intent intent = getIntent();// 收取 email
         Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
         String string=null;
-        if(bundle!=null){
+        if(bundle!=null) {//扫描二位码则获取park_id并存入缓存，否则park_id为空
             String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
             try {
-                string=new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
+                string = new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
+                billingEdior.putString("park_id", string);
+                billingEdior.apply();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -206,6 +214,8 @@ public class HourlyBillingActivity extends AppCompatActivity {
         startParkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                billingEdior.putBoolean("isBilling",true);
+                billingEdior.apply();//保存是否正在停车的状态
                 //显示开始停车时间
                 TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
                 SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -239,7 +249,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
     //对结束停车设置监听事件
     private void setStopPark(final String parkID){
         Button stopParkBtn = (Button)findViewById(R.id.stop_park);
-        stopParkBtn.setEnabled(false);
         stopParkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,6 +278,9 @@ public class HourlyBillingActivity extends AppCompatActivity {
                 new Thread(httpJson.getHttpThread()).start();
                 //开始按钮可点击，结束按钮不可点击
                 setButtonEnabled(true,false);
+                //点击结束停车，清空sharedPreference中的数据
+                billingEdior.clear();
+                billingEdior.apply();
             }
         });
     }
