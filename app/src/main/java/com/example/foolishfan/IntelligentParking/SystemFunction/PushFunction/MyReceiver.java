@@ -11,8 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.SystemFunction.MessageCenter;
-import com.example.foolishfan.IntelligentParking.SystemFunction.PushFunction.Logger;
+import com.example.foolishfan.IntelligentParking.SystemFunction.MessageCenterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +58,7 @@ public class MyReceiver extends BroadcastReceiver {
 				Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
 				//打开自定义的Activity
 				//由于是在广播接收器里面启动Activity，所以要添加Flag：FLAG_ACTIVITY_NEW_TASK，表示新创建一个task来存放启动的Activity
-				Intent i = new Intent(context, MessageCenter.class);
+				Intent i = new Intent(context, MessageCenterActivity.class);
 				i.putExtra("content",content);//Intent传递数据将获取到的消息信息传递给MessageCenter
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );

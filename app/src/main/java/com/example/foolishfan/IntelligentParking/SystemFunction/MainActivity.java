@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -252,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_friend://消息中心
                 if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, MessageCenter.class);
+                    Intent intent = new Intent(MainActivity.this, MessageCenterActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
@@ -260,14 +258,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_suggestion://意见反馈
                 if (isLogin) {
-                    Intent intent = new Intent(MainActivity.this, Suggestion.class);
+                    Intent intent = new Intent(MainActivity.this, SuggestionActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.nav_setting://设置
-                Intent intent = new Intent(MainActivity.this, SoftwareSet.class);
+                Intent intent = new Intent(MainActivity.this, SoftwareSetActivity.class);
                 startActivity(intent);
                 break;
 
