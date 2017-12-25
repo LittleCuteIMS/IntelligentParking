@@ -221,6 +221,10 @@
             android:name=".SystemFunction.WebActivity"
             android:label="广告详情"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".SystemFunction.ContactServiceActivity"
+            android:label="联系客服"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

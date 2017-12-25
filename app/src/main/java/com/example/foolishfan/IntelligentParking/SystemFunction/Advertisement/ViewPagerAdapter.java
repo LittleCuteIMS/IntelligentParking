@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.SystemFunction.Listeners.AdvertisementListener;
 
 import java.util.ArrayList;
 import java.util.List;

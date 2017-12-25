@@ -25,6 +25,10 @@
             android:id="@+id/nav_setting"
             android:title="@string/settings"
             android:icon="@mipmap/icons8_automatic_50"/>
+        <item
+            android:id="@+id/nav_contact"
+            android:title="@string/contact_customer_service"
+            android:icon="@mipmap/icons8_phone_filled_50"/>
 
     </group>
 </menu>

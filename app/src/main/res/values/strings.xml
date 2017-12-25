@@ -54,4 +54,9 @@
     <string name="message_center">消息中心</string>
     <string name="feedback">意见反馈</string>
     <string name="settings">设置</string>
+    <string name="contact_customer_service">联系客服</string>
+    <string name="phone_ZhangLin">张琳：18782003437</string>
+    <string name="phone_RongYuting">荣誉婷：18780073534</string>
+    <string name="phone_LiangJiacheng">梁家铖：15520702168</string>
+    <string name="phone_CaiChuang">蔡创：13551374417</string>
 </resources>

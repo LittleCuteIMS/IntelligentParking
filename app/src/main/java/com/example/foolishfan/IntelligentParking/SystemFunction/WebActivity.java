@@ -19,7 +19,6 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置toolbar导航栏，设置导航按钮
         setContentView(R.layout.activity_web);
         Toolbar web_toolbar = (Toolbar) findViewById(R.id.web_toolbar);
         setSupportActionBar(web_toolbar);

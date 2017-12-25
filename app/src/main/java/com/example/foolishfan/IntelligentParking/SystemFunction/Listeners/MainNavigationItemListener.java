@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.SystemFunction.MainListeners;
+package com.example.foolishfan.IntelligentParking.SystemFunction.Listeners;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.R;
+import com.example.foolishfan.IntelligentParking.SystemFunction.ContactServiceActivity;
 import com.example.foolishfan.IntelligentParking.SystemFunction.MainActivity;
 import com.example.foolishfan.IntelligentParking.SystemFunction.MessageCenterActivity;
 import com.example.foolishfan.IntelligentParking.SystemFunction.SoftwareSetActivity;
@@ -64,7 +65,10 @@ public class MainNavigationItemListener implements NavigationView.OnNavigationIt
                 Intent intent = new Intent(context, SoftwareSetActivity.class);
                 context.startActivity(intent);
                 break;
-
+            case R.id.nav_contact:
+                Intent intent_mainToContact = new Intent(context, ContactServiceActivity.class);
+                context.startActivity(intent_mainToContact);
+                break;
         }
         return true;
 
