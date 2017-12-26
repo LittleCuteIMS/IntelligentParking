@@ -1,5 +1,6 @@
 package com.example.foolishfan.IntelligentParking.SystemFunction;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +45,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
     final private int PARKINFO=4;
     private SharedPreferences billingPref;
     private SharedPreferences.Editor billingEdior;
+    private ProgressDialog progressDialog = null;
     private Handler billingHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -51,22 +53,24 @@ public class HourlyBillingActivity extends AppCompatActivity {
             switch (msg.what) {
                 case PARKINFO:
                     if(msg.obj != null){
+                        Log.d("message","parkInfo");
                         String message=msg.obj.toString();
                         if(!message.equals("FALSE")){
                             showParkInfo(message);
                         }else{
                             Toast.makeText(HourlyBillingActivity.this,"系统中无此停车场",Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case CARINFO:
                     if (msg.obj != null) {
+                        Log.d("message","carInfo");
                         setCarSpinner(msg.obj.toString());
                     }else{
                         Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        setButtonEnabled(false,false);
                     }
+                    progressDialog.dismiss();
                     break;
                 case STARTPARK:
                     if(msg.obj!=null){
@@ -154,6 +158,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         String path = "parkPHP/getParkInfoDetails.php";
         HttpJsonModified http = new HttpJsonModified(path, json.toString(), billingHandler, PARKINFO);
         new Thread(http.getHttpThread()).start();
+        progressDialog = ProgressDialog.show(HourlyBillingActivity.this, "请稍等...", "获取数据中...", true);
     }
 
     //显示停车场的相关信息

@@ -61,7 +61,8 @@ public class HttpJsonModified {
                 conn.setDoInput(true);//设置输入
                 conn.setDoOutput(true);//设置输出
                 conn.setUseCaches(false);//禁用缓存
-
+                conn.setConnectTimeout(6000);
+                conn.setReadTimeout(6000);
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("Charset", "UTF-8");
                 //设置文件类型
@@ -98,8 +99,8 @@ public class HttpJsonModified {
                 e.printStackTrace();
             }
             Message message = new Message();//创建一个Message消息
+            message.what=messageNum;
             if(result!=""){
-                message.what=messageNum;
                 message.obj=result;//为消息添加从服务器上获取的消息
             }
             handler.sendMessage(message);//发送消息
