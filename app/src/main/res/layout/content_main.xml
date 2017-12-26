@@ -85,41 +85,100 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_marginTop="17dp"
+        android:orientation="vertical"
         android:layout_below="@+id/linearLayout"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/addCar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="添加车辆" />
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/parkNearby"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="附近停车场" />
+            <Button
+                android:id="@+id/addCar"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/add_car_drawable"
+                android:text="添加车辆"
+                android:textColor="#faa731" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/wallet"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="我的钱包" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/main_billing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="计时计费" />
+            <Button
+                android:id="@+id/parkNearby"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_button_bg"
+                android:drawableLeft="@drawable/park_nearby"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="附近停车场"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/main_self_navgation_btn"
+            <Button
+                android:id="@+id/main_self_navgation_btn"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_button_bg"
+                android:drawableLeft="@drawable/navigate_icon"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="自动巡航"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="自动巡航" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/wallet"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_button_bg"
+                android:drawableLeft="@drawable/wallet_icon"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="我的钱包"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/main_billing"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_button_bg"
+                android:drawableLeft="@drawable/timer_icon"
+                android:drawablePadding="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="计时计费"
+                android:textSize="18sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

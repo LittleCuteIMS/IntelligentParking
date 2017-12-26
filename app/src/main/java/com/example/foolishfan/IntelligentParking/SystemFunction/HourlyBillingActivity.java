@@ -286,9 +286,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
                 new Thread(httpJson.getHttpThread()).start();
                 //开始按钮可点击，结束按钮不可点击
                 setButtonEnabled(true,false);
-                //点击结束停车，清空sharedPreference中的数据
-                billingEdior.clear();
-                billingEdior.apply();
+
             }
         });
     }
@@ -326,6 +324,9 @@ public class HourlyBillingActivity extends AppCompatActivity {
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(HourlyBillingActivity.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
+            //点击结束停车，清空sharedPreference中的数据
+            billingEdior.clear();
+            billingEdior.apply();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
