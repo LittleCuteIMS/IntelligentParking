@@ -9,6 +9,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -96,8 +97,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         park_info_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent_billingToMain=new Intent(HourlyBillingActivity.this,MainActivity.class);
-                startActivity(intent_billingToMain);
+                finish();
             }
         });
 
@@ -117,6 +117,11 @@ public class HourlyBillingActivity extends AppCompatActivity {
             setStartPark(park_id);
             setStopPark(park_id);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     //从二维码中获取停车场信息
@@ -220,6 +225,8 @@ public class HourlyBillingActivity extends AppCompatActivity {
                 TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
                 SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String datetime = sDateFormat.format(new Date());
+                billingEdior.putString("inDatetime",datetime);
+                billingEdior.apply();
                 String billInTimeStr = "进入时间:" + datetime;
                 billInTime.setText(billInTimeStr);
                 //开始计时
