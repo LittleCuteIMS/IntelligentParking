@@ -16,15 +16,16 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="50dp"
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <ImageButton
                 android:id="@+id/scanImageButton"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="right"
-                android:background="@drawable/scan_qr_code"/>
+                android:background="@drawable/scan_qr_code" />
         </android.support.v7.widget.Toolbar>
 
 

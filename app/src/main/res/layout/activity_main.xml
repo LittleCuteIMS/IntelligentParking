@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#e8e8e8"
     tools:openDrawer="start">
 
     <include
@@ -16,7 +17,7 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="230dp"
+        android:layout_width="275dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
