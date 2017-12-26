@@ -119,7 +119,7 @@
             <Button
                 android:id="@+id/parkNearby"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg"
@@ -128,12 +128,12 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="附近停车场"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/main_self_navgation_btn"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_marginLeft="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg"
@@ -142,7 +142,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="自动巡航"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +154,7 @@
             <Button
                 android:id="@+id/wallet"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_marginRight="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg"
@@ -163,12 +163,12 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="我的钱包"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/main_billing"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_weight="1"
                 android:background="@drawable/default_button_bg"
                 android:drawableLeft="@drawable/timer_icon"
@@ -176,7 +176,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
                 android:text="计时计费"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>
