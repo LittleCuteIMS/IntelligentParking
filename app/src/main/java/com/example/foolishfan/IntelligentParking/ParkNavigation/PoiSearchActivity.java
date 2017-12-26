@@ -1,5 +1,6 @@
 package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.CircleOptions;
 import com.baidu.mapapi.map.GroundOverlayOptions;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -46,50 +48,51 @@ import com.example.foolishfan.IntelligentParking.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
+import static android.R.attr.radius;
 
-    private PoiSearch mPoiSearch = null;
-    private SuggestionSearch mSuggestionSearch = null;
+public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
     private BaiduMap mBaiduMap = null;
-    private List<String> suggest;
     private MapView mapView;//地图对象
-    /**
-     * 搜索关键字输入窗口
-     */
-    private EditText editCity = null;
+    private PoiSearch mPoiSearch = null;//poi搜索类
+    private SuggestionSearch mSuggestionSearch = null;//搜索框的提示建议
+    private List<String> suggest;
+    private EditText editCity = null;//搜索关键字输入窗口
     private AutoCompleteTextView keyWorldsView = null;
     private ArrayAdapter<String> sugAdapter = null;
     private int loadIndex = 0;
+    private int searchType = 0;  // 搜索的类型，在显示时区分
 
-    LatLng center = new LatLng(30.67, 104.06);
-    int radius = 100;
-    LatLng southwest = new LatLng( 30.67, 104.06 );
-    LatLng northeast = new LatLng( 30.69724, 104.08198);
+    private double latitude;//当前位置经度
+    private double longitude;
+    LatLng center = new LatLng(30.631616183067745, 104.08005237579346);
+    LatLng southwest = new LatLng(30.631616183067745, 104.08005237579346);
+    LatLng northeast = new LatLng(30.651616383067745, 104.09998);
     LatLngBounds searchbound = new LatLngBounds.Builder().include(southwest).include(northeast).build();
-
-    int searchType = 0;  // 搜索的类型，在显示时区分
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poi_search);
-
         mapView = (MapView) findViewById(R.id.map);//获取地图实例
         mBaiduMap = mapView.getMap();//获取BaiduMap的实例
-
-        // 初始化搜索模块，注册搜索事件监听
-        mPoiSearch = PoiSearch.newInstance();
-        mPoiSearch.setOnGetPoiSearchResultListener(this);
-
-        // 初始化建议搜索模块，注册建议搜索事件监听
-        mSuggestionSearch = SuggestionSearch.newInstance();
-        mSuggestionSearch.setOnGetSuggestionResultListener(this);
-
         editCity = (EditText) findViewById(R.id.city);
         keyWorldsView = (AutoCompleteTextView) findViewById(R.id.searchkey);
         sugAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
         keyWorldsView.setAdapter(sugAdapter);
         keyWorldsView.setThreshold(1);
+
+        // 初始化搜索模块，注册搜索事件监听
+        mPoiSearch = PoiSearch.newInstance();
+        mPoiSearch.setOnGetPoiSearchResultListener(this);
+        // 初始化建议搜索模块，注册建议搜索事件监听
+        mSuggestionSearch = SuggestionSearch.newInstance();
+        mSuggestionSearch.setOnGetSuggestionResultListener(this);
+
+        Intent intent = getIntent();
+        latitude = intent.getDoubleExtra("localLatitude",0);
+        longitude = intent.getDoubleExtra("localLongitude",0);
+        navigateTo(latitude,longitude);//在地图上显示当前位置
+
         /**
          * 当输入关键字变化时，动态更新建议列表
          */
@@ -109,31 +112,19 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
+    /*
+    *在地图上显示当前位置
+     */
+    private void navigateTo(double latitude,double longitude){
+        LatLng ll = new LatLng(latitude,longitude);//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
+        //创建一个新的MapStatus
+        MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(15).build();
+        mapView.removeViewAt(1);// 不显示百度地图Logo
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mPoiSearch.destroy();
-        mSuggestionSearch.destroy();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+        //利用MapStatus构建一个MapStatusUpdate对象
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mapStatus);
+        //更新BaiduMap，此时BaiduMap的界面就会从初始位置（北京），移动到定位点
+        mBaiduMap.setMapStatus(mapStatusUpdate);
     }
 
     //响应城市内搜索按钮点击事件
@@ -151,11 +142,6 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
         mPoiSearch.searchNearby(nearbySearchOption);
     }
 
-    public void goToNextPage(View v) {
-        loadIndex++;
-        searchButtonProcess(null);
-    }
-
     //响应区域搜索按钮点击事件
     public void searchBoundProcess(View v) {
         searchType = 3;
@@ -167,7 +153,7 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
      */
     public void onGetPoiResult(PoiResult result) {
         if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-            Toast.makeText(PoiSearchActivity.this, "未找到结果", Toast.LENGTH_LONG).show();
+            Toast.makeText(PoiSearchActivity.this, "未找到结果"+result.error.toString(), Toast.LENGTH_LONG).show();
             return;
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
@@ -179,7 +165,7 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
             overlay.zoomToSpan();
             switch( searchType ) {
                 case 2:
-                    showNearbyArea(center, radius);
+                    showNearbyArea(center, 100);
                     break;
                 case 3:
                     showBound(searchbound);
@@ -213,9 +199,7 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
     }
 
     @Override
-    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-
-    }
+    public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {}
 
     /**
      * 获取在线建议搜索结果，得到requestSuggestion返回的搜索结果
@@ -237,49 +221,65 @@ public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSear
     }
 
     private class MyPoiOverlay extends PoiOverlay {
-
         public MyPoiOverlay(BaiduMap baiduMap) {
             super(baiduMap);
         }
-
         @Override
         public boolean onPoiClick(int index) {
             super.onPoiClick(index);
             PoiInfo poi = getPoiResult().getAllPoi().get(index);
-            // if (poi.hasCaterDetails) {
             mPoiSearch.searchPoiDetail((new PoiDetailSearchOption()).poiUid(poi.uid));
-            // }
             return true;
         }
     }
 
     /**
      * 对周边检索的范围进行绘制
-     * @param center
-     * @param radius
      */
     public void showNearbyArea( LatLng center, int radius) {
         BitmapDescriptor centerBitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_geo);
         MarkerOptions ooMarker = new MarkerOptions().position(center).icon(centerBitmap);
         mBaiduMap.addOverlay(ooMarker);
-
-        OverlayOptions ooCircle = new CircleOptions().fillColor( 0xCCCCCC00 ).center(center).stroke(new Stroke(5, 0xFFFF00FF )).radius(radius);
+        OverlayOptions ooCircle = new CircleOptions().fillColor( 0xCCCCCC00).center(center).stroke(new Stroke(5, 0xFFFF00FF )).radius(radius);
         mBaiduMap.addOverlay(ooCircle);
     }
 
     /**
      * 对区域检索的范围进行绘制
-     * @param bounds
      */
     public void showBound( LatLngBounds bounds) {
         BitmapDescriptor bdGround = BitmapDescriptorFactory.fromResource(R.drawable.ground_overlay);
-
         OverlayOptions ooGround = new GroundOverlayOptions().positionFromBounds(bounds).image(bdGround).transparency(0.8f);
         mBaiduMap.addOverlay(ooGround);
-
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(bounds.getCenter());
         mBaiduMap.setMapStatus(u);
-
         bdGround.recycle();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPoiSearch.destroy();
+        mSuggestionSearch.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

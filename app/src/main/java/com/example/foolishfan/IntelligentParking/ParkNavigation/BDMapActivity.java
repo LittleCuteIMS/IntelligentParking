@@ -43,7 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BDMapActivity extends AppCompatActivity{
+public class BDMapActivity extends AppCompatActivity implements  View.OnClickListener{
     public LocationClient mLocationClient;//定位类
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
@@ -129,17 +129,24 @@ public class BDMapActivity extends AppCompatActivity{
         new Thread(http.getHttpThread()).start();
 
         Button btnAddr = (Button) findViewById(R.id.btnAddr);
-        btnAddr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnAddr.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnAddr:
                 Intent intent = new Intent(BDMapActivity.this,PoiSearchActivity.class);
+                intent.putExtra("localLatitude",localLatitude);
+                intent.putExtra("localLongitude",localLongitude);
                 startActivity(intent);
-            }
-        });
+                break;
+            default:
+                break;
+        }
     }
 
     public class MyLocationListener implements BDLocationListener{
-
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             if (bdLocation.getLocType() == BDLocation.TypeGpsLocation || bdLocation.getLocType() == BDLocation.TypeNetWorkLocation ){
