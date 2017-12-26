@@ -292,10 +292,11 @@ public class User extends AppCompatActivity {
             //这里图片是方形的，可以用一个工具类处理成圆形（很多头像都是圆形，这种工具类网上很多不再详述）
             mImage.setImageBitmap(mBitmap);//显示图片
             //在这个地方可以写上上传该图片到服务器的代码
-
         }
     }
 
+
+    
     //设置的监听事件
     View.OnClickListener setListener = new View.OnClickListener() {
         @Override

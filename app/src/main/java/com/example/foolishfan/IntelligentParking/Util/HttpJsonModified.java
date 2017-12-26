@@ -17,7 +17,7 @@ import java.net.URL;
  */
 
 public class HttpJsonModified {
-    static private  String website="http://192.168.155.1/ParkingWeb/";    //设置访问IP地址值
+    static private  String website="http://120.78.173.73/ParkingWeb/";    //设置访问IP地址值
     private String path=null;     //获取访问的php文件的URL地址
     private String json=null;       //获取要传输的json格式字符串数据
     private Handler handler=null;   //接受子线程发送的数据， 并用此数据配合主线程更新UI
@@ -61,7 +61,8 @@ public class HttpJsonModified {
                 conn.setDoInput(true);//设置输入
                 conn.setDoOutput(true);//设置输出
                 conn.setUseCaches(false);//禁用缓存
-
+                conn.setConnectTimeout(6000);
+                conn.setReadTimeout(6000);
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("Charset", "UTF-8");
                 //设置文件类型
@@ -98,8 +99,8 @@ public class HttpJsonModified {
                 e.printStackTrace();
             }
             Message message = new Message();//创建一个Message消息
+            message.what=messageNum;
             if(result!=""){
-                message.what=messageNum;
                 message.obj=result;//为消息添加从服务器上获取的消息
             }
             handler.sendMessage(message);//发送消息

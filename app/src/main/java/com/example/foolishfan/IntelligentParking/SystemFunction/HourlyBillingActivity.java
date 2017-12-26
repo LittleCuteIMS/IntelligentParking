@@ -1,5 +1,6 @@
 package com.example.foolishfan.IntelligentParking.SystemFunction;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,6 +43,10 @@ public class HourlyBillingActivity extends AppCompatActivity {
     final private int STARTPARK=2;
     final private int STOPPARK=3;
     final private int PARKINFO=4;
+    private String wholePlateNumber,wholeDatetime;
+    private SharedPreferences billingPref;
+    private SharedPreferences.Editor billingEdior;
+    private ProgressDialog progressDialog = null;
     private Handler billingHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -54,8 +60,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(HourlyBillingActivity.this,"系统中无此停车场",Toast.LENGTH_SHORT).show();
                         }
-                    }else{
-                        Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case CARINFO:
@@ -63,7 +67,9 @@ public class HourlyBillingActivity extends AppCompatActivity {
                         setCarSpinner(msg.obj.toString());
                     }else{
                         Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
+                        setButtonEnabled(false,false);
                     }
+                    progressDialog.dismiss();
                     break;
                 case STARTPARK:
                     if(msg.obj!=null){
@@ -98,11 +104,28 @@ public class HourlyBillingActivity extends AppCompatActivity {
             }
         });
 
-        String park_id = getParkID();
-        getParkInfoDetails(park_id);
-        getCarInfo();
-        setStartPark(park_id);
-        setStopPark(park_id);
+        billingPref=getSharedPreferences("billing",Context.MODE_PRIVATE);
+        billingEdior=billingPref.edit();
+        String park_id = null;
+        if(billingPref.getBoolean("isBilling",false)){//如果正在停车中，park_id从缓存中获取,开始停车按钮不可点击，结束停车可点击
+            park_id = billingPref.getString("park_id",null);
+            setButtonEnabled(false,true);
+            displayDatetimeAndChronometer(billingPref.getString("inDatetime",null),billingPref.getLong("chronometerBaseTime",0));
+        }else{//如果未停车，park_id从二维码中获取或为空，开始停车按钮可点击，结束停车不可点击
+            park_id=getParkID();
+            setButtonEnabled(true,false);
+        }
+        if(park_id != null){//如果park_id为空，则什么操作都不进行
+            getParkInfoDetails(park_id);
+            getCarInfo();
+            setStartPark(park_id);
+            setStopPark(park_id);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     //从二维码中获取停车场信息
@@ -110,12 +133,16 @@ public class HourlyBillingActivity extends AppCompatActivity {
         //接受二维码扫描的信息
         Intent intent = getIntent();// 收取 email
         Bundle bundle = intent.getBundleExtra("qr_code_info");// 打开 email
-        String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
         String string=null;
-        try {
-            string=new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(bundle!=null) {//扫描二位码则获取park_id并存入缓存，否则park_id为空
+            String parkInfoStr = bundle.getString("parkInfoJson");//读取内容能够
+            try {
+                string = new JSONObject(parkInfoStr).getString("park_id");//获取停车场的id
+                billingEdior.putString("park_id", string);
+                billingEdior.apply();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return string;
     }
@@ -130,6 +157,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         String path = "parkPHP/getParkInfoDetails.php";
         HttpJsonModified http = new HttpJsonModified(path, json.toString(), billingHandler, PARKINFO);
         new Thread(http.getHttpThread()).start();
+        progressDialog = ProgressDialog.show(HourlyBillingActivity.this, "请稍等...", "获取数据中...", true);
     }
 
     //显示停车场的相关信息
@@ -188,6 +216,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         ArrayAdapter<String> carInfoAdapter = new ArrayAdapter<String>(HourlyBillingActivity.this, android.R.layout.simple_spinner_item, carList);
         carInfoAdapter.setDropDownViewResource(R.layout.spinner_item);
         carSpinner.setAdapter(carInfoAdapter);
+        carSpinner.setSelection(billingPref.getInt("plateNumberID",0));//设置默认项
     }
 
     //对开始停车按钮设置监听事件
@@ -196,22 +225,22 @@ public class HourlyBillingActivity extends AppCompatActivity {
         startParkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                billingEdior.putBoolean("isBilling",true);//保存是否正在停车的状态
                 //显示开始停车时间
-                TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
                 SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String datetime = sDateFormat.format(new Date());
-                String billInTimeStr = "进入时间:" + datetime;
-                billInTime.setText(billInTimeStr);
-                //开始计时
-                Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
-                billingTimeChronometer.setBase(SystemClock.elapsedRealtime());
-                billingTimeChronometer.start();
+                long chronometerBaseTime=SystemClock.elapsedRealtime();
+                displayDatetimeAndChronometer(datetime,chronometerBaseTime);
+                Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
+                String plateNumber = carSpinner.getSelectedItem().toString();
+                billingEdior.putString("inDatetime",datetime);//保存进入停车场的时间
+                billingEdior.putLong("chronometerBaseTime",chronometerBaseTime);//保存计时器基准时间
+                billingEdior.putInt("plateNumberID",carSpinner.getSelectedItemPosition());
+                billingEdior.apply();
                 //发送开始停车信息到后台服务器
                 JSONObject jsonInfo = new JSONObject();
                 try {
                     jsonInfo.put("park_id",parkID);
-                    Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
-                    String plateNumber = carSpinner.getSelectedItem().toString();
                     jsonInfo.put("plate_number",plateNumber);
                     jsonInfo.put("in_datetime",datetime);
                 } catch (JSONException e) {
@@ -229,7 +258,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
     //对结束停车设置监听事件
     private void setStopPark(final String parkID){
         Button stopParkBtn = (Button)findViewById(R.id.stop_park);
-        stopParkBtn.setEnabled(false);
         stopParkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,14 +270,13 @@ public class HourlyBillingActivity extends AppCompatActivity {
                     jsonInfo.put("park_id",parkID);//停车场编号
                     Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
                     String plateNumber = carSpinner.getSelectedItem().toString();
+                    wholePlateNumber=plateNumber;
                     jsonInfo.put("plate_number",plateNumber);//车牌号
-                    TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
-                    String prefix = "进入时间:";
-                    String inTime = billInTime.getText().toString();
-                    inTime = inTime.substring(prefix.length());
+                    String inTime=billingPref.getString("inDatetime",null);
                     jsonInfo.put("in_datetime",inTime);//进入停车场时间
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String outTime = sDateFormat.format(new Date());
+                    wholeDatetime=outTime;
                     jsonInfo.put("out_datetime",outTime);//离开停车场时间
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -259,6 +286,9 @@ public class HourlyBillingActivity extends AppCompatActivity {
                 new Thread(httpJson.getHttpThread()).start();
                 //开始按钮可点击，结束按钮不可点击
                 setButtonEnabled(true,false);
+                //点击结束停车，清空sharedPreference中的数据
+                billingEdior.clear();
+                billingEdior.apply();
             }
         });
     }
@@ -271,6 +301,15 @@ public class HourlyBillingActivity extends AppCompatActivity {
         stopParkBtn.setEnabled(stop);
     }
 
+    private void displayDatetimeAndChronometer(String mDatetime,long mChronometerBaseTime){
+        String billInTimeStr = "进入时间:" + mDatetime;
+        TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
+        billInTime.setText(billInTimeStr);
+        Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
+        billingTimeChronometer.setBase(mChronometerBaseTime);
+        billingTimeChronometer.start();
+    }
+
     //结束停车后，接受服务器反馈信息后的处理过程
     private void handleTradingStatus(String tradingStatusStr){
         char[] tradingStatus=tradingStatusStr.toCharArray();
@@ -278,6 +317,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus0,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[1]=='0'){
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus1,Toast.LENGTH_SHORT).show();
+            setButtonEnabled(false,true);
         }else if(tradingStatus[2]=='0'){
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus2,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[3]=='0'){
@@ -286,6 +326,21 @@ public class HourlyBillingActivity extends AppCompatActivity {
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(HourlyBillingActivity.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(HourlyBillingActivity.this,
+                            TradingDetailsActivity.class);
+                    Bundle bundle=new Bundle();//创建email内容
+                    bundle.putString("plate_number",wholePlateNumber);
+                    bundle.putString("out_datetime",wholeDatetime);
+                    intent.putExtra("billingToTradingDetail",bundle);
+
+                    startActivity(intent);
+                    finish();
+                }
+
+            }, 2000);
         }
     }
 }

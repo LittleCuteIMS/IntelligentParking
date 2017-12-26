@@ -70,11 +70,11 @@ public class QRcode {
         try {
             JSONObject jsonObj=new JSONObject(jsonRs);
             if(jsonObj.getString("mode").equals("park")){
-                Intent intent_Login_to_Register = new Intent(context, HourlyBillingActivity.class);
+                Intent intent = new Intent(context, HourlyBillingActivity.class);
                 Bundle bundle=new Bundle();//创建email内容
                 bundle.putString("parkInfoJson",jsonRs);
-                intent_Login_to_Register.putExtra("qr_code_info",bundle);
-                context.startActivity(intent_Login_to_Register);
+                intent.putExtra("qr_code_info",bundle);
+                context.startActivity(intent);
             }
         } catch (JSONException e) {
             e.printStackTrace();

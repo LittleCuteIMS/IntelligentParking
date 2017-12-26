@@ -1,17 +1,16 @@
 package com.example.foolishfan.IntelligentParking.ParkNavigation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -45,12 +43,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BDMapActivity extends AppCompatActivity{
+public class BDMapActivity extends AppCompatActivity implements  View.OnClickListener{
     public LocationClient mLocationClient;//定位类
     private MapView mapView;//地图对象
     private BaiduMap baiduMap;//百度地图对象
     private boolean isFirstLocate = true;//如果是第一次定位的话要将自己的位置显示在地图中间
-    private InfoWindow mInfoWindow;//每个marker的弹窗显示
+    private double localLatitude;//当前经度
+    private double localLongitude;//当前维度
 
     //接收返回的停车场的经纬度
     private Handler handler = new Handler(){
@@ -66,6 +65,11 @@ public class BDMapActivity extends AppCompatActivity{
                         parkingsData.setLatitude(jsonObject.getDouble("latitude"));
                         parkingsData.setLongitude(jsonObject.getDouble("longitude"));
                         parkingsData.setName(jsonObject.getString("name"));
+                        parkingsData.setImageId(jsonObject.getString("image"));
+                        parkingsData.setcarportNumber(jsonObject.getInt("carport_sum"));
+                        parkingsData.setFreeNumber(jsonObject.getInt("carport_free_num"));
+                        parkingsData.setCharge(jsonObject.getDouble("charge"));
+                        parkingsData.setPhone(jsonObject.getString("phone"));
                         initOverlay(parkingsData);//将每一个停车场在地图上标注出来
                     }
                 } catch (JSONException e) {
@@ -83,7 +87,7 @@ public class BDMapActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         mLocationClient = new LocationClient(getApplicationContext());//创建实例，构造函数接收一个Context参数
         mLocationClient.registerLocationListener(new MyLocationListener());//注册一个定位监听器，获取到位置信息则回调这个定位监听器
-        SDKInitializer.initialize(getApplicationContext());//初始化操作要在setContentView()之前调用？
+        SDKInitializer.initialize(getApplicationContext());//初始化操作要在setContentView()之前调用
         setContentView(R.layout.activity_bdmap);
 
         mapView = (MapView) findViewById(R.id.bmapview);//获取地图实例
@@ -123,10 +127,26 @@ public class BDMapActivity extends AppCompatActivity{
         String path="parkPHP/parkAddressSelect.php";
         HttpJson http=new HttpJson(path,"",handler);
         new Thread(http.getHttpThread()).start();
+
+        Button btnAddr = (Button) findViewById(R.id.btnAddr);
+        btnAddr.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnAddr:
+                Intent intent = new Intent(BDMapActivity.this,PoiSearchActivity.class);
+                intent.putExtra("localLatitude",localLatitude);
+                intent.putExtra("localLongitude",localLongitude);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     public class MyLocationListener implements BDLocationListener{
-
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             if (bdLocation.getLocType() == BDLocation.TypeGpsLocation || bdLocation.getLocType() == BDLocation.TypeNetWorkLocation ){
@@ -137,7 +157,9 @@ public class BDMapActivity extends AppCompatActivity{
 
     private void navigateTo(BDLocation location){
         if (isFirstLocate){
-            LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
+            localLatitude = location.getLatitude();
+            localLongitude = location.getLongitude();
+            LatLng ll = new LatLng(localLatitude,localLongitude);//LatLng是用于存放经纬度值的类，接收两个参数：维度，经度
             //创建一个新的MapStatus
             MapStatus mapStatus = new MapStatus.Builder().target(ll).zoom(15).build();
             mapView.removeViewAt(1);// 不显示百度地图Logo
@@ -183,28 +205,38 @@ public class BDMapActivity extends AppCompatActivity{
         //设置点击事件
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener()  {
             @Override
-            public boolean onMarkerClick(final Marker marker)  {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.drawable.popup);
-                InfoWindow.OnInfoWindowClickListener listener = null;
+            public boolean onMarkerClick (final Marker marker)  {
+                AlertDialog.Builder builder = new AlertDialog.Builder(BDMapActivity.this);
+                builder.setIcon(R.drawable.icons6);//    设置Title的图标
                 if (marker == mMarkerA) {
-                    button.setText("点击去："+parkingsData.getName());
-                    button.setTextColor(Color.BLACK);
-                    button.setWidth(300);
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
+                    builder.setTitle("您将要去："+parkingsData.getName());//    设置Title的内容
+                    builder.setNegativeButton("查看路线", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(BDMapActivity.this,RoutePlanActivity.class);
-                            double latitude = parkingsData.getLatitude();
-                            double longitude = parkingsData.getLongitude();
-                            intent.putExtra("latitude",latitude);
-                            intent.putExtra("longitude",longitude);
+                            intent.putExtra("latitude",parkingsData.getLatitude());
+                            intent.putExtra("longitude",parkingsData.getLongitude());
                             startActivity(intent);
-                            baiduMap.hideInfoWindow();
                         }
-                    };
-                    LatLng ll = marker.getPosition();//获取当前地点
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    baiduMap.showInfoWindow(mInfoWindow);
+                    });
+                    builder.setNeutralButton("立刻前往", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(BDMapActivity.this,NavigationActivity.class);
+                            intent.putExtra("parkLatitude",parkingsData.getLatitude());
+                            intent.putExtra("parkLongitude",parkingsData.getLongitude());
+                            intent.putExtra("parkName",parkingsData.getName());
+                            intent.putExtra("parkImage",parkingsData.getImageId());
+                            intent.putExtra("parkNumber",parkingsData.getCarportNumber());
+                            intent.putExtra("parkFreeNumber",parkingsData.getFreeNumber());
+                            intent.putExtra("charge",parkingsData.getCharge());
+                            intent.putExtra("phone",parkingsData.getPhone());
+                            intent.putExtra("localLatitude",localLatitude);
+                            intent.putExtra("localLongitude",localLongitude);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.show();// 显示出该对话框
                 }
                 return true;
             }
@@ -273,20 +305,5 @@ public class BDMapActivity extends AppCompatActivity{
         }
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.map_parkings,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.parkings:
-                Intent intent = new Intent(BDMapActivity.this,ParkingsDetailsActivity.class);
-                startActivity(intent);
-                break;
-            default:
-        }
-        return true;
-    }
 }

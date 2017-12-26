@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 
 /**
- * Created by Administrator on 2017/12/25 .
+ * Created by LiangJiacheng on 2017/12/25 .
  */
 
 public class ResetNickName extends AppCompatActivity {
