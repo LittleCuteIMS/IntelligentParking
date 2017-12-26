@@ -43,6 +43,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
     final private int STARTPARK=2;
     final private int STOPPARK=3;
     final private int PARKINFO=4;
+    private String wholePlateNumber,wholeDatetime;
     private SharedPreferences billingPref;
     private SharedPreferences.Editor billingEdior;
     private ProgressDialog progressDialog = null;
@@ -53,7 +54,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
             switch (msg.what) {
                 case PARKINFO:
                     if(msg.obj != null){
-                        Log.d("message","parkInfo");
                         String message=msg.obj.toString();
                         if(!message.equals("FALSE")){
                             showParkInfo(message);
@@ -64,7 +64,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
                     break;
                 case CARINFO:
                     if (msg.obj != null) {
-                        Log.d("message","carInfo");
                         setCarSpinner(msg.obj.toString());
                     }else{
                         Toast.makeText(HourlyBillingActivity.this,R.string.network_error,Toast.LENGTH_SHORT).show();
@@ -271,11 +270,13 @@ public class HourlyBillingActivity extends AppCompatActivity {
                     jsonInfo.put("park_id",parkID);//停车场编号
                     Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
                     String plateNumber = carSpinner.getSelectedItem().toString();
+                    wholePlateNumber=plateNumber;
                     jsonInfo.put("plate_number",plateNumber);//车牌号
                     String inTime=billingPref.getString("inDatetime",null);
                     jsonInfo.put("in_datetime",inTime);//进入停车场时间
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String outTime = sDateFormat.format(new Date());
+                    wholeDatetime=outTime;
                     jsonInfo.put("out_datetime",outTime);//离开停车场时间
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -316,6 +317,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus0,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[1]=='0'){
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus1,Toast.LENGTH_SHORT).show();
+            setButtonEnabled(false,true);
         }else if(tradingStatus[2]=='0'){
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus2,Toast.LENGTH_SHORT).show();
         }else if(tradingStatus[3]=='0'){
@@ -324,6 +326,21 @@ public class HourlyBillingActivity extends AppCompatActivity {
             Toast.makeText(HourlyBillingActivity.this,R.string.tradingStatus4,Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(HourlyBillingActivity.this,"停车扣费成功",Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(HourlyBillingActivity.this,
+                            TradingDetailsActivity.class);
+                    Bundle bundle=new Bundle();//创建email内容
+                    bundle.putString("plate_number",wholePlateNumber);
+                    bundle.putString("out_datetime",wholeDatetime);
+                    intent.putExtra("billingToTradingDetail",bundle);
+
+                    startActivity(intent);
+                    finish();
+                }
+
+            }, 2000);
         }
     }
 }
