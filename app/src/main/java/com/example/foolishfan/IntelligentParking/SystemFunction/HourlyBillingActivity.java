@@ -107,6 +107,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         if(billingPref.getBoolean("isBilling",false)){//如果正在停车中，park_id从缓存中获取,开始停车按钮不可点击，结束停车可点击
             park_id = billingPref.getString("park_id",null);
             setButtonEnabled(false,true);
+            displayDatetimeAndChronometer(billingPref.getString("inDatetime",null),billingPref.getLong("chronometerBaseTime",0));
         }else{//如果未停车，park_id从二维码中获取或为空，开始停车按钮可点击，结束停车不可点击
             park_id=getParkID();
             setButtonEnabled(true,false);
@@ -211,6 +212,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         ArrayAdapter<String> carInfoAdapter = new ArrayAdapter<String>(HourlyBillingActivity.this, android.R.layout.simple_spinner_item, carList);
         carInfoAdapter.setDropDownViewResource(R.layout.spinner_item);
         carSpinner.setAdapter(carInfoAdapter);
+        carSpinner.setSelection(billingPref.getInt("plateNumberID",0));
     }
 
     //对开始停车按钮设置监听事件
@@ -219,26 +221,22 @@ public class HourlyBillingActivity extends AppCompatActivity {
         startParkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                billingEdior.putBoolean("isBilling",true);
-                billingEdior.apply();//保存是否正在停车的状态
+                billingEdior.putBoolean("isBilling",true);//保存是否正在停车的状态
                 //显示开始停车时间
-                TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
                 SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String datetime = sDateFormat.format(new Date());
-                billingEdior.putString("inDatetime",datetime);
+                long chronometerBaseTime=SystemClock.elapsedRealtime();
+                displayDatetimeAndChronometer(datetime,chronometerBaseTime);
+                Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
+                String plateNumber = carSpinner.getSelectedItem().toString();
+                billingEdior.putString("inDatetime",datetime);//保存进入停车场的时间
+                billingEdior.putLong("chronometerBaseTime",chronometerBaseTime);//保存计时器基准时间
+                billingEdior.putInt("plateNumberID",carSpinner.getSelectedItemPosition());
                 billingEdior.apply();
-                String billInTimeStr = "进入时间:" + datetime;
-                billInTime.setText(billInTimeStr);
-                //开始计时
-                Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
-                billingTimeChronometer.setBase(SystemClock.elapsedRealtime());
-                billingTimeChronometer.start();
                 //发送开始停车信息到后台服务器
                 JSONObject jsonInfo = new JSONObject();
                 try {
                     jsonInfo.put("park_id",parkID);
-                    Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
-                    String plateNumber = carSpinner.getSelectedItem().toString();
                     jsonInfo.put("plate_number",plateNumber);
                     jsonInfo.put("in_datetime",datetime);
                 } catch (JSONException e) {
@@ -269,10 +267,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
                     Spinner carSpinner = (Spinner) findViewById(R.id.car_spinner);
                     String plateNumber = carSpinner.getSelectedItem().toString();
                     jsonInfo.put("plate_number",plateNumber);//车牌号
-                    TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
-                    String prefix = "进入时间:";
-                    String inTime = billInTime.getText().toString();
-                    inTime = inTime.substring(prefix.length());
+                    String inTime=billingPref.getString("inDatetime",null);
                     jsonInfo.put("in_datetime",inTime);//进入停车场时间
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String outTime = sDateFormat.format(new Date());
@@ -299,6 +294,16 @@ public class HourlyBillingActivity extends AppCompatActivity {
         startParkBtn.setEnabled(start);
         stopParkBtn.setEnabled(stop);
     }
+
+    private void displayDatetimeAndChronometer(String mDatetime,long mChronometerBaseTime){
+        String billInTimeStr = "进入时间:" + mDatetime;
+        TextView billInTime = (TextView) findViewById(R.id.billing_in_time);
+        billInTime.setText(billInTimeStr);
+        Chronometer billingTimeChronometer = (Chronometer)findViewById(R.id.billing_time);
+        billingTimeChronometer.setBase(mChronometerBaseTime);
+        billingTimeChronometer.start();
+    }
+
 
     //结束停车后，接受服务器反馈信息后的处理过程
     private void handleTradingStatus(String tradingStatusStr){
