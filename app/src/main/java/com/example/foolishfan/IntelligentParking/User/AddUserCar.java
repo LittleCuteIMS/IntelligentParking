@@ -83,8 +83,8 @@ public class AddUserCar extends AppCompatActivity {          //用户添加车�
                     Add();
                     break;
                 case R.id.addusercar_btn_cancel:                              //用户车辆界面的取消新增按钮
-                    mPlateNumber.setText("");
-                    mRemark.setText("");
+                    Intent intent_AddUserCar_to_MainActivity = new Intent(AddUserCar.this, MainActivity.class);    //切换Login Activity至User Activity
+                    startActivity(intent_AddUserCar_to_MainActivity);
                     break;
             }
         }
