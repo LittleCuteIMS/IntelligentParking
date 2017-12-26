@@ -106,6 +106,8 @@ public class User extends AppCompatActivity {
         //获取按钮，设置监听事件
         Button resetpwd_button = (Button) findViewById(R.id.resetpwd_button);
         resetpwd_button.setOnClickListener(setListener);
+        Button reset_nickname_button = (Button) findViewById(R.id.reset_nickname_button);
+        reset_nickname_button.setOnClickListener(setListener);
     }
 
     @Override
@@ -290,6 +292,7 @@ public class User extends AppCompatActivity {
             //这里图片是方形的，可以用一个工具类处理成圆形（很多头像都是圆形，这种工具类网上很多不再详述）
             mImage.setImageBitmap(mBitmap);//显示图片
             //在这个地方可以写上上传该图片到服务器的代码
+
         }
     }
 
@@ -302,6 +305,10 @@ public class User extends AppCompatActivity {
                 case R.id.resetpwd_button:
                     Intent intent = new Intent(getApplicationContext(), Resetpwd.class);
                     startActivity(intent);
+                    break;
+                case R.id.reset_nickname_button:                     //修改昵称按钮的监听事件,由用户信息界面跳转至修改昵称界面
+                    Intent intent1 = new Intent(getApplicationContext(), ResetNickName.class);
+                    startActivity(intent1);
                     break;
 
             }

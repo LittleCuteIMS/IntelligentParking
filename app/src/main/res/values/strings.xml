@@ -8,7 +8,8 @@
     <string name="login">登 录</string>
     <string name="register">注 册</string>
     <string name="cancel">取 消</string>
-    <string name="mobile_empty">用户名为空，请重新输入！</string>
+    <string name="mobile_empty">手机号为空，请重新输入！</string>
+    <string name="newNickname_empty">新昵称为空，请重新输入！</string>>
     <string name="pwd_empty">密码为空，请重新输入！</string>
     <string name="pwd_not_fit_user">密码不正确，请重新输入！</string>
     <string name="pwd_new_empty">新密码为空，请重新输入！</string>

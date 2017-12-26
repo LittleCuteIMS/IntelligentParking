@@ -58,8 +58,8 @@ public class Resetpwd extends AppCompatActivity {
                 if (msg.obj != null) {//如果不为空
                     if (msg.obj.toString().equals("SUCCEED")) {
                         Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
-                        Intent intent_Register_to_Login = new Intent(Resetpwd.this, Login.class);    //切换Register Activity至Login Activity
-                        startActivity(intent_Register_to_Login);
+                        Intent intent_Resetpwd_to_Login = new Intent(Resetpwd.this, Login.class);    //切换Resetpwd Activity至Login Activity
+                        startActivity(intent_Resetpwd_to_Login);
                         finish();
                     } else {
                         Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
