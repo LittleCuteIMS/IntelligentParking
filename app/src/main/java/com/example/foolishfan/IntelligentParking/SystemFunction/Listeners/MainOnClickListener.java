@@ -3,12 +3,12 @@ package com.example.foolishfan.IntelligentParking.SystemFunction.Listeners;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.foolishfan.IntelligentParking.ParkNavigation.BDMapActivity;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.FinanceActivity;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingsDetailsActivity;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.SystemFunction.HourlyBillingActivity;
 import com.example.foolishfan.IntelligentParking.SystemFunction.MainActivity;
@@ -55,7 +55,7 @@ public class MainOnClickListener implements View.OnClickListener {
                 }
                 break;
             case R.id.parkNearby://点击附近停车场的监听事件
-                Intent intent1 = new Intent(context, BDMapActivity.class);
+                Intent intent1 = new Intent(context, ParkingsDetailsActivity.class);
                 context.startActivity(intent1);
                 break;
             case R.id.wallet://点击我的钱包的监听事件
@@ -78,6 +78,8 @@ public class MainOnClickListener implements View.OnClickListener {
                 }
                 break;
             case R.id.main_self_navgation_btn:
+                Intent intent = new Intent(context, BDMapActivity.class);
+                context.startActivity(intent);
                 break;
         }
     }

@@ -126,7 +126,7 @@ public class ChargeShowActivity extends AppCompatActivity implements LoadListVie
                     count = count+5;
                     select();
                 }else {
-                    Toast.makeText(ChargeShowActivity.this,"全部加载完毕，点击回到屏幕上方",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChargeShowActivity.this,"全部加载完毕",Toast.LENGTH_SHORT).show();
                 }
                 listView.loadComplete();// 通知listview加载完毕
             }

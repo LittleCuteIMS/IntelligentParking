@@ -11,9 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -128,6 +127,15 @@ public class BDMapActivity extends AppCompatActivity{
         String path="parkPHP/parkAddressSelect.php";
         HttpJson http=new HttpJson(path,"",handler);
         new Thread(http.getHttpThread()).start();
+
+        Button btnAddr = (Button) findViewById(R.id.btnAddr);
+        btnAddr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BDMapActivity.this,PoiSearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public class MyLocationListener implements BDLocationListener{
@@ -290,20 +298,5 @@ public class BDMapActivity extends AppCompatActivity{
         }
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.map_parkings,menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.parkings:
-                Intent intent = new Intent(BDMapActivity.this,ParkingsDetailsActivity.class);
-                startActivity(intent);
-                break;
-            default:
-        }
-        return true;
-    }
 }
