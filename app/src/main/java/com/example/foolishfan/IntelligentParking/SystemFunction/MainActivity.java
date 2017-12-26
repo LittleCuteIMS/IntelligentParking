@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -156,6 +157,10 @@ public class MainActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
                 mImageView.setImageBitmap(userBitmap);
+                Log.d("message","bitmap");
+            }else{
+                mImageView.setImageResource(R.mipmap.ic_account_circle_white_48dp);
+                Log.d("message","resource");
             }
             tvNavNickname.setText(nickname);
             tvNavMobile.setText(mobile);

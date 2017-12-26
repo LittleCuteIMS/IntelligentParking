@@ -212,7 +212,7 @@ public class HourlyBillingActivity extends AppCompatActivity {
         ArrayAdapter<String> carInfoAdapter = new ArrayAdapter<String>(HourlyBillingActivity.this, android.R.layout.simple_spinner_item, carList);
         carInfoAdapter.setDropDownViewResource(R.layout.spinner_item);
         carSpinner.setAdapter(carInfoAdapter);
-        carSpinner.setSelection(billingPref.getInt("plateNumberID",0));
+        carSpinner.setSelection(billingPref.getInt("plateNumberID",0));//设置默认项
     }
 
     //对开始停车按钮设置监听事件
@@ -303,7 +303,6 @@ public class HourlyBillingActivity extends AppCompatActivity {
         billingTimeChronometer.setBase(mChronometerBaseTime);
         billingTimeChronometer.start();
     }
-
 
     //结束停车后，接受服务器反馈信息后的处理过程
     private void handleTradingStatus(String tradingStatusStr){
