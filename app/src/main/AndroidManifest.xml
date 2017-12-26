@@ -126,7 +126,7 @@
 
         <!-- User defined.  用户自定义的广播接收器 -->
         <receiver
-            android:name="com.example.foolishfan.IntelligentParking.SystemFunction.PushFunction.MyReceiver"
+            android:name=".SystemFunction.PushFunction.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -145,7 +145,7 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="26fa2a5c2d3b3509d24938e6" /> <!-- </>值来自开发者平台取得的AppKey -->
-        <!--User-->
+        <!-- User -->
         <activity
             android:name=".User.Login"
             android:label="登录"
@@ -174,7 +174,7 @@
             android:name=".User.ParkingHistory"
             android:label="停车历史"
             android:screenOrientation="portrait" />
-        <!--ParkNavigation-->
+        <!-- ParkNavigation -->
         <activity
             android:name=".ParkNavigation.FinanceActivity"
             android:label="我的钱包"
@@ -187,14 +187,17 @@
             android:name=".ParkNavigation.ChargeActivity"
             android:label="充值"
             android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:screenOrientation="portrait"
             android:value="q48TLKD8QmjCrBEkSEGvG1pNq0nzZWoE" />
+
         <activity
             android:name=".ParkNavigation.BDMapActivity"
-            android:label="附近停车场"
+            android:label="自动巡航"
             android:screenOrientation="portrait" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -203,6 +206,7 @@
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".ParkNavigation.ParkingsDetailsActivity"
             android:label="查看附近停车场"
@@ -222,9 +226,8 @@
         <activity
             android:name=".ParkNavigation.GuideActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ParkNavigation.NavigationActivity"/>
-        <!--SystemFunction-->
+        <activity android:name=".ParkNavigation.NavigationActivity" />
+        <!-- SystemFunction -->
         <activity
             android:name=".SystemFunction.ContactServiceActivity"
             android:label="联系客服"
@@ -236,7 +239,7 @@
         <activity
             android:name=".SystemFunction.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SystemFunction.MessageCenterActivity"
             android:label="消息中心"
@@ -273,6 +276,7 @@
             android:name=".SystemFunction.WebActivity"
             android:label="广告详情"
             android:screenOrientation="portrait" />
+        <activity android:name=".ParkNavigation.PoiSearchActivity"></activity>
     </application>
 
 </manifest>
