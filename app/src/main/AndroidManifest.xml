@@ -39,6 +39,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 发短信 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -217,6 +219,11 @@
             android:name=".ParkNavigation.RecordShowActivity"
             android:label="充值详情"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ParkNavigation.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ParkNavigation.NavigationActivity"/>
         <!--SystemFunction-->
         <activity
             android:name=".SystemFunction.ContactServiceActivity"
