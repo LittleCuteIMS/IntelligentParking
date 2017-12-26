@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/record_info_toolbar"
+        android:id="@+id/trading_details_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentLeft="true"
@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:id="@+id/redetail1"
-        android:layout_below="@+id/record_info_toolbar"
+        android:layout_below="@+id/trading_details_toolbar"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -52,6 +52,7 @@
                 android:id="@+id/trading_amout_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:textColor="#000"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -63,8 +64,10 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
                 android:text="交易成功"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -124,20 +127,22 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:text="积分奖励"
-                android:textSize="18sp"/>
+                android:text="收费水平"
+                android:textSize="18sp" />
+
             <TextView
+                android:id="@+id/park_charge_amout_tv"
                 android:layout_width="0dp"
-                android:layout_weight="7"
                 android:layout_height="wrap_content"
-                android:text="1积分"
-                android:textSize="18sp"
+                android:layout_weight="7"
                 android:gravity="end"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -160,14 +165,15 @@
                 android:layout_height="wrap_content"
                 android:text="消费时间"
                 android:textSize="18sp"/>
+
             <TextView
-                android:id="@+id/xiaofei_time"
+                android:id="@+id/trading_time_tv"
                 android:layout_width="0dp"
-                android:layout_weight="7"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="7"
                 android:gravity="end"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="18sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -182,49 +188,15 @@
                 android:layout_height="wrap_content"
                 android:text="订单编号"
                 android:textSize="18sp"/>
+
             <TextView
-                android:id="@+id/xiaofei_id"
+                android:id="@+id/trading_id_tv"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="7"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
                 android:gravity="end"
-                android:textColor="#000"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/redetail1"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#2c000000"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="12"
-                android:layout_height="wrap_content"
-                android:text="联系客服：18782003437"
-                android:textSize="18sp"/>
-            <Button
-                android:id="@+id/kefu"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="28dp"
-                android:background="@drawable/icons10"/>
+                android:textColor="#000"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </LinearLayout>
