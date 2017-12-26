@@ -114,6 +114,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="计时计费" />
+
+        <Button
+            android:id="@+id/main_self_navgation_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自动巡航" />
     </LinearLayout>
 
 </RelativeLayout>

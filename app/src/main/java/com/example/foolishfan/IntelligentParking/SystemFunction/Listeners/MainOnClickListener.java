@@ -76,6 +76,9 @@ public class MainOnClickListener implements View.OnClickListener {
                 }else {
                     Toast.makeText(context, "未登录，请先登录！", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.main_self_navgation_btn:
+                break;
         }
     }
 }
