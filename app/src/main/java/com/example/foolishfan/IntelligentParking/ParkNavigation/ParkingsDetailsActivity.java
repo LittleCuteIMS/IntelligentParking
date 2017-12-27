@@ -12,9 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.ParkingAdapter;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.ParkingsData;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.RecyclerViewClickListener;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingDetails.ParkingAdapter;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingDetails.ParkingsData;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingDetails.RecyclerViewClickListener;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 

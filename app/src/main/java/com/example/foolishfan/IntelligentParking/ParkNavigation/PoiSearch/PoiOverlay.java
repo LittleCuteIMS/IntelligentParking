@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.PoiSearch;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Polyline;
 import com.baidu.mapapi.search.poi.PoiResult;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.OverlayManager;
 
 import java.util.ArrayList;
 import java.util.List;

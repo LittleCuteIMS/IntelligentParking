@@ -41,10 +41,10 @@ import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.example.foolishfan.IntelligentParking.R;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.DrivingRouteOverlay;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.OverlayManager;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.TransitRouteOverlay;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.WalkingRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.DrivingRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.OverlayManager;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.TransitRouteOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.WalkingRouteOverlay;
 
 public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickListener, OnGetRoutePlanResultListener {
     private MapView mMapView = null;//地图对象
