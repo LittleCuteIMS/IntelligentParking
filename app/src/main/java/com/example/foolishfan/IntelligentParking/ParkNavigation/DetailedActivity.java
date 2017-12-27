@@ -24,6 +24,9 @@ import org.json.JSONObject;
 import static com.example.foolishfan.IntelligentParking.R.id.booking;
 import static com.example.foolishfan.IntelligentParking.R.id.tothere;
 
+/**
+ * Created by zhanglin on 2017/12/20.
+ */
 public class DetailedActivity extends AppCompatActivity implements View.OnClickListener{
     private String imageID;//图片路径
     private String latitude;

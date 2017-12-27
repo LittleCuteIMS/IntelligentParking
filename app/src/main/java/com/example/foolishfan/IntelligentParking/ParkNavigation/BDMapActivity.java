@@ -43,6 +43,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by zhanglin on 2017/11/28.
+ */
 public class BDMapActivity extends AppCompatActivity implements  View.OnClickListener{
     public LocationClient mLocationClient;//定位类
     private MapView mapView;//地图对象

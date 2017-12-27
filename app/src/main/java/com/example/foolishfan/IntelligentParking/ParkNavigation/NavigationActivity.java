@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Created by zhanglin on 2017/12/23.
+ */
 public class NavigationActivity extends Activity {
     public static List<Activity> activityList = new LinkedList<Activity>();
     private static final String APP_FOLDER_NAME = "BNSDKSimpleDemo";

@@ -14,6 +14,9 @@ import com.baidu.navisdk.adapter.NaviModuleFactory;
 import com.baidu.navisdk.adapter.NaviModuleImpl;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.Navigation.BNEventHandler;
 
+/**
+ * Created by zhanglin on 2017/12/23.
+ */
 public class GuideActivity extends AppCompatActivity {
     private final String TAG = GuideActivity.class.getName();
     private BNRoutePlanNode mBNRoutePlanNode = null;

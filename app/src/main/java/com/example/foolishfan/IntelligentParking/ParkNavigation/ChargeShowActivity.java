@@ -27,6 +27,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by zhanglin on 2017/11/8.
+ */
 public class ChargeShowActivity extends AppCompatActivity implements LoadListView.IloadListener{
     private LoadListView listView;
     private List<Data> datas = new ArrayList<Data>();//要填充的数据

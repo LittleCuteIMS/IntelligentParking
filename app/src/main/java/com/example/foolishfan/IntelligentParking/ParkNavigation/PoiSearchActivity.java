@@ -50,6 +50,9 @@ import java.util.List;
 
 import static android.R.attr.radius;
 
+/**
+ * Created by zhanglin on 2017/12/25.
+ */
 public class PoiSearchActivity extends AppCompatActivity implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
     private BaiduMap mBaiduMap = null;
     private MapView mapView;//地图对象

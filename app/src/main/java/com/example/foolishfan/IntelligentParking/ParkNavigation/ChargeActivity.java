@@ -20,6 +20,9 @@ import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by zhanglin on 2017/11/15.
+ */
 public class ChargeActivity extends AppCompatActivity {
     private EditText editText = null;//获取用户充值金额
     private Handler handler;//保存服务器返回消息

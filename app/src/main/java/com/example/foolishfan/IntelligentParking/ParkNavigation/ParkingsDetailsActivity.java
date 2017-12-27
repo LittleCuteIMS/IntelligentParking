@@ -25,6 +25,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by zhanglin on 2017/12/4.
+ */
 public class ParkingsDetailsActivity extends AppCompatActivity {
     private ParkingsData parkingsDatas;
     private List<ParkingsData> parkingsDataList = new ArrayList<>();//数据列表

@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.foolishfan.IntelligentParking.R;
 
+/**
+ * Created by zhanglin on 2017/12/21.
+ */
 public class RecordShowActivity extends AppCompatActivity {
     TextView chargeAmount;//充值金额
     TextView chargeTime;

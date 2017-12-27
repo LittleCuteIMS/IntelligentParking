@@ -59,8 +59,8 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         ParkingsData parkingsData = mParkingsDataList.get(position);
         holder.ParkingName.setText(parkingsData.getName());
-        //Glide.with(mContext).load("http://120.78.173.73/ParkingWeb/"+parkingsData.getImageId()).into(holder.ParkingImage);
-        Glide.with(mContext).load("http://192.168.155.1/ParkingWeb/"+parkingsData.getImageId()).into(holder.ParkingImage);
+        Glide.with(mContext).load("http://120.78.173.73/ParkingWeb/"+parkingsData.getImageId()).into(holder.ParkingImage);
+        //Glide.with(mContext).load("http://192.168.155.1/ParkingWeb/"+parkingsData.getImageId()).into(holder.ParkingImage);
     }
 
     @Override

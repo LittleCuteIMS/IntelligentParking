@@ -46,6 +46,9 @@ import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.Overla
 import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.TransitRouteOverlay;
 import com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan.WalkingRouteOverlay;
 
+/**
+ * Created by zhanglin on 2017/12/13.
+ */
 public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickListener, OnGetRoutePlanResultListener {
     private MapView mMapView = null;//地图对象
     private BaiduMap mBaidumap = null;//百度地图对象
