@@ -8,14 +8,15 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/resetpwd_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        app:popupTheme="@style/AppTheme.PopupOverlay">
 
+    </android.support.v7.widget.Toolbar>
     <EditText
-        android:drawableLeft="@android:drawable/ic_menu_myplaces"
+        android:drawableLeft="@drawable/telephone"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:inputType="textPersonName"
@@ -30,7 +31,7 @@
         android:layout_alignParentEnd="true" />
 
     <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:drawableLeft="@drawable/lock"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:inputType="textPassword"
@@ -43,60 +44,63 @@
         android:layout_marginBottom="27dp" />
 
     <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:id="@+id/resetpwd_edit_pwd_new"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:inputType="textPassword"
+        android:drawableLeft="@drawable/nickname"
         android:ems="10"
-        android:id="@+id/resetpwd_edit_pwd_new"
-        android:hint="请确认您的新密码"
-        android:layout_centerVertical="true"
+        android:hint="请输入您的新密码"
+        android:inputType="textPassword"
+        android:layout_above="@+id/resetpwd_btn_sure"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="112dp" />
 
     <EditText
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+        android:id="@+id/resetpwd_edit_pwd_check"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:inputType="textPassword"
+        android:drawableLeft="@drawable/nickname"
         android:ems="10"
-        android:id="@+id/resetpwd_edit_pwd_check"
-        android:hint="请输入您的新密码"
-        android:layout_marginTop="38dp"
-        android:layout_below="@+id/resetpwd_edit_pwd_new"
+        android:hint="请确认您的新密码"
+        android:inputType="textPassword"
+        android:layout_above="@+id/resetpwd_btn_sure"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="22dp" />
 
     <Button
         android:id="@+id/resetpwd_btn_sure"
-        style="@style/Widget.AppCompat.Button"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_above="@+id/resetpwd_btn_cancel"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="19dp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:onClick="sure_to_reset"
+        android:drawableLeft="@drawable/checked"
+        android:layout_weight="1"
+        android:background="@drawable/add_car_drawable"
         android:text="确定"
-        android:textColor="#FFF"
         android:textSize="25dp"
-        android:textStyle="bold" />
+        android:textColor="#faa731" />
     <Button
         android:id="@+id/resetpwd_btn_cancel"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="#f7181c"
-        android:onClick="not_to_reset"
+        android:layout_marginBottom="55dp"
+        android:drawableLeft="@drawable/cancel"
+        android:layout_weight="1"
+        android:background="@drawable/add_car_drawable"
         android:text="取消"
-        android:textColor="#FFF"
         android:textStyle="bold"
         android:textSize="25dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="13dp"
+        android:textColor="#faa731"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/resetpwd_btn_sure"
         android:layout_alignStart="@+id/resetpwd_btn_sure" />
+
+
+
+
 
 </RelativeLayout>

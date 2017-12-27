@@ -39,6 +39,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 发短信 -->
     <uses-permission android:name="android.permission.SEND_SMS" />
 
@@ -167,14 +168,33 @@
             android:label="我的车辆"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".User.AddUserCar"
-            android:label="添加车辆"
+            android:name=".User.ResetNickName"
+            android:label="修改昵称"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".User.ParkingHistory"
-            android:label="停车历史"
+            android:name=".SystemFunction.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SystemFunction.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SystemFunction.ScanActivity"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".SystemFunction.SoftwareSetActivity"
+            android:label="系统设置"
             android:screenOrientation="portrait" />
-        <!-- ParkNavigation -->
         <activity
             android:name=".ParkNavigation.FinanceActivity"
             android:label="我的钱包"
@@ -183,6 +203,15 @@
             android:name=".ParkNavigation.ChargeShowActivity"
             android:label="交易记录"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".User.AddUserCar"
+            android:label="添加车辆"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".User.ParkingHistory"
+            android:label="停车历史"
+            android:screenOrientation="portrait" />
+        <!-- ParkNavigation -->
         <activity
             android:name=".ParkNavigation.ChargeActivity"
             android:label="充值"
@@ -237,33 +266,15 @@
             android:label="计时计费"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SystemFunction.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".SystemFunction.MessageCenterActivity"
             android:label="消息中心"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".SystemFunction.ScanActivity"
-            android:screenOrientation="portrait"
-            android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".SystemFunction.SoftwareSetActivity"
-            android:label="系统设置"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SystemFunction.SplashActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
         <activity
             android:name=".SystemFunction.SuggestionActivity"
             android:label="意见反馈"

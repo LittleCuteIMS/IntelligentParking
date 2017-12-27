@@ -18,11 +18,13 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/login_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="50dp"
             app:navigationIcon="?attr/homeAsUpIndicator"
             android:background="?attr/colorPrimary"
             android:theme="@style/AppTheme.AppBarOverlay"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    </android.support.v7.widget.Toolbar>
 
         <ImageView
             android:id="@+id/logo"
@@ -49,7 +51,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                android:drawableLeft="@drawable/telephone"
                 android:hint="请输入您的手机号码"
                 android:inputType="textPersonName" />
 
@@ -60,7 +62,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/login_edit_mobile"
-                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:drawableLeft="@drawable/password1"
                 android:ems="10"
                 android:hint="请输入您的密码"
                 android:inputType="textPassword" />
@@ -71,10 +73,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="15dp"
                 android:layout_below="@+id/login_edit_pwd"
-                android:background="#545bcb"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorPrimary"
                 android:text="登录"
+                android:drawableLeft="@drawable/checked"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -84,11 +87,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="15dp"
                 android:layout_below="@+id/login_btn_login"
                 android:layout_marginBottom="14dp"
-                android:background="#e52525"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/holo_blue_dark"
                 android:text="注册"
+                android:drawableLeft="@drawable/user"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
