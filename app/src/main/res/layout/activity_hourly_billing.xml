@@ -221,9 +221,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/button_selector"
+            android:background="@drawable/defualt_button_bg2"
             android:text="开始停车"
-            android:textColor="#fff"
+            android:textColor="#faa731"
             android:textSize="18sp" />
 
         <Button
@@ -233,9 +233,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@drawable/button_selector"
+            android:background="@drawable/defualt_button_bg2"
             android:text="结束停车"
-            android:textColor="#fff"
+            android:textColor="#faa731"
             android:textSize="18sp" />
     </LinearLayout>
 
