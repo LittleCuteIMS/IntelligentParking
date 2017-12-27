@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/adverse"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    android:background="#00000000"
     android:fitsSystemWindows="true"
-    tools:context=".SystemFunction.SuggestionActivity"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    tools:context=".SystemFunction.SuggestionActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/suggestion_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:background="?attr/colorPrimary"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:navigationIcon="?attr/homeAsUpIndicator"
@@ -22,23 +23,58 @@
 
     <EditText
         android:id="@+id/suggestionEdTxt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/suggestion_toolbar"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_bg"
         android:ems="20"
-        android:inputType="textMultiLine" />
+        android:gravity="left|top"
+        android:inputType="textMultiLine"
+        android:maxLength="255"
+        android:minLines="10" />
 
     <LinearLayout
+        android:id="@+id/btnLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/suggestionEdTxt"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/suggestionBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/send" />
+            android:layout_below="@+id/suggestionEdTxt"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/defualt_button_bg2"
+            android:text="@string/send"
+            android:textColor="#faa731" />
+
+        <Button
+            android:id="@+id/backout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/suggestionEdTxt"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/defualt_button_bg2"
+            android:text="@string/backout_string"
+            android:textColor="#faa731" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

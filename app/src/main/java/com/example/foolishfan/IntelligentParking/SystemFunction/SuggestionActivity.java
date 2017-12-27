@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,35 @@ public class SuggestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestion);
 
         final EditText suggestionEdTxt=(EditText)findViewById(R.id.suggestionEdTxt);
+        suggestionEdTxt.addTextChangedListener(new TextWatcher() {
+            String tmp = "";
+            String digits = "/\\:*?<>|\"\n\t";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                tmp = s.toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                suggestionEdTxt.setSelection((s.length()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString();
+                if(str.equals(tmp)){
+                    return ;
+                }
+                StringBuffer sb = new StringBuffer();
+                for(int i = 0; i<str.length();i++){
+                    if(digits.indexOf(str.charAt(i))<0){
+                        sb.append(str.charAt(i));
+                    }
+                }
+                tmp = sb.toString();
+                suggestionEdTxt.setText(tmp);
+            }
+        });
         Button suggestionBtn=(Button)findViewById(R.id.suggestionBtn);
         suggestionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +99,13 @@ public class SuggestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        findViewById(R.id.backout_btn).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                suggestionEdTxt.setText("");
             }
         });
     }
