@@ -140,10 +140,19 @@ public class MainActivity extends AppCompatActivity{
         if (isLogin) {
             String nickname;
             String mobile;
-            String url;
             SharedPreferences userPref = getSharedPreferences("user", Context.MODE_PRIVATE);
             nickname = userPref.getString("nickname", null);
             mobile = userPref.getString("mobile", null);
+            tvNavNickname.setText(nickname);
+            tvNavMobile.setText(mobile);
+        } else {
+            tvNavNickname.setText("请登录");
+            tvNavMobile.setText("");
+        }
+        //更改头像显示
+        if(isLogin){
+            String url;
+            SharedPreferences userPref = getSharedPreferences("user", Context.MODE_PRIVATE);
             url=userPref.getString("userImage",null);
             if(url!=null) {
                 Uri uri = Uri.parse(url);
@@ -157,15 +166,12 @@ public class MainActivity extends AppCompatActivity{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                mImageView.setImageBitmap(userBitmap);
-            }else{
-                mImageView.setImageResource(R.mipmap.ic_account_circle_white_48dp);
+                if(userBitmap!=null){
+                    mImageView.setImageBitmap(userBitmap);
+                }
             }
-            tvNavNickname.setText(nickname);
-            tvNavMobile.setText(mobile);
-        } else {
-            tvNavNickname.setText("请登录");
-            tvNavMobile.setText("");
+        }else{
+            mImageView.setImageResource(R.mipmap.ic_account_circle_white_48dp);
         }
 
         //实现广告自动轮播
