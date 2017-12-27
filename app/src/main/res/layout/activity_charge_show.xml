@@ -17,13 +17,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <com.example.foolishfan.IntelligentParking.ParkNavigation.Util.LoadListView
+    <com.example.foolishfan.IntelligentParking.ParkNavigation.ChargeShow.LoadListView
         android:layout_below="@id/finance_toolbar"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
         android:dividerHeight="10dp"
-        android:fastScrollEnabled="true"></com.example.foolishfan.IntelligentParking.ParkNavigation.Util.LoadListView>
+        android:fastScrollEnabled="true"></com.example.foolishfan.IntelligentParking.ParkNavigation.ChargeShow.LoadListView>
 
 </RelativeLayout>

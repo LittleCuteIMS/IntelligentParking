@@ -12,7 +12,7 @@ import com.baidu.navisdk.adapter.BNaviBaseCallbackModel;
 import com.baidu.navisdk.adapter.BaiduNaviCommonModule;
 import com.baidu.navisdk.adapter.NaviModuleFactory;
 import com.baidu.navisdk.adapter.NaviModuleImpl;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.BNEventHandler;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Navigation.BNEventHandler;
 
 public class GuideActivity extends AppCompatActivity {
     private final String TAG = GuideActivity.class.getName();

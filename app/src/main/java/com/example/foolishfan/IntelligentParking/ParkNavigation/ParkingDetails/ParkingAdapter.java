@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingDetails;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

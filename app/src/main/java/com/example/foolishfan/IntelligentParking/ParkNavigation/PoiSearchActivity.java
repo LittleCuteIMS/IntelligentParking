@@ -42,7 +42,7 @@ import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.search.sug.SuggestionSearchOption;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.PoiOverlay;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.PoiSearch.PoiOverlay;
 import com.example.foolishfan.IntelligentParking.R;
 
 import java.util.ArrayList;

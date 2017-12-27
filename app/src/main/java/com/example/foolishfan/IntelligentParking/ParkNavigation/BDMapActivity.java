@@ -32,7 +32,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.ParkingsData;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.ParkingDetails.ParkingsData;
 import com.example.foolishfan.IntelligentParking.R;
 import com.example.foolishfan.IntelligentParking.Util.HttpJson;
 

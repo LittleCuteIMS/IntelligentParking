@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.RoutePlan;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnPolylineClickListener;

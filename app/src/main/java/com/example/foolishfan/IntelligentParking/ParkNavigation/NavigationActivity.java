@@ -25,7 +25,7 @@ import com.baidu.navisdk.adapter.BNRoutePlanNode.CoordinateType;
 import com.baidu.navisdk.adapter.BNaviSettingManager;
 import com.baidu.navisdk.adapter.BaiduNaviManager;
 import com.bumptech.glide.Glide;
-import com.example.foolishfan.IntelligentParking.ParkNavigation.Util.BNEventHandler;
+import com.example.foolishfan.IntelligentParking.ParkNavigation.Navigation.BNEventHandler;
 import com.example.foolishfan.IntelligentParking.R;
 
 import java.io.File;

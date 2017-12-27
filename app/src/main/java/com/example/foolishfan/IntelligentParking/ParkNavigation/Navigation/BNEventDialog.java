@@ -1,4 +1,4 @@
-package com.example.foolishfan.IntelligentParking.ParkNavigation.Util;
+package com.example.foolishfan.IntelligentParking.ParkNavigation.Navigation;
 
 import android.app.Dialog;
 import android.content.Context;
