@@ -162,7 +162,7 @@ public class RoutePlanActivity extends Activity implements BaiduMap.OnMapClickLi
     }
 
     /**
-     * 发起路线规划搜索示例
+     * 发起路线规划搜索
      */
     public void SearchButtonProcessDrive(View v) {
         //重置浏览节点的路线数据

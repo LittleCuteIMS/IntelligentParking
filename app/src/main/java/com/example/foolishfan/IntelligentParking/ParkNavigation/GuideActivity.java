@@ -27,7 +27,6 @@ public class GuideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NavigationActivity.activityList.add(this);
-        //createHandler();
         View view = null;
         if (useCommonInterface) {
             //使用通用接口
@@ -38,7 +37,6 @@ public class GuideActivity extends AppCompatActivity {
                 mBaiduNaviCommonModule.onCreate();
                 view = mBaiduNaviCommonModule.getView();
             }
-
         } else {
             //使用传统接口
             view = BNRouteGuideManager.getInstance().onCreate(this,mOnNavigationListener);
@@ -54,7 +52,6 @@ public class GuideActivity extends AppCompatActivity {
                 mBNRoutePlanNode = (BNRoutePlanNode) bundle.getSerializable(NavigationActivity.ROUTE_PLAN_NODE);
             }
         }
-
         BNEventHandler.getInstance().getDialog(this);
         BNEventHandler.getInstance().showDialog();
     }
@@ -164,8 +161,6 @@ public class GuideActivity extends AppCompatActivity {
         final static String KEY_TYPE_EVENT = "event";
     }
 
-
-
     @Override
     public boolean onKeyDown(int keyCode, android.view.KeyEvent event) {
         if(useCommonInterface) {
@@ -186,8 +181,5 @@ public class GuideActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
 
 }

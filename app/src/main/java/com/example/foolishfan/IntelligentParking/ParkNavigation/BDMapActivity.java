@@ -146,6 +146,24 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
         }
     }
 
+    private void  requestLocation(){
+        initLocation();
+        mLocationClient.start();//开始定位，定位结果返回定位监听器
+    }
+
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setOpenGps(true);// 打开gps
+        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+        option.setScanSpan(10000);//设置更新的时间间隔
+        option.setIsNeedAddress(true);
+        mLocationClient.setLocOption(option);
+        // 当前地点修改为自定义marker
+        BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.icon_geo);
+        baiduMap.setMyLocationConfiguration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker, 0xAAFFFF88, 0xAA00FF00));
+    }
+
     public class MyLocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
@@ -176,24 +194,6 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();//信息封装完毕后调用build()方法
         baiduMap.setMyLocationData(locationData);//在地图上显示当前位置
-    }
-
-    private void  requestLocation(){
-        initLocation();
-        mLocationClient.start();//开始定位，定位结果返回定位监听器
-    }
-
-    private void initLocation(){
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setOpenGps(true);// 打开gps
-        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        option.setScanSpan(10000);//设置更新的时间间隔
-        option.setIsNeedAddress(true);
-        mLocationClient.setLocOption(option);
-        // 当前地点修改为自定义marker
-        BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.icon_geo);
-        baiduMap.setMyLocationConfiguration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker, 0xAAFFFF88, 0xAA00FF00));
     }
 
     public void initOverlay(final ParkingsData parkingsData) {
@@ -304,6 +304,5 @@ public class BDMapActivity extends AppCompatActivity implements  View.OnClickLis
             default:
         }
     }
-
 
 }

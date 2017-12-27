@@ -142,20 +142,6 @@ public class NavigationActivity extends Activity {
         return true;
     }
 
-    //内部TTS播报状态回传handler
-    private Handler ttsHandler = new Handler();
-
-    /**
-     * 内部TTS播报状态回调接口
-     */
-    private BaiduNaviManager.TTSPlayStateListener ttsPlayStateListener = new BaiduNaviManager.TTSPlayStateListener() {
-        @Override
-        public void playEnd() {}
-
-        @Override
-        public void playStart() {}
-    };
-
     private void initNavi() {
         BNOuterTTSPlayerCallback ttsCallback = null;
         // 申请权限
@@ -190,6 +176,20 @@ public class NavigationActivity extends Activity {
         BNaviSettingManager.setNaviSdkParam(bundle);
 
     }
+
+    //内部TTS播报状态回传handler
+    private Handler ttsHandler = new Handler();
+
+    /**
+     * 内部TTS播报状态回调接口
+     */
+    private BaiduNaviManager.TTSPlayStateListener ttsPlayStateListener = new BaiduNaviManager.TTSPlayStateListener() {
+        @Override
+        public void playEnd() {}
+
+        @Override
+        public void playStart() {}
+    };
 
     private boolean hasBasePhoneAuth() {
         PackageManager pm = this.getPackageManager();
